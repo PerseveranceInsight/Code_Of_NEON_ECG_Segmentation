@@ -24,7 +24,7 @@ int32_t signal_container_constructor_fp_fopen(uint32_t signal_num,
     *pp_container = ree_malloc(sizeof(signal_container_t));
     ree_set(*pp_container, 0, sizeof(signal_container_t));
     (*pp_container)->signal_num = signal_num;
-    ree_log(LOG_DEBUG, "%s signal_num %d %d", __func__, (*pp_container)->signal_num, signal_num);
+    ree_log(SIGNAL_LOG, "%s signal_num %d %d", __func__, (*pp_container)->signal_num, signal_num);
     (*pp_container)->signal = ree_malloc(sizeof(mat_sig_t)*signal_num);
     
     for (uint32_t i=0; i<signal_num; i++)
@@ -34,7 +34,7 @@ int32_t signal_container_constructor_fp_fopen(uint32_t signal_num,
                                    "%s occurs error due to signal_path[i] is NULL", __func__);
         ree_check_null_exit_retval(&(*pp_container)->signal[i], retval, ECG_SEG_ALLOC_FAILED, EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN,
                                    "%s occurs error due to (*pp_container)->signal[i] is NULL", __func__);
-        ree_log(LOG_DEBUG, "%s signal_path %s", __func__, signal_path[i]);
+        ree_log(SIGNAL_LOG, "%s signal_path %s", __func__, signal_path[i]);
         mat_sig_constructor_fp_fopen(p_para, &(*pp_container)->signal[i], signal_path[i], FALSE);
     }
 EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN:

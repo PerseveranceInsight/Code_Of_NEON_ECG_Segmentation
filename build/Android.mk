@@ -33,6 +33,10 @@ ifeq ($(EN_GEMM_DBG),true)
 LOCAL_CFLAGS += -DEN_GEMM_DBG
 endif
 
+ifeq ($(EN_SIG2COL_DBG),true)
+LOCAL_CFLAGS += -DEN_SIG2COL_DBG
+endif
+
 LOCAL_ARM_MODE := arm
 
 PROJECT_SRC = $(LOCAL_PATH)/../src
@@ -46,6 +50,7 @@ LOCAL_C_INCLUDES += $(PROJECT_INC) \
 LOCAL_SRC_FILES +=  ${PROJECT_SRC}/ecg_seg_main.c \
 					${PROJECT_SRC}/ecg_seg_matrix.c \
 					${PROJECT_SRC}/ecg_seg_model.c \
+					${PROJECT_SRC}/ecg_seg_sig2col.c \
 					${PROJECT_SRC}/ecg_seg_signal.c \
 				    ${PROJECT_UTIL_SRC}/arm_util.c
 

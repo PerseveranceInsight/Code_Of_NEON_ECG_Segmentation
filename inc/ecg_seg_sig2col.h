@@ -1,7 +1,7 @@
 #ifndef __ECG_SEG_SIG2COL_H__
 #define __ECG_SEG_SIG2COL_H__
 #include <stdint.h>
-#include <limit.h>
+#include <limits.h>
 #include "arm_typedef.h"
 #include "arm_util.h"
 #include "ecg_seg_matrix.h"
@@ -9,14 +9,14 @@
 #include "ecg_seg_util.h"
 
 #ifdef EN_SIG2COL_DBG
-#define SIG2COL_FUNC_ENTRACNCE                  FUNC_ENTRANCE_LOG
+#define SIG2COL_FUNC_ENTRANCE                   FUNC_ENTRANCE_LOG
 #define SIG2COL_FUNC_EXIT                       FUNC_EXIT_LOG
 #define SIG2COL_PRINTF(x...)                    ree_printf(LOG_DEBUG, x)
 #define SIG2COL_LOG                             LOG_DEBUG
 #else
-#define SIG2COL_FUNC_ENTRACNCE                  do {} while (0)
+#define SIG2COL_FUNC_ENTRANCE                   do {} while (0)
 #define SIG2COL_FUNC_EXIT                       do {} while (0)
-#define SIG2COL_PRINTF                          do {} while (0)
+#define SIG2COL_PRINTF(x...)                    do {} while (0)
 #define SIG2COL_LOG                             LOG_VERBOSE
 #endif
 
@@ -35,8 +35,8 @@ typedef struct sig2col_ctr {
 } sig2col_ctr_t;
 
 int32_t sig2col_ctr_fp_constructor(uint32_t max_out_l, uint32_t max_k_l, sig2col_ctr_t **pp_ctr);
-int32_t sig2col_mat_fp(sig2col_ctr_t **pp_ctr, mat_sig_t *p_mat);
-void sig2col_print_mat(void);
+int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat);
+void sig2col_printf_mat_fp(sig2col_ctr_t *p_ctr);
 void sig2col_ctr_destructor(sig2col_ctr_t *p_ctr);
 
 #endif

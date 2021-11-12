@@ -20,6 +20,7 @@
 #endif
 
 #define ECG_SIGNAL                                                      "./data/test_signal.bin"
+#define ECG_TINY_SIGNAL                                                 "./data/test_tiny_signal.bin"
 
 typedef struct signal_container {
     uint32_t signal_num;
