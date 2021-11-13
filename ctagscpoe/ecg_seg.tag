@@ -16,7 +16,7 @@ BOOL	../util/inc/arm_typedef.h	4;"	d
 DEFAULT_LOG_LEVEL	../util/inc/arm_util.h	14;"	d
 ECG_SEG_ALLOC_FAILED	../util/inc/ecg_response_def.h	/^    ECG_SEG_ALLOC_FAILED = 2,$/;"	e	enum:ecg_seg_res
 ECG_SEG_ENCODER_CONVRELU_1_K_C	../inc/ecg_seg_def.h	5;"	d
-ECG_SEG_ENCODER_CONVRELU_1_K_DUMMING_PAD	../inc/ecg_seg_def.h	6;"	d
+ECG_SEG_ENCODER_CONVRELU_1_K_DUMMING_PADDING	../inc/ecg_seg_def.h	6;"	d
 ECG_SEG_ENCODER_CONVRELU_1_K_DUMMING_STRIDE	../inc/ecg_seg_def.h	7;"	d
 ECG_SEG_ENCODER_CONVRELU_1_K_L	../inc/ecg_seg_def.h	4;"	d
 ECG_SEG_INVALID_PARAM	../util/inc/ecg_response_def.h	/^    ECG_SEG_INVALID_PARAM = 1,$/;"	e	enum:ecg_seg_res
@@ -56,6 +56,14 @@ FUNC_ENTANGE_LOG	../util/inc/arm_util.h	53;"	d
 FUNC_ENTRANCE_LOG	../util/inc/arm_util.h	43;"	d
 FUNC_EXIT_LOG	../util/inc/arm_util.h	44;"	d
 FUNC_EXIT_LOG	../util/inc/arm_util.h	54;"	d
+GEMM_FUNC_ENTRANCE	../inc/ecg_seg_gemm.h	11;"	d
+GEMM_FUNC_ENTRANCE	../inc/ecg_seg_gemm.h	16;"	d
+GEMM_FUNC_EXIT	../inc/ecg_seg_gemm.h	12;"	d
+GEMM_FUNC_EXIT	../inc/ecg_seg_gemm.h	17;"	d
+GEMM_LOG	../inc/ecg_seg_gemm.h	14;"	d
+GEMM_LOG	../inc/ecg_seg_gemm.h	19;"	d
+GEMM_PRINTF	../inc/ecg_seg_gemm.h	13;"	d
+GEMM_PRINTF	../inc/ecg_seg_gemm.h	18;"	d
 IN_FILE_FP	../inc/ecg_seg_matrix.h	/^    IN_FILE_FP = 3,$/;"	e	enum:in_file_type
 IN_FILE_U16	../inc/ecg_seg_matrix.h	/^    IN_FILE_U16 = 1,$/;"	e	enum:in_file_type
 IN_FILE_U32	../inc/ecg_seg_matrix.h	/^    IN_FILE_U32 = 2,$/;"	e	enum:in_file_type
@@ -85,14 +93,14 @@ MAT_FP	../inc/ecg_seg_matrix.h	/^    MAT_FP = 3,$/;"	e	enum:mat_type
 MAT_U16	../inc/ecg_seg_matrix.h	/^    MAT_U16 = 1,$/;"	e	enum:mat_type
 MAT_U32	../inc/ecg_seg_matrix.h	/^    MAT_U32 = 2,$/;"	e	enum:mat_type
 MAT_U8	../inc/ecg_seg_matrix.h	/^    MAT_U8 = 0,$/;"	e	enum:mat_type
-MODEL_FUNC_ENTRANCE	../inc/ecg_seg_model.h	11;"	d
-MODEL_FUNC_ENTRANCE	../inc/ecg_seg_model.h	16;"	d
-MODEL_FUNC_EXIT	../inc/ecg_seg_model.h	12;"	d
-MODEL_FUNC_EXIT	../inc/ecg_seg_model.h	17;"	d
-MODEL_LOG	../inc/ecg_seg_model.h	14;"	d
-MODEL_LOG	../inc/ecg_seg_model.h	19;"	d
-MODEL_PRINTF	../inc/ecg_seg_model.h	13;"	d
-MODEL_PRINTF	../inc/ecg_seg_model.h	18;"	d
+MODEL_FUNC_ENTRANCE	../inc/ecg_seg_model.h	13;"	d
+MODEL_FUNC_ENTRANCE	../inc/ecg_seg_model.h	18;"	d
+MODEL_FUNC_EXIT	../inc/ecg_seg_model.h	14;"	d
+MODEL_FUNC_EXIT	../inc/ecg_seg_model.h	19;"	d
+MODEL_LOG	../inc/ecg_seg_model.h	16;"	d
+MODEL_LOG	../inc/ecg_seg_model.h	21;"	d
+MODEL_PRINTF	../inc/ecg_seg_model.h	15;"	d
+MODEL_PRINTF	../inc/ecg_seg_model.h	20;"	d
 NULL	../util/inc/arm_util.h	59;"	d
 PACK_MAT_COL	../inc/ecg_seg_matrix.h	/^    PACK_MAT_COL = 1,$/;"	e	enum:pack_mat
 PACK_MAT_ORI	../inc/ecg_seg_matrix.h	/^    PACK_MAT_ORI = 0,$/;"	e	enum:pack_mat
@@ -119,13 +127,15 @@ SIGNAL_LOG	../inc/ecg_seg_signal.h	19;"	d
 SIGNAL_PRINTF	../inc/ecg_seg_signal.h	13;"	d
 SIGNAL_PRINTF	../inc/ecg_seg_signal.h	18;"	d
 TRUE	../util/inc/arm_typedef.h	5;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT0	../inc/ecg_seg_model.h	22;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT1	../inc/ecg_seg_model.h	23;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT2	../inc/ecg_seg_model.h	24;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT3	../inc/ecg_seg_model.h	25;"	d
+UNET_ENCODER1_CONV1D_BLOCK_1_CONV_BIAS	../inc/ecg_seg_model.h	28;"	d
+UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT0	../inc/ecg_seg_model.h	24;"	d
+UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT1	../inc/ecg_seg_model.h	25;"	d
+UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT2	../inc/ecg_seg_model.h	26;"	d
+UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT3	../inc/ecg_seg_model.h	27;"	d
 __ARM_TYPEDEF_H__	../util/inc/arm_typedef.h	2;"	d
 __ARM_UTIL_H__	../util/inc/arm_util.h	4;"	d
 __ECG_SEG_DEF_H__	../inc/ecg_seg_def.h	2;"	d
+__ECG_SEG_GEMM_H__	../inc/ecg_seg_gemm.h	2;"	d
 __ECG_SEG_MATRIX_H__	../inc/ecg_seg_matrix.h	2;"	d
 __ECG_SEG_MODEL_H__	../inc/ecg_seg_model.h	2;"	d
 __ECG_SEG_RESPONSE_DEF_H__	../util/inc/ecg_response_def.h	2;"	d
@@ -136,16 +146,20 @@ alloc_col	../inc/ecg_seg_matrix.h	/^    uint32_t alloc_col;$/;"	m	struct:mat_sig
 col_buf	../inc/ecg_seg_sig2col.h	/^    void *col_buf;$/;"	m	struct:sig2col_ctr
 col_h	../inc/ecg_seg_matrix.h	/^    uint32_t col_h;$/;"	m	struct:mat_sig
 col_w	../inc/ecg_seg_matrix.h	/^    uint32_t col_w;$/;"	m	struct:mat_sig
-conv_bias	../inc/ecg_seg_model.h	/^    mat_sig_t conv_bias[4];$/;"	m	struct:conv_fuse_relu
+conv_bias	../inc/ecg_seg_model.h	/^    float conv_bias[4];$/;"	m	struct:conv_fuse_relu
+conv_fuse_bias_fopen	../src/ecg_seg_model.c	/^static int32_t conv_fuse_bias_fopen(char *bias_path,$/;"	f	file:
 conv_fuse_relu	../inc/ecg_seg_model.h	/^typedef struct conv_fuse_relu$/;"	s
+conv_fuse_relu_c	../inc/ecg_seg_model.h	/^    uint32_t conv_fuse_relu_c;$/;"	m	struct:conv_fuse_relu
 conv_fuse_relu_constructor_fopen	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para, $/;"	f
 conv_fuse_relu_destructor	../src/ecg_seg_model.c	/^void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)$/;"	f
+conv_fuse_relu_forward	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_forward(sig2col_ctr_t *p_col_ctr,$/;"	f
 conv_fuse_relu_t	../inc/ecg_seg_model.h	/^} conv_fuse_relu_t;$/;"	t	typeref:struct:conv_fuse_relu
 conv_weight	../inc/ecg_seg_model.h	/^    mat_sig_t conv_weight[4];$/;"	m	struct:conv_fuse_relu
 cur_ele_num	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_ele_num;$/;"	m	struct:sig2col_ctr
 cur_k_l	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_k_l;$/;"	m	struct:sig2col_ctr
 cur_out_l	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_out_l;$/;"	m	struct:sig2col_ctr
 cur_out_pack_l	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_out_pack_l;$/;"	m	struct:sig2col_ctr
+ecg_seg_fp_gemm	../src/ecg_seg_gemm.c	/^int32_t ecg_seg_fp_gemm(mat_sig_t *p_conv_weight,$/;"	f
 ecg_seg_res	../util/inc/ecg_response_def.h	/^typedef enum ecg_seg_res {$/;"	g
 ecg_seg_res_t	../util/inc/ecg_response_def.h	/^} ecg_seg_res_t;$/;"	t	typeref:enum:ecg_seg_res
 in_file_type	../inc/ecg_seg_matrix.h	/^typedef enum in_file_type {$/;"	g
@@ -182,6 +196,7 @@ print_mat_ori_fp	../src/ecg_seg_matrix.c	/^void print_mat_ori_fp(mat_sig_t *p_ma
 print_mat_para	../src/ecg_seg_matrix.c	/^void print_mat_para(mat_sig_t *p_mat)$/;"	f
 print_mat_sig_para	../src/ecg_seg_matrix.c	/^void print_mat_sig_para(mat_sig_para_t *p_param)$/;"	f
 print_sig2col_ctr_param	../src/ecg_seg_sig2col.c	/^static void print_sig2col_ctr_param(sig2col_ctr_t *p_ctr)$/;"	f	file:
+printf_conv_fuse_bias	../src/ecg_seg_model.c	/^static void printf_conv_fuse_bias(conv_fuse_relu_t *p_op)$/;"	f	file:
 ree_check_fopen	../util/inc/arm_util.h	83;"	d
 ree_check_null_exit	../util/inc/arm_util.h	121;"	d
 ree_check_null_exit_retval	../util/inc/arm_util.h	129;"	d
