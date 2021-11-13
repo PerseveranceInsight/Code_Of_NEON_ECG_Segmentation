@@ -72,7 +72,7 @@ int32_t signal_container_constructor(uint32_t signal_num, mat_sig_para_t *p_para
         ree_log(SIGNAL_LOG, "%s signal index i %d", __func__, i);
         ree_check_null_exit_retval(&((*pp_container)->signal[i]), retval, ECG_SEG_ALLOC_FAILED, EXIT_SIGNAL_CONTAINER_CONSTRUCTOR,
                                    "%s occurs error due to (*pp_container)->signal[i] is NULL", __func__);
-        // mat_sig_constructor_fp(p_para, &(*pp_container)->signal[i], FALSE);
+        mat_sig_constructor_fp(p_para, &(*pp_container)->signal[i], FALSE);
     }
 EXIT_SIGNAL_CONTAINER_CONSTRUCTOR:
     SIGNAL_FUNC_EXIT;

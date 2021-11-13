@@ -87,7 +87,8 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
     {
         p_mat->ori_l = p_param->ori_l;
         p_mat->out_l = p_param->ori_l;
-        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE + 1;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE)!=0)?1:0;
         p_mat->pack_h = 1;
     } else
     {
@@ -95,7 +96,8 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
         p_mat->out_l = (p_param->ori_l+2*p_param->padding-p_param->k_l)/p_param->stride+1;
         p_mat->col_h = p_param->k_l;
         p_mat->col_w = p_mat->out_l;
-        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE + 1;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE)!=0)?1:0;
         p_mat->pack_h = p_mat->col_h; 
     }
     p_mat->pack_w = p_mat->pack_w_step * FP_PACK_SIZE;
@@ -109,7 +111,9 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
         ree_log(MATRIX_LOG, "%s prepares to allocate kernel buffer", __func__);
     } else
     {
-        ele_num = (p_mat->ori_l/FP_PACK_SIZE + 1)*FP_PACK_SIZE;
+        ele_num = p_mat->ori_l/FP_PACK_SIZE;
+        ele_num += ((p_mat->ori_l%FP_PACK_SIZE)!=0)?1:0;
+        ele_num *= FP_PACK_SIZE;
         ree_log(MATRIX_LOG, "%s prepares to allocate signal buffer", __func__);
     }
     ree_log(MATRIX_LOG, "%s prepares to allocate %d * ELE_FP_SIZE", __func__, ele_num);
@@ -120,6 +124,62 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
     mat_sig_fp_fopen(p_mat->ori_buf, path);
     print_mat_ori_fp(p_mat);
 EXIT_MAT_SIG_CONSTRUCTOR_FP_FOPEN:
+    MATRIX_FUNC_EXIT;
+    return retval;
+}
+
+int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
+                               mat_sig_t *p_mat,
+                               BOOL kernel)
+{
+    MATRIX_FUNC_ENTRANCE;
+    uint32_t ele_num = 0;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_param, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_CONSTRUCTOR_FP,
+                               "%s occurs error due to p_param is NULL", __func__);
+    ree_check_null_exit_retval(p_mat, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_CONSTRUCTOR_FP,
+                               "%s occurs error due to p_mat is NULL", __func__);
+    print_mat_sig_para(p_param);
+
+    if (kernel)
+    {
+        p_mat->ori_l = p_param->ori_l;
+        p_mat->out_l = p_param->ori_l;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE + 1;
+        p_mat->pack_h = 1;
+    } else
+    {
+        p_mat->ori_l = p_param->ori_l;
+        p_mat->out_l = (p_param->ori_l+2*p_param->padding-p_param->k_l)/p_param->stride+1;
+        p_mat->col_h = p_param->k_l;
+        p_mat->col_w = p_mat->out_l;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE)!=0)?1:0;
+        p_mat->pack_h = p_mat->col_h;
+    }
+    p_mat->pack_w = p_mat->pack_w_step * FP_PACK_SIZE;
+    p_mat->pack_ele = p_mat->pack_h * p_mat->pack_w;
+    p_mat->padding = p_param->padding;
+    p_mat->stride = p_param->stride;
+    print_mat_para(p_mat);
+    
+    if (kernel)
+    {
+        ele_num = p_mat->pack_ele;
+        ree_log(MATRIX_LOG, "%s prepares to allocate kernel_buffer", __func__);
+    } else {
+        ele_num = p_mat->ori_l/FP_PACK_SIZE;
+        ele_num += ((p_mat->ori_l%FP_PACK_SIZE)!=0)?1:0;
+        ele_num *= FP_PACK_SIZE;
+        ree_log(MATRIX_LOG, "%s prepares to allocate signal buffer", __func__);
+    }
+    ree_log(MATRIX_LOG, "%s prepares to allocate %d * ELE_FP_SIZE", __func__, ele_num);
+    p_mat->ori_buf = ree_malloc(ele_num*ELE_FP_SIZE);
+    ree_check_null_exit_retval(p_mat->ori_buf, retval, ECG_SEG_ALLOC_FAILED, EXIT_MAT_SIG_CONSTRUCTOR_FP,
+                               "%s occurs error due to allocate p_mat->ori_buf failed", __func__);
+    ree_set(p_mat->ori_buf, 0, ele_num*ELE_FP_SIZE);
+    print_mat_ori_fp(p_mat);
+EXIT_MAT_SIG_CONSTRUCTOR_FP:
     MATRIX_FUNC_EXIT;
     return retval;
 }
