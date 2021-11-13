@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
                                         ECG_SIG2COL_MAX_K_L, 
                                         &p_sig2col_ctr);
     retval = sig2col_mat_fp(p_sig2col_ctr, p_signal->signal);
+    sig2col_printf_mat_fp(p_sig2col_ctr);
 
     ree_log(LOG_DEBUG, "%s ends", __func__);
 
