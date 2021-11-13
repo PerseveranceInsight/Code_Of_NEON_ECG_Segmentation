@@ -109,7 +109,7 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
         ree_log(MATRIX_LOG, "%s prepares to allocate kernel buffer", __func__);
     } else
     {
-        ele_num = p_mat->ori_l;
+        ele_num = (p_mat->ori_l/FP_PACK_SIZE + 1)*FP_PACK_SIZE;
         ree_log(MATRIX_LOG, "%s prepares to allocate signal buffer", __func__);
     }
     ree_log(MATRIX_LOG, "%s prepares to allocate %d * ELE_FP_SIZE", __func__, ele_num);

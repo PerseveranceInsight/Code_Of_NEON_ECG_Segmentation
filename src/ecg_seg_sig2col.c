@@ -99,7 +99,7 @@ int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat)
                                "%s occurs error due to p_ctr->col_buf is NULL", __func__);
     p_ctr->cur_k_l = p_mat->col_h;
     p_ctr->cur_out_l = p_mat->col_w;
-    p_ctr->cur_out_pack_l = (p_mat->col_w / FP_PACK_SIZE + 1)*FP_PACK_SIZE;
+    p_ctr->cur_out_pack_l = p_mat->pack_w;
     p_ctr->cur_ele_num = p_ctr->cur_k_l * p_ctr->cur_out_pack_l;
     print_sig2col_ctr_param(p_ctr);
     ele_num = p_ctr->cur_ele_num;
@@ -111,12 +111,12 @@ int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat)
         sig_ind_w_padding = col_h_ind;
         for (uint32_t col_w_ind = 0; col_w_ind<p_ctr->cur_out_pack_l; col_w_ind++)
         {
-            if (col_w_ind < p_ctr->cur_out_l)
-            {
+            // if (col_w_ind < p_ctr->cur_out_l)
+            // {
                 feature = sig2col_get_pixel_fp(sig_ind_w_padding, p_mat);
                 *p_col_buf = feature;
                 sig_ind_w_padding += p_mat->stride;
-            }
+            // }
             p_col_buf++;
         }
     }
