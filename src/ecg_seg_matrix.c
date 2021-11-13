@@ -126,5 +126,9 @@ EXIT_MAT_SIG_CONSTRUCTOR_FP_FOPEN:
 
 void mat_sig_destructor(mat_sig_t *p_mat)
 {
+    MATRIX_FUNC_ENTRANCE;
+    ree_check_null_exit(p_mat, EXIT_MAT_SIG_DESTRUCTOR, "%s directly returns due to p_mat is NULL", __func__);
     ree_free(p_mat->ori_buf);
+EXIT_MAT_SIG_DESTRUCTOR:
+    MATRIX_FUNC_EXIT;
 }

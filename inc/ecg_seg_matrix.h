@@ -70,13 +70,14 @@ int32_t mat_sig_constructor_fp_st(mat_sig_para_t *p_param,
                                   mat_sig_t *p_mat);
 
 int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
-                                     mat_sig_t *p_mat,
+                                     mat_sig_t *p_mat, 
                                      char *path,
-                                     BOOL alloc_col);
-int32_t mat_sig_constructor_fp_fopen_v2(mat_sig_para_t *p_param,
-                                        mat_sig_t *p_mat, 
-                                        char *path,
-                                        BOOL kernel);
+                                     BOOL kernel);
+
+int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
+                               mat_sig_t *p_mat,
+                               BOOL kernel);
+
 void mat_sig_destructor(mat_sig_t *p_mat);
 
 #endif
