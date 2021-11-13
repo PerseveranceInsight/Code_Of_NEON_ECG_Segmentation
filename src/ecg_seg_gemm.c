@@ -5,7 +5,7 @@
 #include "arm_util.h"
 #include "arm_typedef.h"
 #include "ecg_seg_gemm.h"
-#include "ecg_seg_response_def.h"
+#include "ecg_response_def.h"
 #include "ecg_seg_sig2col.h"
 #include "ecg_seg_signal.h"
 
@@ -31,7 +31,7 @@ int32_t ecg_seg_fp_gemm(mat_sig_t *p_conv_weight,
                                                                           p_conv_weight->ori_l,
                                                                           p_sig_ctr->cur_k_l);
     ree_log(GEMM_LOG, "%s p_sig_ctr->cur_out_pack_l %d p_out_feature->pack_w %d", __func__,
-                                                                                 p_sig_ctr->cur_cout_pack_l,
+                                                                                 p_sig_ctr->cur_out_pack_l,
                                                                                  p_out_feature->pack_w);
     ree_log(GEMM_LOG, "%s p_sig_ctr->cur_out_l %d p_out_feature->ori_l %d", __func__,
                                                                             p_sig_ctr->cur_out_l,

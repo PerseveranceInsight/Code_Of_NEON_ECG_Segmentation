@@ -4,6 +4,7 @@
 
 #include "arm_util.h"
 #include "ecg_seg_def.h"
+#include "ecg_seg_gemm.h"
 #include "ecg_seg_matrix.h"
 #include "ecg_seg_model.h"
 #include "ecg_seg_sig2col.h"
@@ -61,6 +62,11 @@ int main(int argc, char* argv[])
     ree_log(LOG_DEBUG, "%s retval of sig2col_ctr_fp_constructor %d", __func__, retval);
     retval = sig2col_mat_fp(p_sig2col_ctr, p_input_sig->signal);
     ree_log(LOG_DEBUG, "%s retval of sig2col_mat_fp %d", __func__, retval);
+
+    ecg_seg_fp_gemm(&(p_module->conv_weight[0]),
+                    p_sig2col_ctr,
+                    &(p_mid_feature->signal[0]));
+
     ree_log(LOG_DEBUG, "%s ends", __func__);
 
     conv_fuse_relu_destructor(p_module);

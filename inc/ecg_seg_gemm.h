@@ -7,7 +7,7 @@
 #include "ecg_seg_sig2col.h"
 #include "ecg_seg_signal.h"
 
-#ifdef GEMM_DBG
+#ifdef EN_GEMM_DBG
 #define GEMM_FUNC_ENTRANCE                                              FUNC_ENTRANCE_LOG
 #define GEMM_FUNC_EXIT                                                  FUNC_EXIT_LOG
 #define GEMM_PRINTF(x...)                                               ree_printf(LOG_DEBUG, x)

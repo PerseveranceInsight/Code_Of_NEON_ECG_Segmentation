@@ -52,6 +52,7 @@ LOCAL_C_INCLUDES += $(PROJECT_INC) \
 					$(PROJECT_UTIL_INC)
 
 LOCAL_SRC_FILES +=  ${PROJECT_SRC}/ecg_seg_main.c \
+					${PROJECT_SRC}/ecg_seg_gemm.c \
 					${PROJECT_SRC}/ecg_seg_matrix.c \
 					${PROJECT_SRC}/ecg_seg_model.c \
 					${PROJECT_SRC}/ecg_seg_sig2col.c \
