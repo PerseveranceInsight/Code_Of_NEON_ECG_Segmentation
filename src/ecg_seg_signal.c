@@ -42,12 +42,33 @@ EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN:
     return retval;
 }
 
+int32_t signal_container_constructor(uint32_t signal_num, mat_sig_para_t *p_para, signal_container_t **pp_container)
+{
+    SIGNAL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_para, retval, ECG_SEG_INVALID_PARAM, EXIT_SIGNAL_CONTAINER_CONSTRUCTOR,
+                               "%s occurs error due to p_para is NULL", __func__);
+    ree_check_null_exit_retval(pp_container, retval, ECG_SEG_INVALID_PARAM, EXIT_SIGNAL_CONTAINER_CONSTRUCTOR,
+                               "%s occurs error due to pp_container is NULL", __func__);
+    ree_check_true_exit((signal_num == 0), EXIT_SIGNAL_CONTAINER_CONSTRUCTOR, "%s directly returns due to signal_num == 0", __func__);
+    *pp_container = ree_malloc(sizeof(signal_container_t));
+    ree_set(*pp_container, 0, sizeof(signal_container_t));
+    (*pp_container)->signal_num = signal_num;
+    ree_log(SIGNAL_LOG, "%s signal_num %d %d", __func__, (*pp_container)->signal_num, signal_num);
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR:
+    SIGNAL_FUNC_EXIT;
+    return retval;
+}
+
 void signal_container_destructor(signal_container_t *p_container)
 {
     SIGNAL_FUNC_ENTRANCE;
-    for (uint32_t i = 0; i<p_container->signal_num; i++)
+    if (p_container->signal)
     {
-       mat_sig_destructor(&p_container->signal[i]);
+        for (uint32_t i = 0; i<p_container->signal_num; i++)
+        {
+            mat_sig_destructor(&p_container->signal[i]);
+        }
     }
     ree_free(p_container->signal);
     SIGNAL_FUNC_EXIT;

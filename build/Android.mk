@@ -33,6 +33,10 @@ ifeq ($(EN_GEMM_DBG),true)
 LOCAL_CFLAGS += -DEN_GEMM_DBG
 endif
 
+ifeq ($(EN_SIGNAL_DBG),true)
+LOCAL_CFLAGS += -DEN_SIGNAL_DBG
+endif
+
 ifeq ($(EN_SIG2COL_DBG),true)
 LOCAL_CFLAGS += -DEN_SIG2COL_DBG
 endif

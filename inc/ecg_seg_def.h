@@ -28,6 +28,13 @@
 #define ECG_SIGNAL_PADDING                                            (ECG_TINY_TEST_SIGNAL_PADDING)
 #define ECG_SIGNAL_STRIDE                                             (ECG_TINY_TEST_SIGNAL_STRIDE)
 
+#define ECG_SIGNAL_MID1_ORI_C                                         (4)
+#define ECG_SIGNAL_MID1_ORI_L                                         (ECG_TINY_TEST_SIGNAL_ORI_L)
+#define ECG_SIGNAL_MID1_K_L                                           (ECG_TINY_TEST_SIGNAL_K_L)
+#define ECG_SIGNAL_MID1_PADDING                                       (ECG_TINY_TEST_SIGNAL_PADDING)
+#define ECG_SIGNAL_MID1_STRIDE                                        (ECG_TINY_TEST_SIGNAL_STRIDE)
+#define ECG_SIGNAL_MID1_MAX_C                                         (12)
+
 #define ECG_SIG2COL_MAX_OUT_L                                         (ECG_TINY_TEST_SIGNAL_MAX_OUT_L)
 #define ECG_SIG2COL_MAX_K_L                                           (ECG_TINY_TEST_SIGNAL_MAX_K_L)
 
