@@ -17,7 +17,8 @@
 #define MATRIX_LOG                              LOG_VERBOSE
 #endif
 
-#define FP_PACK_SIZE                            (4)
+#define FP_PACK_SIZE_H                          (2)
+#define FP_PACK_SIZE_W                          (4)
 #define FP_PACK_ELE                             (16)
 
 #define ELE_U8_SIZE                             sizeof(uint8_t)

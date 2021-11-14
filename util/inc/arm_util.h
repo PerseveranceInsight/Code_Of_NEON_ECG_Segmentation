@@ -157,5 +157,7 @@ typedef enum LOG_LEVEL {
 double now_ns(void);
 void ree_dbg_neon_u32x4_t(uint32x4_t vec_dbg);
 void ree_dbg_neon_u32x4x4_t(uint32x4x4_t vec_dbg);
+void ree_dbg_neon_fp32x2_t(float32x2_t vec_dbg);
+void ree_dbg_neon_fp32x4_t(float32x4_t vec_dbg);
 void ree_dbg_neon_fp32x4x4_t(float32x4x4_t vec_dbg);
 #endif

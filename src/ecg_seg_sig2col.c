@@ -69,7 +69,7 @@ int32_t sig2col_ctr_fp_constructor(uint32_t max_out_l, uint32_t max_k_l, sig2col
     *pp_ctr = ree_malloc(sizeof(sig2col_ctr_t));
     ree_set(*pp_ctr, 0, sizeof(sig2col_ctr_t));
     (*pp_ctr)->max_out_l = max_out_l;
-    (*pp_ctr)->max_out_pack_l = (max_out_l / FP_PACK_SIZE + 1) * FP_PACK_SIZE;
+    (*pp_ctr)->max_out_pack_l = (max_out_l / FP_PACK_SIZE_W + 1) * FP_PACK_SIZE_W;
     (*pp_ctr)->max_k_l = max_k_l;
     (*pp_ctr)->max_ele_num = ((*pp_ctr)->max_out_pack_l)*((*pp_ctr)->max_k_l);
     print_sig2col_ctr_param(*pp_ctr);
@@ -111,7 +111,13 @@ int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat)
         sig_ind_w_padding = col_h_ind;
         for (uint32_t col_w_ind = 0; col_w_ind<p_ctr->cur_out_pack_l; col_w_ind++)
         {
-            feature = sig2col_get_pixel_fp(sig_ind_w_padding, p_mat);
+            if (col_w_ind<p_ctr->cur_out_l)
+            {
+                feature = sig2col_get_pixel_fp(sig_ind_w_padding, p_mat);
+            } else
+            {
+                feature = 0.0f;
+            }
             *p_col_buf = feature;
             sig_ind_w_padding += p_mat->stride;
             p_col_buf++;

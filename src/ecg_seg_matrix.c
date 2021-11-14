@@ -87,8 +87,8 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
     {
         p_mat->ori_l = p_param->ori_l;
         p_mat->out_l = p_param->ori_l;
-        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE;
-        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE)!=0)?1:0;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE_W;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE_W)!=0)?1:0;
         p_mat->pack_h = 1;
     } else
     {
@@ -96,11 +96,11 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
         p_mat->out_l = (p_param->ori_l+2*p_param->padding-p_param->k_l)/p_param->stride+1;
         p_mat->col_h = p_param->k_l;
         p_mat->col_w = p_mat->out_l;
-        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE;
-        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE)!=0)?1:0;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE_W;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE_W)!=0)?1:0;
         p_mat->pack_h = p_mat->col_h; 
     }
-    p_mat->pack_w = p_mat->pack_w_step * FP_PACK_SIZE;
+    p_mat->pack_w = p_mat->pack_w_step * FP_PACK_SIZE_W;
     p_mat->pack_ele = p_mat->pack_h * p_mat->pack_w;
     p_mat->padding = p_param->padding;
     p_mat->stride = p_param->stride;
@@ -111,9 +111,9 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
         ree_log(MATRIX_LOG, "%s prepares to allocate kernel buffer", __func__);
     } else
     {
-        ele_num = p_mat->ori_l/FP_PACK_SIZE;
-        ele_num += ((p_mat->ori_l%FP_PACK_SIZE)!=0)?1:0;
-        ele_num *= FP_PACK_SIZE;
+        ele_num = p_mat->ori_l/FP_PACK_SIZE_W;
+        ele_num += ((p_mat->ori_l%FP_PACK_SIZE_W)!=0)?1:0;
+        ele_num *= FP_PACK_SIZE_W;
         ree_log(MATRIX_LOG, "%s prepares to allocate signal buffer", __func__);
     }
     ree_log(MATRIX_LOG, "%s prepares to allocate %d * ELE_FP_SIZE", __func__, ele_num);
@@ -145,7 +145,7 @@ int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
     {
         p_mat->ori_l = p_param->ori_l;
         p_mat->out_l = p_param->ori_l;
-        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE + 1;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE_W + 1;
         p_mat->pack_h = 1;
     } else
     {
@@ -153,11 +153,11 @@ int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
         p_mat->out_l = (p_param->ori_l+2*p_param->padding-p_param->k_l)/p_param->stride+1;
         p_mat->col_h = p_param->k_l;
         p_mat->col_w = p_mat->out_l;
-        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE;
-        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE)!=0)?1:0;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE_W;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE_W)!=0)?1:0;
         p_mat->pack_h = p_mat->col_h;
     }
-    p_mat->pack_w = p_mat->pack_w_step * FP_PACK_SIZE;
+    p_mat->pack_w = p_mat->pack_w_step * FP_PACK_SIZE_W;
     p_mat->pack_ele = p_mat->pack_h * p_mat->pack_w;
     p_mat->padding = p_param->padding;
     p_mat->stride = p_param->stride;
@@ -168,9 +168,9 @@ int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
         ele_num = p_mat->pack_ele;
         ree_log(MATRIX_LOG, "%s prepares to allocate kernel_buffer", __func__);
     } else {
-        ele_num = p_mat->ori_l/FP_PACK_SIZE;
-        ele_num += ((p_mat->ori_l%FP_PACK_SIZE)!=0)?1:0;
-        ele_num *= FP_PACK_SIZE;
+        ele_num = p_mat->ori_l/FP_PACK_SIZE_W;
+        ele_num += ((p_mat->ori_l%FP_PACK_SIZE_W)!=0)?1:0;
+        ele_num *= FP_PACK_SIZE_W;
         ree_log(MATRIX_LOG, "%s prepares to allocate signal buffer", __func__);
     }
     ree_log(MATRIX_LOG, "%s prepares to allocate %d * ELE_FP_SIZE", __func__, ele_num);
