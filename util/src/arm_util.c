@@ -17,6 +17,13 @@ void ree_dbg_neon_u32x4_t(uint32x4_t vec_dbg)
     ree_log(LOG_DEBUG, "%04d %04d %04d %04d", dbg_buf[0], dbg_buf[1], dbg_buf[2], dbg_buf[3]);
 }
 
+void ree_dbg_neon_hex_u32x4_t(uint32x4_t vec_dbg)
+{
+    uint32_t dbg_buf[4] = {0};
+    vst1q_u32(dbg_buf, vec_dbg);
+    ree_log(LOG_DEBUG, "%x %x %x %x", dbg_buf[0], dbg_buf[1], dbg_buf[2], dbg_buf[3]);
+}
+
 void ree_dbg_neon_u32x4x4_t(uint32x4x4_t vec_dbg)
 {
     uint32_t dbg_buf[16] = {0};
