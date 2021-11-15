@@ -22,10 +22,16 @@ ECG_SEG_ENCODER_CONVRELU_1_K_L	../inc/ecg_seg_def.h	4;"	d
 ECG_SEG_INVALID_PARAM	../util/inc/ecg_response_def.h	/^    ECG_SEG_INVALID_PARAM = 1,$/;"	e	enum:ecg_seg_res
 ECG_SEG_OK	../util/inc/ecg_response_def.h	/^    ECG_SEG_OK = 0,$/;"	e	enum:ecg_seg_res
 ECG_SEG_PATH_MAX	../util/inc/ecg_seg_util.h	4;"	d
-ECG_SIG2COL_MAX_K_L	../inc/ecg_seg_def.h	32;"	d
-ECG_SIG2COL_MAX_OUT_L	../inc/ecg_seg_def.h	31;"	d
+ECG_SIG2COL_MAX_K_L	../inc/ecg_seg_def.h	39;"	d
+ECG_SIG2COL_MAX_OUT_L	../inc/ecg_seg_def.h	38;"	d
 ECG_SIGNAL	../inc/ecg_seg_signal.h	22;"	d
 ECG_SIGNAL_K_L	../inc/ecg_seg_def.h	27;"	d
+ECG_SIGNAL_MID1_K_L	../inc/ecg_seg_def.h	33;"	d
+ECG_SIGNAL_MID1_MAX_C	../inc/ecg_seg_def.h	36;"	d
+ECG_SIGNAL_MID1_ORI_C	../inc/ecg_seg_def.h	31;"	d
+ECG_SIGNAL_MID1_ORI_L	../inc/ecg_seg_def.h	32;"	d
+ECG_SIGNAL_MID1_PADDING	../inc/ecg_seg_def.h	34;"	d
+ECG_SIGNAL_MID1_STRIDE	../inc/ecg_seg_def.h	35;"	d
 ECG_SIGNAL_ORI_C	../inc/ecg_seg_def.h	25;"	d
 ECG_SIGNAL_ORI_L	../inc/ecg_seg_def.h	26;"	d
 ECG_SIGNAL_PADDING	../inc/ecg_seg_def.h	28;"	d
@@ -45,13 +51,14 @@ ECG_TINY_TEST_SIGNAL_ORI_C	../inc/ecg_seg_def.h	17;"	d
 ECG_TINY_TEST_SIGNAL_ORI_L	../inc/ecg_seg_def.h	18;"	d
 ECG_TINY_TEST_SIGNAL_PADDING	../inc/ecg_seg_def.h	20;"	d
 ECG_TINY_TEST_SIGNAL_STRIDE	../inc/ecg_seg_def.h	21;"	d
-ELE_FP_SIZE	../inc/ecg_seg_matrix.h	26;"	d
-ELE_U16_SIZE	../inc/ecg_seg_matrix.h	24;"	d
-ELE_U32_SIZE	../inc/ecg_seg_matrix.h	25;"	d
-ELE_U8_SIZE	../inc/ecg_seg_matrix.h	23;"	d
+ELE_FP_SIZE	../inc/ecg_seg_matrix.h	27;"	d
+ELE_U16_SIZE	../inc/ecg_seg_matrix.h	25;"	d
+ELE_U32_SIZE	../inc/ecg_seg_matrix.h	26;"	d
+ELE_U8_SIZE	../inc/ecg_seg_matrix.h	24;"	d
 FALSE	../util/inc/arm_typedef.h	6;"	d
-FP_PACK_ELE	../inc/ecg_seg_matrix.h	21;"	d
-FP_PACK_SIZE	../inc/ecg_seg_matrix.h	20;"	d
+FP_PACK_ELE	../inc/ecg_seg_matrix.h	22;"	d
+FP_PACK_SIZE_H	../inc/ecg_seg_matrix.h	20;"	d
+FP_PACK_SIZE_W	../inc/ecg_seg_matrix.h	21;"	d
 FUNC_ENTANGE_LOG	../util/inc/arm_util.h	53;"	d
 FUNC_ENTRANCE_LOG	../util/inc/arm_util.h	43;"	d
 FUNC_EXIT_LOG	../util/inc/arm_util.h	44;"	d
@@ -167,6 +174,7 @@ in_file_type_t	../inc/ecg_seg_matrix.h	/^} in_file_type_t;$/;"	t	typeref:enum:in
 k_l	../inc/ecg_seg_matrix.h	/^    uint32_t k_l;$/;"	m	struct:mat_sig_para
 main	../src/ecg_seg_main.c	/^int main(int argc, char* argv[])$/;"	f
 mat_sig	../inc/ecg_seg_matrix.h	/^typedef struct mat_sig {$/;"	s
+mat_sig_constructor_fp	../src/ecg_seg_matrix.c	/^int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,$/;"	f
 mat_sig_constructor_fp_fopen	../src/ecg_seg_matrix.c	/^int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,$/;"	f
 mat_sig_destructor	../src/ecg_seg_matrix.c	/^void mat_sig_destructor(mat_sig_t *p_mat)$/;"	f
 mat_sig_fp_fopen	../src/ecg_seg_matrix.c	/^static void mat_sig_fp_fopen(void *p_mat, char *path)$/;"	f	file:
@@ -203,6 +211,8 @@ ree_check_null_exit_retval	../util/inc/arm_util.h	129;"	d
 ree_check_true_exit	../util/inc/arm_util.h	138;"	d
 ree_check_true_exit_retval	../util/inc/arm_util.h	146;"	d
 ree_cpy	../util/inc/arm_util.h	63;"	d
+ree_dbg_neon_fp32x2_t	../util/src/arm_util.c	/^void ree_dbg_neon_fp32x2_t(float32x2_t vec_dbg)$/;"	f
+ree_dbg_neon_fp32x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_fp32x4_t(float32x4_t vec_dbg)$/;"	f
 ree_dbg_neon_fp32x4x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_fp32x4x4_t(float32x4x4_t vec_dbg)$/;"	f
 ree_dbg_neon_u32x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_u32x4_t(uint32x4_t vec_dbg)$/;"	f
 ree_dbg_neon_u32x4x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_u32x4x4_t(uint32x4x4_t vec_dbg)$/;"	f
@@ -227,6 +237,7 @@ sig2col_mat_fp	../src/ecg_seg_sig2col.c	/^int32_t sig2col_mat_fp(sig2col_ctr_t *
 sig2col_printf_mat_fp	../src/ecg_seg_sig2col.c	/^void sig2col_printf_mat_fp(sig2col_ctr_t *p_ctr)$/;"	f
 signal	../inc/ecg_seg_signal.h	/^    mat_sig_t *signal;$/;"	m	struct:signal_container
 signal_container	../inc/ecg_seg_signal.h	/^typedef struct signal_container {$/;"	s
+signal_container_constructor	../src/ecg_seg_signal.c	/^int32_t signal_container_constructor(uint32_t signal_num, mat_sig_para_t *p_para, signal_container_t **pp_container)$/;"	f
 signal_container_constructor_fp_fopen	../src/ecg_seg_signal.c	/^int32_t signal_container_constructor_fp_fopen(uint32_t signal_num,$/;"	f
 signal_container_destructor	../src/ecg_seg_signal.c	/^void signal_container_destructor(signal_container_t *p_container)$/;"	f
 signal_container_t	../inc/ecg_seg_signal.h	/^} signal_container_t;$/;"	t	typeref:struct:signal_container

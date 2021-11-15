@@ -1,3 +1,7 @@
 **/ctagscope
+**/ctagscope/ecg_seg.cout
+**/ctagscope/ecg_seg.count.in
+**/ctagscope/ecg_seg.cout.po
+**/ctagscope/ecg_seg.tag
 **/build/libs
 **/build/obj

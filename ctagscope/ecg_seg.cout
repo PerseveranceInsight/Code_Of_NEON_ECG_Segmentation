@@ -1,4 +1,4 @@
-cscope 15 $HOME/Documents/SelfStudy/Code/Code_Of_Android_ECG_SEG -q 0000000335 0000036175
+cscope 15 $HOME/Documents/SelfStudy/Code/Code_Of_Android_ECG_SEG -q 0000000371 0000044864
 	@inc/ecg_seg_def.h
 
 1 #i‚de‡
@@ -160,6 +160,50 @@ ECG_TINY_TEST_SIGNAL_STRIDE
 	)
 
 31 
+	#ECG_SIGNAL_MID1_ORI_C
+ (4)
+
+	)
+
+32 
+	#ECG_SIGNAL_MID1_ORI_L
+ (
+ECG_TINY_TEST_SIGNAL_ORI_L
+)
+
+	)
+
+33 
+	#ECG_SIGNAL_MID1_K_L
+ (
+ECG_TINY_TEST_SIGNAL_K_L
+)
+
+	)
+
+34 
+	#ECG_SIGNAL_MID1_PADDING
+ (
+ECG_TINY_TEST_SIGNAL_PADDING
+)
+
+	)
+
+35 
+	#ECG_SIGNAL_MID1_STRIDE
+ (
+ECG_TINY_TEST_SIGNAL_STRIDE
+)
+
+	)
+
+36 
+	#ECG_SIGNAL_MID1_MAX_C
+ (12)
+
+	)
+
+38 
 	#ECG_SIG2COL_MAX_OUT_L
  (
 ECG_TINY_TEST_SIGNAL_MAX_OUT_L
@@ -167,7 +211,7 @@ ECG_TINY_TEST_SIGNAL_MAX_OUT_L
 
 	)
 
-32 
+39 
 	#ECG_SIG2COL_MAX_K_L
  (
 ECG_TINY_TEST_SIGNAL_MAX_K_L
@@ -208,7 +252,7 @@ __ECG_SEG_GEMM_H__
 "
 
 10 #ifde‡
-GEMM_DBG
+EN_GEMM_DBG
 
 
 11 
@@ -392,18 +436,24 @@ LOG_VERBOSE
 	)
 
 20 
-	#FP_PACK_SIZE
- (4)
+	#FP_PACK_SIZE_H
+ (2)
 
 	)
 
 21 
+	#FP_PACK_SIZE_W
+ (4)
+
+	)
+
+22 
 	#FP_PACK_ELE
  (16)
 
 	)
 
-23 
+24 
 	#ELE_U8_SIZE
  (
 uöt8_t
@@ -411,7 +461,7 @@ uöt8_t
 
 	)
 
-24 
+25 
 	#ELE_U16_SIZE
  (
 uöt16_t
@@ -419,7 +469,7 @@ uöt16_t
 
 	)
 
-25 
+26 
 	#ELE_U32_SIZE
  (
 uöt32_t
@@ -427,187 +477,187 @@ uöt32_t
 
 	)
 
-26 
+27 
 	#ELE_FP_SIZE
  ()
 
 	)
 
-28 
+29 
 	eö_fûe_ty≥
  {
 
-29 
+30 
 	mIN_FILE_U8
  = 0,
 
-30 
+31 
 	mIN_FILE_U16
  = 1,
 
-31 
+32 
 	mIN_FILE_U32
  = 2,
 
-32 
+33 
 	mIN_FILE_FP
  = 3,
 
-33 } 
+34 } 
 	tö_fûe_ty≥_t
 ;
 
-35 
+36 
 	em©_ty≥
  {
 
-36 
+37 
 	mMAT_U8
  = 0,
 
-37 
+38 
 	mMAT_U16
  = 1,
 
-38 
+39 
 	mMAT_U32
  = 2,
 
-39 
+40 
 	mMAT_FP
  = 3,
 
-40 } 
+41 } 
 	tm©_ty≥_t
 ;
 
-42 
+43 
 	e∑ck_m©
  {
 
-43 
+44 
 	mPACK_MAT_ORI
  = 0,
 
-44 
+45 
 	mPACK_MAT_COL
  = 1,
 
-45 } 
+46 } 
 	t∑ck_m©_t
 ;
 
-47 
+48 
 	sm©_sig_∑ø
  {
-
-48 
-uöt32_t
- 
-	m‹i_l
-;
 
 49 
 uöt32_t
  
-	mk_l
+	m‹i_l
 ;
 
 50 
 uöt32_t
  
-	m∑ddög
+	mk_l
 ;
 
 51 
 uöt32_t
  
+	m∑ddög
+;
+
+52 
+uöt32_t
+ 
 	m°ride
 ;
 
-52 } 
+53 } 
 	tm©_sig_∑ø_t
 ;
 
-54 
+55 
 	sm©_sig
  {
 
-55 
+56 
 uöt32_t
  
 	m‹i_l
 ;
 
-56 
+57 
 uöt32_t
  
 	mout_l
 ;
 
-57 
+58 
 uöt32_t
  
 	mcﬁ_h
 ;
 
-58 
+59 
 uöt32_t
  
 	mcﬁ_w
 ;
 
-59 
+60 
 uöt32_t
  
 	m∑ck_w_°ï
 ;
 
-60 
+61 
 uöt32_t
  
 	m∑ck_h
 ;
 
-61 
+62 
 uöt32_t
  
 	m∑ck_w
 ;
 
-62 
+63 
 uöt32_t
  
 	m∑ck_ñe
 ;
 
-63 
+64 
 uöt32_t
  
 	m∑ddög
 ;
 
-64 
+65 
 uöt32_t
  
 	m°ride
 ;
 
-65 
+66 
 uöt32_t
  
 	mÆloc_cﬁ
 ;
 
-66 *
+67 *
 	m‹i_buf
 ;
 
-67 } 
+68 } 
 	tm©_sig_t
 ;
 
-69 
+70 
 öt32_t
  
 m©_sig_c⁄°ru˘‹_Â_°
@@ -617,13 +667,13 @@ m©_sig_∑ø_t
 p_∑øm
 ,
 
-70 
+71 
 m©_sig_t
  *
 p_m©
 );
 
-72 
+73 
 öt32_t
  
 m©_sig_c⁄°ru˘‹_Â_f›í
@@ -633,49 +683,45 @@ m©_sig_∑ø_t
 p_∑øm
 ,
 
-73 
+74 
 m©_sig_t
  *
 p_m©
 ,
 
-74 *
+75 *
 ∑th
 ,
 
-75 
+76 
 BOOL
  
-Æloc_cﬁ
+kî√l
 );
 
-76 
+78 
 öt32_t
  
-m©_sig_c⁄°ru˘‹_Â_f›í_v2
+m©_sig_c⁄°ru˘‹_Â
 (
 m©_sig_∑ø_t
  *
 p_∑øm
 ,
 
-77 
+79 
 m©_sig_t
  *
 p_m©
 ,
 
-78 *
-∑th
-,
-
-79 
+80 
 BOOL
  
 kî√l
 );
 
-80 
+82 
 m©_sig_de°ru˘‹
 (
 m©_sig_t
@@ -1307,7 +1353,29 @@ sig«l_c⁄èöî_t
 sig«l_∑th
 );
 
-36 
+36 
+öt32_t
+ 
+sig«l_c⁄èöî_c⁄°ru˘‹
+(
+uöt32_t
+ 
+sig«l_num
+,
+
+37 
+m©_sig_∑ø_t
+ *
+p_∑ø
+,
+
+38 
+sig«l_c⁄èöî_t
+ **
+µ_c⁄èöî
+);
+
+40 
 sig«l_c⁄èöî_de°ru˘‹
 (
 sig«l_c⁄èöî_t
@@ -1330,30 +1398,34 @@ p_c⁄èöî
 >
 
 5 
+	~<¨m_√⁄.h
+>
+
+7 
 	~"¨m_utû.h
 "
 
-6 
+8 
 	~"¨m_ty≥def.h
 "
 
-7 
+9 
 	~"ecg_£g_gemm.h
 "
 
-8 
-	~"ecg_£g_ª•⁄£_def.h
+10 
+	~"ecg_ª•⁄£_def.h
 "
 
-9 
+11 
 	~"ecg_£g_sig2cﬁ.h
 "
 
-10 
+12 
 	~"ecg_£g_sig«l.h
 "
 
-12 
+14 
 öt32_t
  
 	$ecg_£g_Â_gemm
@@ -1363,23 +1435,23 @@ m©_sig_t
 p_c⁄v_weight
 ,
 
-13 
+15 
 sig2cﬁ_˘r_t
  *
 p_sig_˘r
 ,
 
-14 
+16 
 m©_sig_t
  *
 p_out_„©uª
 )
 
-16 
+18 
 GEMM_FUNC_ENTRANCE
 ;
 
-17 
+19 
 öt32_t
  
 ªtvÆ
@@ -1387,7 +1459,53 @@ GEMM_FUNC_ENTRANCE
 ECG_SEG_OK
 ;
 
-18 
+20 
+uöt32_t
+ 
+h_°ïs
+ = 0, 
+w_°ïs
+ = 0, 
+ªmaö_h_num
+ = 0;
+
+21 
+uöt32_t
+ 
+w_off£t
+ = 0;
+
+22 *
+p_weight
+ = 
+NULL
+, *
+p_sig
+ = NULL, *
+p_„©
+ = NULL;
+
+23 
+Êﬂt32x2_t
+ 
+vec_weight
+;
+
+24 
+Êﬂt32x4_t
+ 
+vec_ö_„©uª1
+, 
+vec_ö_„©uª2
+;
+
+25 
+Êﬂt32x4_t
+ 
+vec_out_„©uª
+;
+
+26 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 p_c⁄v_weight
@@ -1399,11 +1517,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_ECG_SEG_FP_GEMM
 ,
 
-19 "%†occur†îr‹ duêtÿp_c⁄v_weighài†NULL", 
+27 "%†occur†îr‹ duêtÿp_c⁄v_weighài†NULL", 
 __func__
 );
 
-20 
+28 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 p_sig_˘r
@@ -1415,11 +1533,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_ECG_SEG_FP_GEMM
 ,
 
-21 "%†occur†îr‹ duêtÿp_sig_˘∏i†NULL", 
+29 "%†occur†îr‹ duêtÿp_sig_˘∏i†NULL", 
 __func__
 );
 
-22 
+30 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 p_out_„©uª
@@ -1431,11 +1549,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_ECG_SEG_FP_GEMM
 ,
 
-23 "%†occur†îr‹ duêtÿp_out_„©uª i†NULL", 
+31 "%†occur†îr‹ duêtÿp_out_„©uª i†NULL", 
 __func__
 );
 
-24 
+32 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 p_c⁄v_weight
@@ -1449,11 +1567,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_ECG_SEG_FP_GEMM
 ,
 
-25 "%†occur†îr‹ duêtÿp_c⁄v_weight->‹i_bu‡i†NULL", 
+33 "%†occur†îr‹ duêtÿp_c⁄v_weight->‹i_bu‡i†NULL", 
 __func__
 );
 
-26 
+34 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 p_sig_˘r
@@ -1467,11 +1585,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_ECG_SEG_FP_GEMM
 ,
 
-27 "%†occur†îr‹ duêtÿp_sig_˘r->cﬁ_bu‡i†NULL", 
+35 "%†occur†îr‹ duêtÿp_sig_˘r->cﬁ_bu‡i†NULL", 
 __func__
 );
 
-28 
+36 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 p_out_„©uª
@@ -1485,23 +1603,273 @@ ECG_SEG_INVALID_PARAM
 EXIT_ECG_SEG_FP_GEMM
 ,
 
-29 "%†occur†îr‹ duêtÿp_out_„©uª->‹i_bu‡i†NULL", 
+37 "%†occur†îr‹ duêtÿp_out_„©uª->‹i_bu‡i†NULL", 
 __func__
 );
 
-33 
+38 
+	`ªe_log
+(
+GEMM_LOG
+, "%†p_c⁄v_weight->‹i_»%dÖ_sig_˘r->cur_k_»%d", 
+__func__
+,
+
+39 
+p_c⁄v_weight
+->
+‹i_l
+,
+
+40 
+p_sig_˘r
+->
+cur_k_l
+);
+
+41 
+	`ªe_log
+(
+GEMM_LOG
+, "%†p_sig_˘r->cur_out_∑ck_»%dÖ_out_„©uª->∑ck_w %d", 
+__func__
+,
+
+42 
+p_sig_˘r
+->
+cur_out_∑ck_l
+,
+
+43 
+p_out_„©uª
+->
+∑ck_w
+);
+
+44 
+	`ªe_log
+(
+GEMM_LOG
+, "%†p_sig_˘r->cur_out_»%dÖ_out_„©uª->‹i_»%d", 
+__func__
+,
+
+45 
+p_sig_˘r
+->
+cur_out_l
+,
+
+46 
+p_out_„©uª
+->
+‹i_l
+);
+
+47 
+h_°ïs
+ = 
+p_c⁄v_weight
+->
+‹i_l
+ / 
+FP_PACK_SIZE_H
+;
+
+48 
+w_°ïs
+ = 
+p_sig_˘r
+->
+cur_out_∑ck_l
+ / 
+FP_PACK_SIZE_W
+;
+
+49 
+ªmaö_h_num
+ = 
+p_c⁄v_weight
+->
+‹i_l
+ - 
+h_°ïs
+*
+FP_PACK_SIZE_H
+;
+
+50 
+w_off£t
+ = 
+w_°ïs
+*
+FP_PACK_SIZE_W
+;
+
+51 
+	`ªe_log
+(
+GEMM_LOG
+, "%†h_°ï†%d, w_°ï†%d,Ñemaö_h_num %d, w_off£à%d", 
+__func__
+, 
+h_°ïs
+, 
+w_°ïs
+, 
+ªmaö_h_num
+, 
+w_off£t
+);
+
+52 
+p_weight
+ = 
+p_c⁄v_weight
+->
+‹i_buf
+;
+
+53 
+p_sig
+ = 
+p_sig_˘r
+->
+cﬁ_buf
+;
+
+54 
+p_„©
+ = 
+p_out_„©uª
+->
+‹i_buf
+;
+
+55 
+uöt32_t
+ 
+h_°ï_öd
+ = 0; h_°ï_öd<
+h_°ïs
+; h_step_ind++)
+
+57 
+vec_weight
+ = 
+	`vld1_f32
+(
+p_weight
+);
+
+58 
+p_„©
+ = 
+p_out_„©uª
+->
+‹i_buf
+;
+
+59 
+uöt32_t
+ 
+w_°ï_öd
+ = 0; w_°ï_öd<
+w_°ïs
+; w_step_ind++)
+
+61 
+vec_ö_„©uª1
+ = 
+	`vld1q_f32
+(
+p_sig
+);
+
+62 
+vec_ö_„©uª2
+ = 
+	`vld1q_f32
+(
+p_sig
++
+w_off£t
+);
+
+63 
+vec_out_„©uª
+ = 
+	`vld1q_f32
+(
+p_„©
+);
+
+64 
+vec_out_„©uª
+ = 
+	`vmœq_œ√_f32
+(vec_out_„©uª, 
+vec_ö_„©uª1
+, 
+vec_weight
+, 0);
+
+65 
+vec_out_„©uª
+ = 
+	`vmœq_œ√_f32
+(vec_out_„©uª, 
+vec_ö_„©uª2
+, 
+vec_weight
+, 1);
+
+66 
+	`v°1q_f32
+(
+p_„©
+, 
+vec_out_„©uª
+);
+
+67 
+p_sig
+ +
+FP_PACK_SIZE_W
+;
+
+68 
+p_„©
+ +
+FP_PACK_SIZE_W
+;
+
+70 
+p_weight
+ +
+FP_PACK_SIZE_H
+;
+
+71 
+p_sig
+ +
+w_off£t
+;
+
+73 
 EXIT_ECG_SEG_FP_GEMM
 :
 
-34 
+74 
 GEMM_FUNC_EXIT
 ;
 
-35  
+75  
 ªtvÆ
 ;
 
-36 
+76 
 	}
 }
 
@@ -1528,30 +1896,34 @@ GEMM_FUNC_EXIT
 "
 
 7 
-	~"ecg_£g_m©rix.h
+	~"ecg_£g_gemm.h
 "
 
 8 
-	~"ecg_£g_modñ.h
+	~"ecg_£g_m©rix.h
 "
 
 9 
-	~"ecg_£g_sig2cﬁ.h
+	~"ecg_£g_modñ.h
 "
 
 10 
-	~"ecg_£g_sig«l.h
+	~"ecg_£g_sig2cﬁ.h
 "
 
 11 
-	~"ecg_ª•⁄£_def.h
+	~"ecg_£g_sig«l.h
 "
 
 12 
+	~"ecg_ª•⁄£_def.h
+"
+
+13 
 	~"ecg_£g_utû.h
 "
 
-14 
+15 
 	$maö
 (
 ¨gc
@@ -1559,7 +1931,7 @@ GEMM_FUNC_EXIT
 ¨gv
 [])
 
-16 
+17 
 	`ªe_log
 (
 LOG_DEBUG
@@ -1567,7 +1939,7 @@ LOG_DEBUG
 __func__
 );
 
-18 
+19 
 öt32_t
  
 ªtvÆ
@@ -1575,13 +1947,13 @@ __func__
 ECG_SEG_OK
 ;
 
-19 **
-sig«l_∑th
+20 **
+öput_sig_∑th
  = 
 NULL
 ;
 
-20 
+21 
 c⁄v_fu£_ªlu_t
  *
 p_moduÀ
@@ -1589,15 +1961,23 @@ p_moduÀ
 NULL
 ;
 
-21 
+22 
 sig«l_c⁄èöî_t
  *
-p_sig«l
+p_öput_sig
  = 
 NULL
 ;
 
-22 
+23 
+sig«l_c⁄èöî_t
+ *
+p_mid_„©uª
+ = 
+NULL
+;
+
+24 
 sig2cﬁ_˘r_t
  *
 p_sig2cﬁ_˘r
@@ -1605,39 +1985,39 @@ p_sig2cﬁ_˘r
 NULL
 ;
 
-24 
-sig«l_∑th
+26 
+öput_sig_∑th
  = 
 	`ªe_mÆloc
 ((*));
 
-25 
-sig«l_∑th
+27 
+öput_sig_∑th
 [0] = 
 	`ªe_mÆloc
 (()*
 ECG_SEG_PATH_MAX
 );
 
-26 
+28 
 	`•rötf
 (
-sig«l_∑th
+öput_sig_∑th
 [0], "%s", 
 ECG_TINY_SIGNAL
 );
 
-27 
+29 
 	`ªe_log
 (
 LOG_DEBUG
 , "%†∑th %s", 
 __func__
 , 
-sig«l_∑th
+öput_sig_∑th
 [0]);
 
-29 
+31 
 m©_sig_∑ø_t
  
 weight_∑ø
@@ -1647,53 +2027,81 @@ weight_∑ø
 ECG_SEG_ENCODER_CONVRELU_1_K_L
 ,
 
-30 .
+32 .
 k_l
  = 
 ECG_SEG_ENCODER_CONVRELU_1_K_L
 ,
 
-31 .
+33 .
 ∑ddög
  = 
 ECG_SEG_ENCODER_CONVRELU_1_K_DUMMING_PADDING
 ,
 
-32 .
+34 .
 °ride
  = 
 ECG_SEG_ENCODER_CONVRELU_1_K_DUMMING_STRIDE
 ,};
 
-33 
+35 
 m©_sig_∑ø_t
  
-sig«l_∑ø
+öput_sig_∑ø
  = {.
 ‹i_l
  = 
 ECG_SIGNAL_ORI_L
 ,
 
-34 .
+36 .
 k_l
  = 
 ECG_SIGNAL_K_L
 ,
 
-35 .
+37 .
 ∑ddög
  = 
 ECG_SIGNAL_PADDING
 ,
 
-36 .
+38 .
 °ride
  = 
 ECG_SIGNAL_STRIDE
 ,};
 
-38 
+39 
+m©_sig_∑ø_t
+ 
+mid_„©_∑ø
+ = {.
+‹i_l
+ = 
+ECG_SIGNAL_MID1_ORI_L
+,
+
+40 .
+k_l
+ = 
+ECG_SIGNAL_MID1_K_L
+,
+
+41 .
+∑ddög
+ = 
+ECG_SIGNAL_MID1_PADDING
+,
+
+42 .
+°ride
+ = 
+ECG_SIGNAL_MID1_STRIDE
+,};
+
+44 
 	`c⁄v_fu£_ªlu_c⁄°ru˘‹_f›í
 (&
 weight_∑ø
@@ -1701,27 +2109,27 @@ weight_∑ø
 p_moduÀ
 ,
 
-39 
+45 
 UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT0
 ,
 
-40 
+46 
 UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT1
 ,
 
-41 
+47 
 UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT2
 ,
 
-42 
+48 
 UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT3
 ,
 
-43 
+49 
 UNET_ENCODER1_CONV1D_BLOCK_1_CONV_BIAS
 );
 
-44 
+50 
 ªtvÆ
  = 
 	`sig«l_c⁄èöî_c⁄°ru˘‹_Â_f›í
@@ -1729,19 +2137,55 @@ UNET_ENCODER1_CONV1D_BLOCK_1_CONV_BIAS
 ECG_SIGNAL_ORI_C
 ,
 
-45 &
-sig«l_∑ø
+51 &
+öput_sig_∑ø
 ,
 
-46 &
-p_sig«l
+52 &
+p_öput_sig
 ,
 
-47 
-sig«l_∑th
+53 
+öput_sig_∑th
 );
 
-48 
+54 
+	`ªe_log
+(
+LOG_DEBUG
+, "%†ªtvÆ o‡sig«l_c⁄èöî_c⁄°ru˘‹_Â_f›í %d", 
+__func__
+, 
+ªtvÆ
+);
+
+55 
+ªtvÆ
+ = 
+	`sig«l_c⁄èöî_c⁄°ru˘‹
+(
+ECG_SIGNAL_MID1_MAX_C
+,
+
+56 &
+mid_„©_∑ø
+,
+
+57 &
+p_mid_„©uª
+);
+
+58 
+	`ªe_log
+(
+LOG_DEBUG
+, "%†ªtvÆ o‡sig«l_c⁄èöî_c⁄°ru˘‹ %d", 
+__func__
+, 
+ªtvÆ
+);
+
+59 
 ªtvÆ
  = 
 	`sig2cﬁ_˘r_Â_c⁄°ru˘‹
@@ -1749,27 +2193,65 @@ sig«l_∑th
 ECG_SIG2COL_MAX_OUT_L
 ,
 
-49 
+60 
 ECG_SIG2COL_MAX_K_L
 ,
 
-50 &
+61 &
 p_sig2cﬁ_˘r
 );
 
-51 
+62 
+	`ªe_log
+(
+LOG_DEBUG
+, "%†ªtvÆ o‡sig2cﬁ_˘r_Â_c⁄°ru˘‹ %d", 
+__func__
+, 
+ªtvÆ
+);
+
+63 
 ªtvÆ
  = 
 	`sig2cﬁ_m©_Â
 (
 p_sig2cﬁ_˘r
 , 
-p_sig«l
+p_öput_sig
 ->
 sig«l
 );
 
-53 
+64 
+	`ªe_log
+(
+LOG_DEBUG
+, "%†ªtvÆ o‡sig2cﬁ_m©_Â %d", 
+__func__
+, 
+ªtvÆ
+);
+
+66 
+	`ecg_£g_Â_gemm
+(&(
+p_moduÀ
+->
+c⁄v_weight
+[0]),
+
+67 
+p_sig2cﬁ_˘r
+,
+
+68 &(
+p_mid_„©uª
+->
+sig«l
+[0]));
+
+70 
 	`ªe_log
 (
 LOG_DEBUG
@@ -1777,55 +2259,67 @@ LOG_DEBUG
 __func__
 );
 
-55 
+72 
 	`c⁄v_fu£_ªlu_de°ru˘‹
 (
 p_moduÀ
 );
 
-56 
+73 
 	`sig«l_c⁄èöî_de°ru˘‹
 (
-p_sig«l
+p_öput_sig
 );
 
-57 
+74 
+	`sig«l_c⁄èöî_de°ru˘‹
+(
+p_mid_„©uª
+);
+
+75 
 	`sig2cﬁ_˘r_de°ru˘‹
 (
 p_sig2cﬁ_˘r
 );
 
-58 
+76 
 	`ªe_‰ì
 (
 p_moduÀ
 );
 
-59 
+77 
 	`ªe_‰ì
 (
-p_sig«l
+p_öput_sig
 );
 
-60 
+78 
+	`ªe_‰ì
+(
+p_mid_„©uª
+);
+
+79 
 	`ªe_‰ì
 (
 p_sig2cﬁ_˘r
 );
 
-61 
+80 
 	`ªe_‰ì
 (
-sig«l_∑th
+öput_sig_∑th
 [0]);
 
-62 
+81 
 	`ªe_‰ì
 (
-sig«l_∑th
+öput_sig_∑th
 );
 
-64 
+83 
 	}
 }
 
@@ -2376,16 +2870,26 @@ p_m©
  =Ö_m©->
 out_l
  / 
-FP_PACK_SIZE
- + 1;
+FP_PACK_SIZE_W
+;
 
 91 
+p_m©
+->
+∑ck_w_°ï
+ +(’_m©->
+out_l
+ % 
+FP_PACK_SIZE_W
+)!=0)?1:0;
+
+92 
 p_m©
 ->
 ∑ck_h
  = 1;
 
-94 
+95 
 p_m©
 ->
 ‹i_l
@@ -2393,7 +2897,7 @@ p_m©
 p_∑øm
 ->ori_l;
 
-95 
+96 
 p_m©
 ->
 out_l
@@ -2409,7 +2913,7 @@ k_l
 °ride
 +1;
 
-96 
+97 
 p_m©
 ->
 cﬁ_h
@@ -2419,7 +2923,7 @@ p_∑øm
 k_l
 ;
 
-97 
+98 
 p_m©
 ->
 cﬁ_w
@@ -2427,17 +2931,27 @@ cﬁ_w
 out_l
 ;
 
-98 
+99 
 p_m©
 ->
 ∑ck_w_°ï
  =Ö_m©->
 out_l
  / 
-FP_PACK_SIZE
- + 1;
+FP_PACK_SIZE_W
+;
 
-99 
+100 
+p_m©
+->
+∑ck_w_°ï
+ +(’_m©->
+out_l
+ % 
+FP_PACK_SIZE_W
+)!=0)?1:0;
+
+101 
 p_m©
 ->
 ∑ck_h
@@ -2445,17 +2959,17 @@ p_m©
 cﬁ_h
 ;
 
-101 
+103 
 p_m©
 ->
 ∑ck_w
  =Ö_m©->
 ∑ck_w_°ï
  * 
-FP_PACK_SIZE
+FP_PACK_SIZE_W
 ;
 
-102 
+104 
 p_m©
 ->
 ∑ck_ñe
@@ -2465,7 +2979,7 @@ p_m©
 ∑ck_w
 ;
 
-103 
+105 
 p_m©
 ->
 ∑ddög
@@ -2473,7 +2987,7 @@ p_m©
 p_∑øm
 ->padding;
 
-104 
+106 
 p_m©
 ->
 °ride
@@ -2481,17 +2995,17 @@ p_m©
 p_∑øm
 ->stride;
 
-105 
+107 
 	`¥öt_m©_∑ø
 (
 p_m©
 );
 
-106 i‡(
+108 i‡(
 kî√l
 )
 
-108 
+110 
 ñe_num
  = 
 p_m©
@@ -2499,7 +3013,7 @@ p_m©
 ∑ck_ñe
 ;
 
-109 
+111 
 	`ªe_log
 (
 MATRIX_LOG
@@ -2507,17 +3021,33 @@ MATRIX_LOG
 __func__
 );
 
-112 
+114 
 ñe_num
- = (
+ = 
 p_m©
 ->
 ‹i_l
 /
-FP_PACK_SIZE
- + 1)*FP_PACK_SIZE;
+FP_PACK_SIZE_W
+;
 
-113 
+115 
+ñe_num
+ +((
+p_m©
+->
+‹i_l
+%
+FP_PACK_SIZE_W
+)!=0)?1:0;
+
+116 
+ñe_num
+ *
+FP_PACK_SIZE_W
+;
+
+117 
 	`ªe_log
 (
 MATRIX_LOG
@@ -2525,7 +3055,7 @@ MATRIX_LOG
 __func__
 );
 
-115 
+119 
 	`ªe_log
 (
 MATRIX_LOG
@@ -2535,7 +3065,7 @@ __func__
 ñe_num
 );
 
-116 
+120 
 p_m©
 ->
 ‹i_buf
@@ -2547,7 +3077,7 @@ p_m©
 ELE_FP_SIZE
 );
 
-117 
+121 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 p_m©
@@ -2561,11 +3091,11 @@ ECG_SEG_ALLOC_FAILED
 EXIT_MAT_SIG_CONSTRUCTOR_FP_FOPEN
 ,
 
-118 "%†occur†îr‹ duêtÿÆloˇãÖ_m©->‹i_bu‡Áûed", 
+122 "%†occur†îr‹ duêtÿÆloˇãÖ_m©->‹i_bu‡Áûed", 
 __func__
 );
 
-119 
+123 
 	`ªe_£t
 (
 p_m©
@@ -2577,7 +3107,7 @@ p_m©
 ELE_FP_SIZE
 );
 
-120 
+124 
 	`m©_sig_Â_f›í
 (
 p_m©
@@ -2587,29 +3117,385 @@ p_m©
 ∑th
 );
 
-121 
+125 
 	`¥öt_m©_‹i_Â
 (
 p_m©
 );
 
-122 
+126 
 EXIT_MAT_SIG_CONSTRUCTOR_FP_FOPEN
 :
 
-123 
+127 
 MATRIX_FUNC_EXIT
 ;
 
-124  
+128  
 ªtvÆ
 ;
 
-125 
+129 
 	}
 }
 
-127 
+131 
+öt32_t
+ 
+	$m©_sig_c⁄°ru˘‹_Â
+(
+m©_sig_∑ø_t
+ *
+p_∑øm
+,
+
+132 
+m©_sig_t
+ *
+p_m©
+,
+
+133 
+BOOL
+ 
+kî√l
+)
+
+135 
+MATRIX_FUNC_ENTRANCE
+;
+
+136 
+uöt32_t
+ 
+ñe_num
+ = 0;
+
+137 
+öt32_t
+ 
+ªtvÆ
+ = 
+ECG_SEG_OK
+;
+
+138 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(
+p_∑øm
+, 
+ªtvÆ
+, 
+ECG_SEG_INVALID_PARAM
+, 
+EXIT_MAT_SIG_CONSTRUCTOR_FP
+,
+
+139 "%†occur†îr‹ duêtÿp_∑øm i†NULL", 
+__func__
+);
+
+140 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(
+p_m©
+, 
+ªtvÆ
+, 
+ECG_SEG_INVALID_PARAM
+, 
+EXIT_MAT_SIG_CONSTRUCTOR_FP
+,
+
+141 "%†occur†îr‹ duêtÿp_m© i†NULL", 
+__func__
+);
+
+142 
+	`¥öt_m©_sig_∑ø
+(
+p_∑øm
+);
+
+144 i‡(
+kî√l
+)
+
+146 
+p_m©
+->
+‹i_l
+ = 
+p_∑øm
+->ori_l;
+
+147 
+p_m©
+->
+out_l
+ = 
+p_∑øm
+->
+‹i_l
+;
+
+148 
+p_m©
+->
+∑ck_w_°ï
+ =Ö_m©->
+out_l
+ / 
+FP_PACK_SIZE_W
+ + 1;
+
+149 
+p_m©
+->
+∑ck_h
+ = 1;
+
+152 
+p_m©
+->
+‹i_l
+ = 
+p_∑øm
+->ori_l;
+
+153 
+p_m©
+->
+out_l
+ = (
+p_∑øm
+->
+‹i_l
++2*p_∑øm->
+∑ddög
+-p_∑øm->
+k_l
+)/p_∑øm->
+°ride
++1;
+
+154 
+p_m©
+->
+cﬁ_h
+ = 
+p_∑øm
+->
+k_l
+;
+
+155 
+p_m©
+->
+cﬁ_w
+ =Ö_m©->
+out_l
+;
+
+156 
+p_m©
+->
+∑ck_w_°ï
+ =Ö_m©->
+out_l
+ / 
+FP_PACK_SIZE_W
+;
+
+157 
+p_m©
+->
+∑ck_w_°ï
+ +(’_m©->
+out_l
+ % 
+FP_PACK_SIZE_W
+)!=0)?1:0;
+
+158 
+p_m©
+->
+∑ck_h
+ =Ö_m©->
+cﬁ_h
+;
+
+160 
+p_m©
+->
+∑ck_w
+ =Ö_m©->
+∑ck_w_°ï
+ * 
+FP_PACK_SIZE_W
+;
+
+161 
+p_m©
+->
+∑ck_ñe
+ =Ö_m©->
+∑ck_h
+ *Ö_m©->
+∑ck_w
+;
+
+162 
+p_m©
+->
+∑ddög
+ = 
+p_∑øm
+->padding;
+
+163 
+p_m©
+->
+°ride
+ = 
+p_∑øm
+->stride;
+
+164 
+	`¥öt_m©_∑ø
+(
+p_m©
+);
+
+166 i‡(
+kî√l
+)
+
+168 
+ñe_num
+ = 
+p_m©
+->
+∑ck_ñe
+;
+
+169 
+	`ªe_log
+(
+MATRIX_LOG
+, "%†¥ï¨e†tÿÆloˇã kî√l_buf„r", 
+__func__
+);
+
+171 
+ñe_num
+ = 
+p_m©
+->
+‹i_l
+/
+FP_PACK_SIZE_W
+;
+
+172 
+ñe_num
+ +((
+p_m©
+->
+‹i_l
+%
+FP_PACK_SIZE_W
+)!=0)?1:0;
+
+173 
+ñe_num
+ *
+FP_PACK_SIZE_W
+;
+
+174 
+	`ªe_log
+(
+MATRIX_LOG
+, "%†¥ï¨e†tÿÆloˇã sig«»buf„r", 
+__func__
+);
+
+176 
+	`ªe_log
+(
+MATRIX_LOG
+, "%†¥ï¨e†tÿÆloˇã %d * ELE_FP_SIZE", 
+__func__
+, 
+ñe_num
+);
+
+177 
+p_m©
+->
+‹i_buf
+ = 
+	`ªe_mÆloc
+(
+ñe_num
+*
+ELE_FP_SIZE
+);
+
+178 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(
+p_m©
+->
+‹i_buf
+, 
+ªtvÆ
+, 
+ECG_SEG_ALLOC_FAILED
+, 
+EXIT_MAT_SIG_CONSTRUCTOR_FP
+,
+
+179 "%†occur†îr‹ duêtÿÆloˇãÖ_m©->‹i_bu‡Áûed", 
+__func__
+);
+
+180 
+	`ªe_£t
+(
+p_m©
+->
+‹i_buf
+, 0, 
+ñe_num
+*
+ELE_FP_SIZE
+);
+
+181 
+	`¥öt_m©_‹i_Â
+(
+p_m©
+);
+
+182 
+EXIT_MAT_SIG_CONSTRUCTOR_FP
+:
+
+183 
+MATRIX_FUNC_EXIT
+;
+
+184  
+ªtvÆ
+;
+
+185 
+	}
+}
+
+187 
 	$m©_sig_de°ru˘‹
 (
 m©_sig_t
@@ -2617,7 +3503,21 @@ m©_sig_t
 p_m©
 )
 
-129 
+189 
+MATRIX_FUNC_ENTRANCE
+;
+
+190 
+	`ªe_check_nuŒ_exô
+(
+p_m©
+, 
+EXIT_MAT_SIG_DESTRUCTOR
+, "%†dúe˘lyÑëu∫†duêtÿp_m© i†NULL", 
+__func__
+);
+
+191 
 	`ªe_‰ì
 (
 p_m©
@@ -2625,7 +3525,15 @@ p_m©
 ‹i_buf
 );
 
-130 
+192 
+EXIT_MAT_SIG_DESTRUCTOR
+:
+
+193 
+MATRIX_FUNC_EXIT
+;
+
+194 
 	}
 }
 
@@ -3798,8 +4706,8 @@ max_out_∑ck_l
  = (
 max_out_l
  / 
-FP_PACK_SIZE
- + 1) * FP_PACK_SIZE;
+FP_PACK_SIZE_W
+ + 1) * FP_PACK_SIZE_W;
 
 73 (*
 µ_˘r
@@ -4091,6 +4999,14 @@ p_˘r
 cur_out_∑ck_l
 ; col_w_ind++)
 
+114 i‡(
+cﬁ_w_öd
+<
+p_˘r
+->
+cur_out_l
+)
+
 116 
 „©uª
  = 
@@ -4101,13 +5017,17 @@ sig_öd_w_∑ddög
 p_m©
 );
 
-117 *
+119 
+„©uª
+ = 0.0f;
+
+121 *
 p_cﬁ_buf
  = 
 „©uª
 ;
 
-118 
+122 
 sig_öd_w_∑ddög
  +
 p_m©
@@ -4115,27 +5035,27 @@ p_m©
 °ride
 ;
 
-120 
+123 
 p_cﬁ_buf
 ++;
 
-124 
+127 
 EXIT_SIG2COL_MAT_FP
 :
 
-125 
+128 
 SIG2COL_FUNC_EXIT
 ;
 
-126  
+129  
 ªtvÆ
 ;
 
-127 
+130 
 	}
 }
 
-129 
+132 
 	$sig2cﬁ_˘r_de°ru˘‹
 (
 sig2cﬁ_˘r_t
@@ -4143,11 +5063,11 @@ sig2cﬁ_˘r_t
 p_˘r
 )
 
-131 
+134 
 SIG2COL_FUNC_ENTRANCE
 ;
 
-132 
+135 
 	`ªe_check_nuŒ_exô
 (
 p_˘r
@@ -4157,7 +5077,7 @@ EXIT_SIG2COL_CTR_DESTRUCTOR
 __func__
 );
 
-133 
+136 
 	`ªe_‰ì
 (
 p_˘r
@@ -4165,15 +5085,15 @@ p_˘r
 cﬁ_buf
 );
 
-134 
+137 
 EXIT_SIG2COL_CTR_DESTRUCTOR
 :
 
-135 
+138 
 SIG2COL_FUNC_EXIT
 ;
 
-136 
+139 
 	}
 }
 
@@ -4312,6 +5232,22 @@ sig«l_c⁄èöî_t
 ));
 
 25 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(*
+µ_c⁄èöî
+, 
+ªtvÆ
+, 
+ECG_SEG_ALLOC_FAILED
+, 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN
+,
+
+26 "%†occur†îr‹ duêtÿµ_c⁄èöî i†NULL", 
+__func__
+);
+
+27 
 	`ªe_£t
 (*
 µ_c⁄èöî
@@ -4319,13 +5255,13 @@ sig«l_c⁄èöî_t
 sig«l_c⁄èöî_t
 ));
 
-26 (*
+28 (*
 µ_c⁄èöî
 )->
 sig«l_num
  = signal_num;
 
-27 
+29 
 	`ªe_log
 (
 SIGNAL_LOG
@@ -4337,7 +5273,7 @@ __func__
 sig«l_num
 , signal_num);
 
-28 (*
+30 (*
 µ_c⁄èöî
 )->
 sig«l
@@ -4349,7 +5285,37 @@ m©_sig_t
 sig«l_num
 );
 
-30 
+31 
+	`ªe_check_nuŒ_exô_ªtvÆ
+((*
+µ_c⁄èöî
+)->
+sig«l
+, 
+ªtvÆ
+, 
+ECG_SEG_ALLOC_FAILED
+, 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN
+,
+
+32 "%†occur†îr‹ duêtÿÆloˇã (*µ_c⁄èöî)->sig«»Áûd", 
+__func__
+);
+
+33 
+	`ªe_£t
+((*
+µ_c⁄èöî
+)->
+sig«l
+, 0, (
+m©_sig_t
+)*
+sig«l_num
+);
+
+35 
 uöt32_t
  
 i
@@ -4357,7 +5323,7 @@ i
 sig«l_num
 ; i++)
 
-32 
+37 
 	`ªe_log
 (
 SIGNAL_LOG
@@ -4367,7 +5333,7 @@ __func__
 i
 );
 
-33 
+38 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (
 sig«l_∑th
@@ -4381,11 +5347,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN
 ,
 
-34 "%†occur†îr‹ duêtÿsig«l_∑th[i] i†NULL", 
+39 "%†occur†îr‹ duêtÿsig«l_∑th[i] i†NULL", 
 __func__
 );
 
-35 
+40 
 	`ªe_check_nuŒ_exô_ªtvÆ
 (&(*
 µ_c⁄èöî
@@ -4401,11 +5367,11 @@ ECG_SEG_ALLOC_FAILED
 EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN
 ,
 
-36 "%†occur†îr‹ duêtÿ(*µ_c⁄èöî)->sig«l[i] i†NULL", 
+41 "%†occur†îr‹ duêtÿ(*µ_c⁄èöî)->sig«l[i] i†NULL", 
 __func__
 );
 
-37 
+42 
 	`ªe_log
 (
 SIGNAL_LOG
@@ -4417,7 +5383,7 @@ sig«l_∑th
 i
 ]);
 
-38 
+43 
 	`m©_sig_c⁄°ru˘‹_Â_f›í
 (
 p_∑ø
@@ -4433,23 +5399,255 @@ sig«l_∑th
 FALSE
 );
 
-40 
+45 
 EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP_FOPEN
 :
 
-41 
+46 
 SIGNAL_FUNC_EXIT
 ;
 
-42  
+47  
 ªtvÆ
 ;
 
-43 
+48 
 	}
 }
 
-45 
+50 
+öt32_t
+ 
+	$sig«l_c⁄èöî_c⁄°ru˘‹
+(
+uöt32_t
+ 
+sig«l_num
+, 
+m©_sig_∑ø_t
+ *
+p_∑ø
+, 
+sig«l_c⁄èöî_t
+ **
+µ_c⁄èöî
+)
+
+52 
+SIGNAL_FUNC_ENTRANCE
+;
+
+53 
+öt32_t
+ 
+ªtvÆ
+ = 
+ECG_SEG_OK
+;
+
+54 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(
+p_∑ø
+, 
+ªtvÆ
+, 
+ECG_SEG_INVALID_PARAM
+, 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR
+,
+
+55 "%†occur†îr‹ duêtÿp_∑ø i†NULL", 
+__func__
+);
+
+56 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(
+µ_c⁄èöî
+, 
+ªtvÆ
+, 
+ECG_SEG_INVALID_PARAM
+, 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR
+,
+
+57 "%†occur†îr‹ duêtÿµ_c⁄èöî i†NULL", 
+__func__
+);
+
+58 
+	`ªe_check_åue_exô
+((
+sig«l_num
+ =0), 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR
+, "%†dúe˘lyÑëu∫†duêtÿsig«l_num =0", 
+__func__
+);
+
+59 *
+µ_c⁄èöî
+ = 
+	`ªe_mÆloc
+((
+sig«l_c⁄èöî_t
+));
+
+60 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(*
+µ_c⁄èöî
+, 
+ªtvÆ
+, 
+ECG_SEG_ALLOC_FAILED
+, 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR
+,
+
+61 "%†occur†îr‹ duêtÿµ_c⁄èöî i†NULL", 
+__func__
+);
+
+62 
+	`ªe_£t
+(*
+µ_c⁄èöî
+, 0, (
+sig«l_c⁄èöî_t
+));
+
+63 (*
+µ_c⁄èöî
+)->
+sig«l_num
+ = signal_num;
+
+64 
+	`ªe_log
+(
+SIGNAL_LOG
+, "%†sig«l_num %d %d", 
+__func__
+, (*
+µ_c⁄èöî
+)->
+sig«l_num
+, signal_num);
+
+65 (*
+µ_c⁄èöî
+)->
+sig«l
+ = 
+	`ªe_mÆloc
+((
+m©_sig_t
+)*
+sig«l_num
+);
+
+66 
+	`ªe_check_nuŒ_exô_ªtvÆ
+((*
+µ_c⁄èöî
+)->
+sig«l
+, 
+ªtvÆ
+, 
+ECG_SEG_ALLOC_FAILED
+, 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR
+,
+
+67 "%†occur†îr‹ duêtÿÆloˇã (*µ_c⁄èöî)->sig«»Áûd", 
+__func__
+);
+
+68 
+	`ªe_£t
+((*
+µ_c⁄èöî
+)->
+sig«l
+, 0, (
+m©_sig_t
+)*
+sig«l_num
+);
+
+70 
+uöt32_t
+ 
+i
+=0; i<
+sig«l_num
+; i++)
+
+72 
+	`ªe_log
+(
+SIGNAL_LOG
+, "%†sig«»ödex i %d", 
+__func__
+, 
+i
+);
+
+73 
+	`ªe_check_nuŒ_exô_ªtvÆ
+(&((*
+µ_c⁄èöî
+)->
+sig«l
+[
+i
+]), 
+ªtvÆ
+, 
+ECG_SEG_ALLOC_FAILED
+, 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR
+,
+
+74 "%†occur†îr‹ duêtÿ(*µ_c⁄èöî)->sig«l[i] i†NULL", 
+__func__
+);
+
+75 
+	`m©_sig_c⁄°ru˘‹_Â
+(
+p_∑ø
+, &(*
+µ_c⁄èöî
+)->
+sig«l
+[
+i
+], 
+FALSE
+);
+
+77 
+EXIT_SIGNAL_CONTAINER_CONSTRUCTOR
+:
+
+78 
+SIGNAL_FUNC_EXIT
+;
+
+79  
+ªtvÆ
+;
+
+80 
+	}
+}
+
+82 
 	$sig«l_c⁄èöî_de°ru˘‹
 (
 sig«l_c⁄èöî_t
@@ -4457,11 +5655,17 @@ sig«l_c⁄èöî_t
 p_c⁄èöî
 )
 
-47 
+84 
 SIGNAL_FUNC_ENTRANCE
 ;
 
-48 
+85 i‡(
+p_c⁄èöî
+->
+sig«l
+)
+
+87 
 uöt32_t
  
 i
@@ -4471,17 +5675,17 @@ p_c⁄èöî
 sig«l_num
 ; i++)
 
-50 
+89 
 	`m©_sig_de°ru˘‹
-(&
+(&(
 p_c⁄èöî
 ->
 sig«l
 [
 i
-]);
+]));
 
-52 
+92 
 	`ªe_‰ì
 (
 p_c⁄èöî
@@ -4489,11 +5693,11 @@ p_c⁄èöî
 sig«l
 );
 
-53 
+93 
 SIGNAL_FUNC_EXIT
 ;
 
-54 
+94 
 	}
 }
 
@@ -5244,6 +6448,22 @@ vec_dbg
 );
 
 160 
+ªe_dbg_√⁄_Â32x2_t
+(
+Êﬂt32x2_t
+ 
+vec_dbg
+);
+
+161 
+ªe_dbg_√⁄_Â32x4_t
+(
+Êﬂt32x4_t
+ 
+vec_dbg
+);
+
+162 
 ªe_dbg_√⁄_Â32x4x4_t
 (
 Êﬂt32x4x4_t
@@ -5442,19 +6662,19 @@ dbg_buf
 }
 
 30 
-	$ªe_dbg_√⁄_Â32x4x4_t
+	$ªe_dbg_√⁄_Â32x2_t
 (
-Êﬂt32x4x4_t
+Êﬂt32x2_t
  
 vec_dbg
 )
 
 32 
 dbg_buf
-[16] = {0.0};
+[2] = {0.0};
 
 33 
-	`v°4q_f32
+	`v°1_f32
 (
 dbg_buf
 , 
@@ -5465,11 +6685,75 @@ vec_dbg
 	`ªe_log
 (
 LOG_DEBUG
+, "%03.3‡%03.3f", 
+dbg_buf
+[0], dbg_buf[1]);
+
+35 
+	}
+}
+
+37 
+	$ªe_dbg_√⁄_Â32x4_t
+(
+Êﬂt32x4_t
+ 
+vec_dbg
+)
+
+39 
+dbg_buf
+[4] = {0.0};
+
+40 
+	`v°1q_f32
+(
+dbg_buf
+, 
+vec_dbg
+);
+
+41 
+	`ªe_log
+(
+LOG_DEBUG
+, "%03.3‡%03.3‡%03.3‡%03.3f", 
+dbg_buf
+[0], dbg_buf[1], dbg_buf[2], dbg_buf[3]);
+
+42 
+	}
+}
+
+44 
+	$ªe_dbg_√⁄_Â32x4x4_t
+(
+Êﬂt32x4x4_t
+ 
+vec_dbg
+)
+
+46 
+dbg_buf
+[16] = {0.0};
+
+47 
+	`v°4q_f32
+(
+dbg_buf
+, 
+vec_dbg
+);
+
+48 
+	`ªe_log
+(
+LOG_DEBUG
 , "%1.1‡%1.1‡%1.1‡%1.1f", 
 dbg_buf
 [0], dbg_buf[1], dbg_buf[2], dbg_buf[3]);
 
-35 
+49 
 	`ªe_log
 (
 LOG_DEBUG
@@ -5477,7 +6761,7 @@ LOG_DEBUG
 dbg_buf
 [4], dbg_buf[5], dbg_buf[6], dbg_buf[7]);
 
-36 
+50 
 	`ªe_log
 (
 LOG_DEBUG
@@ -5485,7 +6769,7 @@ LOG_DEBUG
 dbg_buf
 [8], dbg_buf[9], dbg_buf[10], dbg_buf[11]);
 
-37 
+51 
 	`ªe_log
 (
 LOG_DEBUG
@@ -5493,7 +6777,7 @@ LOG_DEBUG
 dbg_buf
 [12], dbg_buf[13], dbg_buf[14], dbg_buf[15]);
 
-38 
+52 
 	}
 }
 

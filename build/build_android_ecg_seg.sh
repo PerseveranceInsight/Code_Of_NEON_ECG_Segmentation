@@ -1,6 +1,6 @@
 # export EN_DEBUG_SYM=true
 
-# export EN_MATRIX_DBG=true
+export EN_MATRIX_DBG=true
 # export EN_MODEL_DBG=true
 # export EN_PACK_DEBUG=true
 export EN_GEMM_DBG=true

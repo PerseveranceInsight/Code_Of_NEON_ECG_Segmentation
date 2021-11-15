@@ -62,11 +62,10 @@ int main(int argc, char* argv[])
     ree_log(LOG_DEBUG, "%s retval of sig2col_ctr_fp_constructor %d", __func__, retval);
     retval = sig2col_mat_fp(p_sig2col_ctr, p_input_sig->signal);
     ree_log(LOG_DEBUG, "%s retval of sig2col_mat_fp %d", __func__, retval);
-
     ecg_seg_fp_gemm(&(p_module->conv_weight[0]),
                     p_sig2col_ctr,
                     &(p_mid_feature->signal[0]));
-
+    print_mat_ori_fp(&(p_mid_feature->signal[0]));
     ree_log(LOG_DEBUG, "%s ends", __func__);
 
     conv_fuse_relu_destructor(p_module);

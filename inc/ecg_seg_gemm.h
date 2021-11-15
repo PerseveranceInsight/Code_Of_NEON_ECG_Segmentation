@@ -23,4 +23,8 @@ int32_t ecg_seg_fp_gemm(mat_sig_t *p_conv_weight,
                         sig2col_ctr_t *p_sig_ctr,
                         mat_sig_t *p_out_feature);
 
+int32_t ecg_seg_fp_add_bias(mat_sig_t *p_out_feature,
+                            float bias,
+                            BOOL fused_relu);
+
 #endif
