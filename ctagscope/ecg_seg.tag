@@ -159,7 +159,7 @@ conv_fuse_relu	../inc/ecg_seg_model.h	/^typedef struct conv_fuse_relu$/;"	s
 conv_fuse_relu_c	../inc/ecg_seg_model.h	/^    uint32_t conv_fuse_relu_c;$/;"	m	struct:conv_fuse_relu
 conv_fuse_relu_constructor_fopen	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para, $/;"	f
 conv_fuse_relu_destructor	../src/ecg_seg_model.c	/^void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)$/;"	f
-conv_fuse_relu_forward	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_forward(sig2col_ctr_t *p_col_ctr,$/;"	f
+conv_fuse_relu_forward	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,$/;"	f
 conv_fuse_relu_t	../inc/ecg_seg_model.h	/^} conv_fuse_relu_t;$/;"	t	typeref:struct:conv_fuse_relu
 conv_weight	../inc/ecg_seg_model.h	/^    mat_sig_t conv_weight[4];$/;"	m	struct:conv_fuse_relu
 cur_ele_num	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_ele_num;$/;"	m	struct:sig2col_ctr

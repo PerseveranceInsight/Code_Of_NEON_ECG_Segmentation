@@ -1,4 +1,4 @@
-cscope 15 $HOME/Documents/SelfStudy/Code/Code_Of_Android_ECG_SEG -q 0000000371 0000044864
+cscope 15 $HOME/Documents/SelfStudy/Code/Code_Of_Android_ECG_SEG -q 0000000376 0000046446
 	@inc/ecg_seg_def.h
 
 1 #iâdeà
@@ -341,6 +341,26 @@ m©_sig_t
 p_out_ã©u»
 );
 
+26 
+št32_t
+ 
+ecg_£g_å_add_bŸs
+(
+m©_sig_t
+ *
+p_out_ã©u»
+,
+
+27 
+bŸs
+,
+
+28 
+BOOL
+ 
+fu£d_»lu
+);
+
 	@inc/ecg_seg_graph.h
 
 	@inc/ecg_seg_matrix.h
@@ -673,7 +693,15 @@ m©_sig_t
 p_m©
 );
 
-73 
+73 
+´št_m©_Üi_å
+(
+m©_sig_t
+ *
+p_m©
+);
+
+75 
 št32_t
  
 m©_sig_cÚ¡ruùÜ_å_fİ’
@@ -683,23 +711,23 @@ m©_sig_·¿_t
 p_·¿m
 ,
 
-74 
+76 
 m©_sig_t
  *
 p_m©
 ,
 
-75 *
+77 *
 ·th
 ,
 
-76 
+78 
 BOOL
  
 k”Ãl
 );
 
-78 
+80 
 št32_t
  
 m©_sig_cÚ¡ruùÜ_å
@@ -709,19 +737,19 @@ m©_sig_·¿_t
 p_·¿m
 ,
 
-79 
+81 
 m©_sig_t
  *
 p_m©
 ,
 
-80 
+82 
 BOOL
  
 k”Ãl
 );
 
-82 
+84 
 m©_sig_de¡ruùÜ
 (
 m©_sig_t
@@ -934,36 +962,48 @@ bŸs_·th
  
 cÚv_fu£_»lu_fÜw¬d
 (
+cÚv_fu£_»lu_t
+ *
+p_moduË
+,
+
+47 
 sig2cŞ_ùr_t
  *
 p_cŞ_ùr
 ,
 
-47 
+48 
 sigÇl_cÚš”_t
  *
 p_š_sig_cÚ
 ,
 
-48 
+49 
 sigÇl_cÚš”_t
  *
 p_out_sig_cÚ
 ,
 
-49 
+50 
 ušt32_t
  
 šput_num
 ,
 
-50 
+51 
+ušt32_t
+ 
+š_sig2cŞ_num
+,
+
+52 
 ušt32_t
  
 ouut_num
 );
 
-52 
+54 
 cÚv_fu£_»lu_de¡ruùÜ
 (
 cÚv_fu£_»lu_t
@@ -1480,7 +1520,9 @@ p_weight
  = 
 NULL
 , *
-p_sig
+p_sig1
+ = NULL, *
+p_sig2
  = NULL, *
 p_ã©
  = NULL;
@@ -1732,7 +1774,7 @@ p_cÚv_weight
 ;
 
 53 
-p_sig
+p_sig1
  = 
 p_sig_ùr
 ->
@@ -1740,6 +1782,14 @@ cŞ_buf
 ;
 
 54 
+p_sig2
+ = 
+p_sig1
+ + 
+w_off£t
+;
+
+55 
 p_ã©
  = 
 p_out_ã©u»
@@ -1747,7 +1797,7 @@ p_out_ã©u»
 Üi_buf
 ;
 
-55 
+56 
 ušt32_t
  
 h_¡•_šd
@@ -1755,7 +1805,7 @@ h_¡•_šd
 h_¡•s
 ; h_step_ind++)
 
-57 
+58 
 vec_weight
  = 
 	`vld1_f32
@@ -1763,7 +1813,7 @@ vec_weight
 p_weight
 );
 
-58 
+59 
 p_ã©
  = 
 p_out_ã©u»
@@ -1771,7 +1821,7 @@ p_out_ã©u»
 Üi_buf
 ;
 
-59 
+60 
 ušt32_t
  
 w_¡•_šd
@@ -1779,25 +1829,23 @@ w_¡•_šd
 w_¡•s
 ; w_step_ind++)
 
-61 
+62 
 vec_š_ã©u»1
  = 
 	`vld1q_f32
 (
-p_sig
+p_sig1
 );
 
-62 
+63 
 vec_š_ã©u»2
  = 
 	`vld1q_f32
 (
-p_sig
-+
-w_off£t
+p_sig2
 );
 
-63 
+64 
 vec_out_ã©u»
  = 
 	`vld1q_f32
@@ -1805,7 +1853,7 @@ vec_out_ã©u»
 p_ã©
 );
 
-64 
+65 
 vec_out_ã©u»
  = 
 	`vmÏq_ÏÃ_f32
@@ -1815,7 +1863,7 @@ vec_š_ã©u»1
 vec_weight
 , 0);
 
-65 
+66 
 vec_out_ã©u»
  = 
 	`vmÏq_ÏÃ_f32
@@ -1825,7 +1873,7 @@ vec_š_ã©u»2
 vec_weight
 , 1);
 
-66 
+67 
 	`v¡1q_f32
 (
 p_ã©
@@ -1833,43 +1881,163 @@ p_ã©
 vec_out_ã©u»
 );
 
-67 
-p_sig
+68 
+p_sig1
  +ğ
 FP_PACK_SIZE_W
 ;
 
-68 
-p_ã©
+69 
+p_sig2
  +ğ
 FP_PACK_SIZE_W
 ;
 
 70 
+p_ã©
+ +ğ
+FP_PACK_SIZE_W
+;
+
+72 
 p_weight
  +ğ
 FP_PACK_SIZE_H
 ;
 
-71 
-p_sig
+73 
+p_sig1
  +ğ
 w_off£t
 ;
 
-73 
+74 
+p_sig2
+ +ğ
+w_off£t
+;
+
+77 
+p_sig1
+ = 
+p_sig_ùr
+->
+cŞ_buf
+;
+
+78 
+p_weight
+ = 
+p_cÚv_weight
+->
+Üi_buf
+;
+
+79 
+p_sig1
+ +ğ
+h_¡•s
+*
+FP_PACK_SIZE_H
+*
+w_off£t
+;
+
+80 
+p_weight
+ +ğ
+h_¡•s
+*
+FP_PACK_SIZE_H
+;
+
+81 
+p_ã©
+ = 
+p_out_ã©u»
+->
+Üi_buf
+;
+
+82 
+vec_weight
+ = 
+	`vld1_f32
+(
+p_weight
+);
+
+84 ià(
+»maš_h_num
+!=0)
+
+86 
+ušt32_t
+ 
+w_¡•_šd
+ = 0; w_¡•_šd<
+w_¡•s
+; w_step_ind++)
+
+88 
+vec_š_ã©u»1
+ = 
+	`vld1q_f32
+(
+p_sig1
+);
+
+89 
+vec_out_ã©u»
+ = 
+	`vld1q_f32
+(
+p_ã©
+);
+
+90 
+vec_out_ã©u»
+ = 
+	`vmÏq_ÏÃ_f32
+(vec_out_ã©u», 
+vec_š_ã©u»1
+, 
+vec_weight
+, 0);
+
+91 
+	`v¡1q_f32
+(
+p_ã©
+, 
+vec_out_ã©u»
+);
+
+92 
+p_sig1
+ +ğ
+FP_PACK_SIZE_W
+;
+
+93 
+p_ã©
+ +ğ
+FP_PACK_SIZE_W
+;
+
+97 
 EXIT_ECG_SEG_FP_GEMM
 :
 
-74 
+98 
 GEMM_FUNC_EXIT
 ;
 
-75  
+99  
 »tv®
 ;
 
-76 
+100 
 	}
 }
 
@@ -2233,7 +2401,7 @@ __func__
 »tv®
 );
 
-66 
+65 
 	`ecg_£g_å_gemm
 (&(
 p_moduË
@@ -2241,17 +2409,25 @@ p_moduË
 cÚv_weight
 [0]),
 
-67 
+66 
 p_sig2cŞ_ùr
 ,
 
-68 &(
+67 &(
 p_mid_ã©u»
 ->
 sigÇl
 [0]));
 
-70 
+68 
+	`´št_m©_Üi_å
+(&(
+p_mid_ã©u»
+->
+sigÇl
+[0]));
+
+69 
 	`»e_log
 (
 LOG_DEBUG
@@ -2259,67 +2435,67 @@ LOG_DEBUG
 __func__
 );
 
-72 
+71 
 	`cÚv_fu£_»lu_de¡ruùÜ
 (
 p_moduË
 );
 
-73 
+72 
 	`sigÇl_cÚš”_de¡ruùÜ
 (
 p_šput_sig
 );
 
-74 
+73 
 	`sigÇl_cÚš”_de¡ruùÜ
 (
 p_mid_ã©u»
 );
 
-75 
+74 
 	`sig2cŞ_ùr_de¡ruùÜ
 (
 p_sig2cŞ_ùr
 );
 
-76 
+75 
 	`»e_ä“
 (
 p_moduË
 );
 
-77 
+76 
 	`»e_ä“
 (
 p_šput_sig
 );
 
-78 
+77 
 	`»e_ä“
 (
 p_mid_ã©u»
 );
 
-79 
+78 
 	`»e_ä“
 (
 p_sig2cŞ_ùr
 );
 
-80 
+79 
 	`»e_ä“
 (
 šput_sig_·th
 [0]);
 
-81 
+80 
 	`»e_ä“
 (
 šput_sig_·th
 );
 
-83 
+82 
 	}
 }
 
@@ -3568,10 +3744,14 @@ MATRIX_FUNC_EXIT
 "
 
 9 
+	~"ecg_£g_sig2cŞ.h
+"
+
+10 
 	~"ecg_»¥Ú£_def.h
 "
 
-11 
+12 
 	$´štf_cÚv_fu£_bŸs
 (
 cÚv_fu£_»lu_t
@@ -3579,11 +3759,11 @@ cÚv_fu£_»lu_t
 p_İ
 )
 
-13 
+14 
 MODEL_FUNC_ENTRANCE
 ;
 
-14 
+15 
 	`»e_check_nuÎ_ex™
 (
 p_İ
@@ -3593,49 +3773,49 @@ EXIT_PRINTF_CONV_FUSE_BIAS
 __func__
 );
 
-15 
+16 
 	`MODEL_PRINTF
 ("% %03.4à%03.4à%03.4à%03.4f\n", 
 __func__
 ,
 
-16 
+17 
 p_İ
 ->
 cÚv_bŸs
 [0],
 
-17 
+18 
 p_İ
 ->
 cÚv_bŸs
 [1],
 
-18 
+19 
 p_İ
 ->
 cÚv_bŸs
 [2],
 
-19 
+20 
 p_İ
 ->
 cÚv_bŸs
 [3]);
 
-20 
+21 
 EXIT_PRINTF_CONV_FUSE_BIAS
 :
 
-21 
+22 
 MODEL_FUNC_EXIT
 ;
 
-22 
+23 
 	}
 }
 
-24 
+25 
 št32_t
  
 	$cÚv_fu£_bŸs_fİ’
@@ -3643,15 +3823,15 @@ MODEL_FUNC_EXIT
 bŸs_·th
 ,
 
-25 *
+26 *
 cÚv_bŸs_buf
 )
 
-27 
+28 
 MODEL_FUNC_ENTRANCE
 ;
 
-28 
+29 
 št32_t
  
 »tv®
@@ -3659,7 +3839,7 @@ MODEL_FUNC_ENTRANCE
 ECG_SEG_OK
 ;
 
-29 
+30 
 size_t
  
 fe_size
@@ -3667,7 +3847,7 @@ fe_size
 »ad_size
  = 0;
 
-30 
+31 
 FILE
  *
 bŸs_fe
@@ -3675,7 +3855,7 @@ bŸs_fe
 NULL
 ;
 
-31 
+32 
 	`»e_check_nuÎ_ex™_»tv®
 (
 bŸs_·th
@@ -3687,11 +3867,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_BIAS_FOPEN
 ,
 
-32 "% occur ”rÜ dutØbŸs_·th i NULL", 
+33 "% occur ”rÜ dutØbŸs_·th i NULL", 
 __func__
 );
 
-33 
+34 
 	`»e_check_nuÎ_ex™_»tv®
 (
 cÚv_bŸs_buf
@@ -3703,11 +3883,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_BIAS_FOPEN
 ,
 
-34 "% occur ”rÛ dutØcÚv_bŸs_buài NULL", 
+35 "% occur ”rÛ dutØcÚv_bŸs_buài NULL", 
 __func__
 );
 
-35 
+36 
 	`»e_check_fİ’
 (
 bŸs_fe
@@ -3717,7 +3897,7 @@ bŸs_·th
 EXIT_CONV_FUSE_BIAS_FOPEN
 );
 
-36 
+37 
 	`»e_fe_size
 (
 fe_size
@@ -3725,7 +3905,7 @@ fe_size
 bŸs_fe
 );
 
-37 
+38 
 	`»e_log
 (
 MODEL_LOG
@@ -3735,7 +3915,7 @@ __func__
 fe_size
 );
 
-38 
+39 
 	`»e_check_fİ’
 (
 bŸs_fe
@@ -3745,7 +3925,7 @@ bŸs_·th
 EXIT_CONV_FUSE_BIAS_FOPEN
 );
 
-39 
+40 
 	`»e_fe_»ad
 (
 bŸs_fe
@@ -3757,23 +3937,23 @@ fe_size
 »ad_size
 );
 
-40 
+41 
 EXIT_CONV_FUSE_BIAS_FOPEN
 :
 
-41 
+42 
 MODEL_FUNC_EXIT
 ;
 
-42  
+43  
 »tv®
 ;
 
-43 
+44 
 	}
 }
 
-45 
+46 
 št32_t
  
 	$cÚv_fu£_»lu_cÚ¡ruùÜ_fİ’
@@ -3783,37 +3963,37 @@ m©_sig_·¿_t
 p_·¿
 ,
 
-46 
+47 
 cÚv_fu£_»lu_t
  **
 µ_moduË
 ,
 
-47 *
+48 *
 weight_·th0
 ,
 
-48 *
+49 *
 weight_·th1
 ,
 
-49 *
+50 *
 weight_·th2
 ,
 
-50 *
+51 *
 weight_·th3
 ,
 
-51 *
+52 *
 bŸs_·th
 )
 
-53 
+54 
 MODEL_FUNC_ENTRANCE
 ;
 
-54 
+55 
 št32_t
  
 »tv®
@@ -3821,7 +4001,7 @@ MODEL_FUNC_ENTRANCE
 ECG_SEG_OK
 ;
 
-55 
+56 
 	`»e_check_nuÎ_ex™_»tv®
 (
 p_·¿
@@ -3833,11 +4013,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 ,
 
-56 "% occur ”rÜ dutØp_·¿ i NULL", 
+57 "% occur ”rÜ dutØp_·¿ i NULL", 
 __func__
 );
 
-57 
+58 
 	`»e_check_nuÎ_ex™_»tv®
 (
 µ_moduË
@@ -3849,11 +4029,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 ,
 
-58 "% occur ”rÜ dutØµ_moduË i NULL", 
+59 "% occur ”rÜ dutØµ_moduË i NULL", 
 __func__
 );
 
-59 
+60 
 	`»e_check_nuÎ_ex™_»tv®
 (
 weight_·th0
@@ -3865,11 +4045,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 ,
 
-60 "% occur ”rÜ dutØweight_·th0 i NULL", 
+61 "% occur ”rÜ dutØweight_·th0 i NULL", 
 __func__
 );
 
-61 
+62 
 	`»e_check_nuÎ_ex™_»tv®
 (
 weight_·th1
@@ -3881,11 +4061,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 ,
 
-62 "% occur ”rÜ dutØweight_·th1 i NULL", 
+63 "% occur ”rÜ dutØweight_·th1 i NULL", 
 __func__
 );
 
-63 
+64 
 	`»e_check_nuÎ_ex™_»tv®
 (
 weight_·th2
@@ -3897,11 +4077,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 ,
 
-64 "% occur ”rÜ dutØweight_·th2 i NULL", 
+65 "% occur ”rÜ dutØweight_·th2 i NULL", 
 __func__
 );
 
-65 
+66 
 	`»e_check_nuÎ_ex™_»tv®
 (
 weight_·th3
@@ -3913,11 +4093,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 ,
 
-66 "% occur ”rÜ dutØweight_·th3 i NULL", 
+67 "% occur ”rÜ dutØweight_·th3 i NULL", 
 __func__
 );
 
-67 
+68 
 	`»e_check_nuÎ_ex™_»tv®
 (
 bŸs_·th
@@ -3929,11 +4109,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 ,
 
-68 "% occur ”rÜ dutØbŸs_·th i NULL", 
+69 "% occur ”rÜ dutØbŸs_·th i NULL", 
 __func__
 );
 
-69 *
+70 *
 µ_moduË
  = 
 	`»e_m®loc
@@ -3941,7 +4121,7 @@ __func__
 cÚv_fu£_»lu_t
 ));
 
-70 
+71 
 	`»e_£t
 (*
 µ_moduË
@@ -3949,7 +4129,7 @@ cÚv_fu£_»lu_t
 cÚv_fu£_»lu_t
 ));
 
-71 
+72 
 »tv®
  |ğ
 	`m©_sig_cÚ¡ruùÜ_å_fİ’
@@ -3957,21 +4137,21 @@ cÚv_fu£_»lu_t
 p_·¿
 ,
 
-72 &(*
+73 &(*
 µ_moduË
 )->
 cÚv_weight
 [0],
 
-73 
+74 
 weight_·th0
 ,
 
-74 
+75 
 TRUE
 );
 
-75 
+76 
 	`»e_check_Œue_ex™
 ((
 »tv®
@@ -3983,7 +4163,7 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 __func__
 );
 
-76 
+77 
 »tv®
  |ğ
 	`m©_sig_cÚ¡ruùÜ_å_fİ’
@@ -3991,21 +4171,21 @@ __func__
 p_·¿
 ,
 
-77 &(*
+78 &(*
 µ_moduË
 )->
 cÚv_weight
 [1],
 
-78 
+79 
 weight_·th1
 ,
 
-79 
+80 
 TRUE
 );
 
-80 
+81 
 	`»e_check_Œue_ex™
 ((
 »tv®
@@ -4017,7 +4197,7 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 __func__
 );
 
-81 
+82 
 »tv®
  |ğ
 	`m©_sig_cÚ¡ruùÜ_å_fİ’
@@ -4025,21 +4205,21 @@ __func__
 p_·¿
 ,
 
-82 &(*
+83 &(*
 µ_moduË
 )->
 cÚv_weight
 [2],
 
-83 
+84 
 weight_·th2
 ,
 
-84 
+85 
 TRUE
 );
 
-85 
+86 
 	`»e_check_Œue_ex™
 ((
 »tv®
@@ -4051,7 +4231,7 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 __func__
 );
 
-86 
+87 
 »tv®
  |ğ
 	`m©_sig_cÚ¡ruùÜ_å_fİ’
@@ -4059,21 +4239,21 @@ __func__
 p_·¿
 ,
 
-87 &(*
+88 &(*
 µ_moduË
 )->
 cÚv_weight
 [3],
 
-88 
+89 
 weight_·th3
 ,
 
-89 
+90 
 TRUE
 );
 
-90 
+91 
 	`»e_check_Œue_ex™
 ((
 »tv®
@@ -4085,79 +4265,91 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 __func__
 );
 
-91 
+92 
 	`cÚv_fu£_bŸs_fİ’
 (
 bŸs_·th
 ,
 
-92 (*
+93 (*
 µ_moduË
 )->
 cÚv_bŸs
 );
 
-93 
+94 
 	`´štf_cÚv_fu£_bŸs
 ((*
 µ_moduË
 ));
 
-94 
+95 
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR
 :
 
-95 
+96 
 MODEL_FUNC_EXIT
 ;
 
-96  
+97  
 »tv®
 ;
 
-97 
+98 
 	}
 }
 
-99 
+100 
 št32_t
  
 	$cÚv_fu£_»lu_fÜw¬d
 (
+cÚv_fu£_»lu_t
+ *
+p_moduË
+,
+
+101 
 sig2cŞ_ùr_t
  *
 p_cŞ_ùr
 ,
 
-100 
+102 
 sigÇl_cÚš”_t
  *
 p_š_sig_cÚ
 ,
 
-101 
+103 
 sigÇl_cÚš”_t
  *
 p_out_sig_cÚ
 ,
 
-102 
+104 
 ušt32_t
  
 šput_num
 ,
 
-103 
+105 
+ušt32_t
+ 
+š_sig2cŞ_num
+,
+
+106 
 ušt32_t
  
 ouut_num
 )
 
-105 
+108 
 MODEL_FUNC_ENTRANCE
 ;
 
-106 
+109 
 št32_t
  
 »tv®
@@ -4165,7 +4357,23 @@ MODEL_FUNC_ENTRANCE
 ECG_SEG_OK
 ;
 
-107 
+110 
+	`»e_check_nuÎ_ex™_»tv®
+(
+p_moduË
+, 
+»tv®
+, 
+ECG_SEG_INVALID_PARAM
+, 
+EXIT_CONV_FUSE_RELU_FORWARD
+,
+
+111 "% occur ”rÜ dutØp_moduË i NULL", 
+__func__
+);
+
+112 
 	`»e_check_nuÎ_ex™_»tv®
 (
 p_cŞ_ùr
@@ -4177,11 +4385,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_FORWARD
 ,
 
-108 "% occur ”rÜ dutØp_cŞ_ù¸i NULL", 
+113 "% occur ”rÜ dutØp_cŞ_ù¸i NULL", 
 __func__
 );
 
-109 
+114 
 	`»e_check_nuÎ_ex™_»tv®
 (
 p_š_sig_cÚ
@@ -4193,11 +4401,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_FORWARD
 ,
 
-110 "% occur ”rÜ dutØp_š_sig_cÚ i NULL", 
+115 "% occur ”rÜ dutØp_š_sig_cÚ i NULL", 
 __func__
 );
 
-111 
+116 
 	`»e_check_nuÎ_ex™_»tv®
 (
 p_out_sig_cÚ
@@ -4209,11 +4417,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_FORWARD
 ,
 
-112 "% occur ”rÜ dutØp_out_sig_cÚ i NULL", 
+117 "% occur ”rÜ dutØp_out_sig_cÚ i NULL", 
 __func__
 );
 
-113 
+118 
 	`»e_check_Œue_ex™_»tv®
 ((
 šput_num
@@ -4225,11 +4433,11 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_FORWARD
 ,
 
-114 "% dœeùly„‘uº dutØšput_num =ğ0", 
+119 "% dœeùly„‘uº dutØšput_num =ğ0", 
 __func__
 );
 
-115 
+120 
 	`»e_check_Œue_ex™_»tv®
 ((
 ouut_num
@@ -4241,27 +4449,61 @@ ECG_SEG_INVALID_PARAM
 EXIT_CONV_FUSE_RELU_FORWARD
 ,
 
-116 "% dœeùly„‘uº dutØouut_num =ğ0", 
+121 "% dœeùly„‘uº dutØouut_num =ğ0", 
 __func__
 );
 
-117 
+122 
+	`»e_check_Œue_ex™_»tv®
+((
+ouut_num
+ !ğ4), 
+»tv®
+, 
+ECG_SEG_INVALID_PARAM
+, 
+EXIT_CONV_FUSE_RELU_FORWARD
+,
+
+123 "% occur ”rÜ dutØouut_num !ğ4", 
+__func__
+);
+
+124 
+	`»e_check_Œue_ex™_»tv®
+((
+š_sig2cŞ_num
+ !ğ
+šput_num
+), 
+»tv®
+, 
+ECG_SEG_INVALID_PARAM
+, 
+EXIT_CONV_FUSE_RELU_FORWARD
+,
+
+125 "% occur ”rÜ dutØš_sig2cŞ_num !ğšput_num", 
+__func__
+);
+
+134 
 EXIT_CONV_FUSE_RELU_FORWARD
 :
 
-118 
+135 
 MODEL_FUNC_EXIT
 ;
 
-119  
+136  
 »tv®
 ;
 
-120 
+137 
 	}
 }
 
-122 
+139 
 	$cÚv_fu£_»lu_de¡ruùÜ
 (
 cÚv_fu£_»lu_t
@@ -4269,11 +4511,11 @@ cÚv_fu£_»lu_t
 p_moduË
 )
 
-124 
+141 
 MODEL_FUNC_ENTRANCE
 ;
 
-125 
+142 
 	`»e_check_nuÎ_ex™
 (
 p_moduË
@@ -4283,13 +4525,13 @@ EXIT_CONV_FUSE_RELU_DESTRUCTOR
 __func__
 );
 
-126 
+143 
 ušt32_t
  
 i
  = 0; i<4; i++)
 
-128 
+145 
 	`m©_sig_de¡ruùÜ
 (&
 p_moduË
@@ -4299,15 +4541,15 @@ cÚv_weight
 i
 ]);
 
-130 
+147 
 EXIT_CONV_FUSE_RELU_DESTRUCTOR
 :
 
-131 
+148 
 MODEL_FUNC_EXIT
 ;
 
-132 
+149 
 	}
 }
 

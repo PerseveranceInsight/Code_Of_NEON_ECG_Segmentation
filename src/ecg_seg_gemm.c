@@ -98,3 +98,42 @@ EXIT_ECG_SEG_FP_GEMM:
     GEMM_FUNC_EXIT;
     return retval;
 }
+
+int32_t ecg_seg_fp_add_bias(mat_sig_t *p_out_feature,
+                            float bias,
+                            BOOL fused_relu)
+{
+    GEMM_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    uint32_t w_steps = 0, remain_w_num = 0;
+    float *p_feat = NULL;
+    float32x4_t vec_bias, vec_out_feature;
+    ree_check_null_exit_retval(p_out_feature, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_FP_ADD_BIAS,
+                               "%s occurs error due to p_out_feature is NULL", __func__);
+    ree_check_null_exit_retval(p_out_feature->ori_buf, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_FP_ADD_BIAS,
+                               "%s occurs error due to p_out_feature->ori_buf is NULL", __func__);
+    ree_log(GEMM_LOG, "%s bias %03.3f", __func__, bias);
+    w_steps = p_out_feature->out_l / FP_PACK_SIZE_W;
+    remain_w_num = p_out_feature->out_l - w_steps*FP_PACK_SIZE_W;
+    ree_log(GEMM_LOG, "%s w_steps %d, remian_w_num %d", __func__, w_steps, remain_w_num);
+    p_feat = p_out_feature->ori_buf;
+    if (bias != 0.0f)
+    {
+        vec_bias = vdupq_n_f32(bias);
+        for (uint32_t w_ind = 0; w_ind<w_steps; w_ind++)
+        {
+            vec_out_feature = vld1q_f32(p_feat);
+            vec_out_feature = vaddq_f32(vec_out_feature, vec_bias);
+            vst1q_f32(p_feat, vec_out_feature);
+            p_feat += FP_PACK_SIZE_W;
+        }
+        for (uint32_t w_ind = 0; w_ind<remain_w_num; w_ind++)
+        {
+            *(p_feat) += bias;
+            p_feat++; 
+        }
+    }
+EXIT_ECG_SEG_FP_ADD_BIAS:
+    GEMM_FUNC_EXIT;
+    return retval;
+}

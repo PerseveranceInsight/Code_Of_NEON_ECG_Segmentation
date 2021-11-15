@@ -6,6 +6,7 @@
 #include "arm_typedef.h"
 #include "ecg_seg_matrix.h"
 #include "ecg_seg_model.h"
+#include "ecg_seg_sig2col.h"
 #include "ecg_response_def.h"
 
 static void printf_conv_fuse_bias(conv_fuse_relu_t *p_op)
@@ -96,14 +97,18 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR:
     return retval;
 }
 
-int32_t conv_fuse_relu_forward(sig2col_ctr_t *p_col_ctr,
+int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
+                               sig2col_ctr_t *p_col_ctr,
                                signal_container_t *p_in_sig_con,
                                signal_container_t *p_out_sig_con,
                                uint32_t input_num,
+                               uint32_t in_sig2col_num,
                                uint32_t output_num)
 {
     MODEL_FUNC_ENTRANCE;
     int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_module, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
+                               "%s occurs error due to p_module is NULL", __func__);
     ree_check_null_exit_retval(p_col_ctr, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
                                "%s occurs error due to p_col_ctr is NULL", __func__);
     ree_check_null_exit_retval(p_in_sig_con, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
@@ -114,6 +119,18 @@ int32_t conv_fuse_relu_forward(sig2col_ctr_t *p_col_ctr,
                                "%s directly return due to input_num == 0", __func__);
     ree_check_true_exit_retval((output_num == 0), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
                                "%s directly return due to output_num == 0", __func__);
+    ree_check_true_exit_retval((output_num != 4), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
+                               "%s occurs error due to output_num != 4", __func__);
+    ree_check_true_exit_retval((in_sig2col_num != input_num), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
+                               "%s occurs error due to in_sig2col_num != input_num", __func__);
+
+
+    // for (uint32_t out_ind = 0; out_ind<output_num; out_ind++)
+    // {
+    //     for (uint32_t in_ind = 0; in_ind<input_num; in_ind++)
+    //     {
+    //     }
+    // }
 EXIT_CONV_FUSE_RELU_FORWARD:
     MODEL_FUNC_EXIT;
     return retval;
