@@ -19,6 +19,8 @@
 #define GEMM_LOG                                                        LOG_VERBOSE
 #endif
 
+#define FLOAT_POINT_EXP_MAN_BIT                                         (31)
+
 int32_t ecg_seg_fp_gemm(mat_sig_t *p_conv_weight,
                         sig2col_ctr_t *p_sig_ctr,
                         mat_sig_t *p_out_feature);

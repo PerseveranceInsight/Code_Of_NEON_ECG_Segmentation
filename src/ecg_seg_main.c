@@ -62,6 +62,8 @@ int main(int argc, char* argv[])
     ree_log(LOG_DEBUG, "%s retval of sig2col_ctr_fp_constructor %d", __func__, retval);
     retval = sig2col_mat_fp(p_sig2col_ctr, p_input_sig->signal);
     ree_log(LOG_DEBUG, "%s retval of sig2col_mat_fp %d", __func__, retval);
+   
+    ree_log(LOG_DEBUG, "%s conv1_1 starts", __func__);
     retval |= ecg_seg_fp_gemm(&(p_module->conv_weight[0]),
                               p_sig2col_ctr,
                               &(p_mid_feature->signal[0]));
@@ -69,6 +71,38 @@ int main(int argc, char* argv[])
                                   p_module->conv_bias[0],
                                   TRUE);
     print_mat_ori_fp(&(p_mid_feature->signal[0]));
+    ree_log(LOG_DEBUG, "%s conv1_1 ends", __func__);
+
+    ree_log(LOG_DEBUG, "%s conv1_2 starts", __func__);
+    retval |= ecg_seg_fp_gemm(&(p_module->conv_weight[1]),
+                              p_sig2col_ctr,
+                              &(p_mid_feature->signal[1]));
+    retval |= ecg_seg_fp_add_bias(&(p_mid_feature->signal[1]),
+                                  p_module->conv_bias[1],
+                                  TRUE);
+    print_mat_ori_fp(&(p_mid_feature->signal[1]));
+    ree_log(LOG_DEBUG, "%s conv1_2 ends", __func__);
+
+    ree_log(LOG_DEBUG, "%s conv1_3 starts", __func__);
+    retval |= ecg_seg_fp_gemm(&(p_module->conv_weight[2]),
+                              p_sig2col_ctr,
+                              &(p_mid_feature->signal[2]));
+    retval |= ecg_seg_fp_add_bias(&(p_mid_feature->signal[2]),
+                                  p_module->conv_bias[2],
+                                  TRUE);
+    print_mat_ori_fp(&(p_mid_feature->signal[2]));
+    ree_log(LOG_DEBUG, "%s conv1_3 ends", __func__);
+
+    ree_log(LOG_DEBUG, "%s conv1_4 starts", __func__);
+    retval |= ecg_seg_fp_gemm(&(p_module->conv_weight[3]),
+                              p_sig2col_ctr,
+                              &(p_mid_feature->signal[3]));
+    retval |= ecg_seg_fp_add_bias(&(p_mid_feature->signal[3]),
+                                  p_module->conv_bias[3],
+                                  TRUE);
+    print_mat_ori_fp(&(p_mid_feature->signal[3]));
+    ree_log(LOG_DEBUG, "%s conv1_4 ends", __func__);
+    
     ree_log(LOG_DEBUG, "%s ends", __func__);
 
     conv_fuse_relu_destructor(p_module);

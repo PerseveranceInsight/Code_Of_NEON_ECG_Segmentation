@@ -135,7 +135,8 @@ int32_t ecg_seg_fp_add_bias(mat_sig_t *p_out_feature,
         }
     }
 
-    w_steps += 1;
+    w_steps++; // for all elements of output feature
+    ree_log(GEMM_LOG, "%s w_steps %d for relu", __func__, w_steps);
     p_feat = p_out_feature->ori_buf;
     if (fused_relu)
     {
@@ -145,7 +146,7 @@ int32_t ecg_seg_fp_add_bias(mat_sig_t *p_out_feature,
             vec_tmp = vld1q_f32(p_feat);
             vec_out_feature_s32 = vreinterpretq_s32_f32(vec_out_feature);
             vec_tmp_s32 = vreinterpretq_s32_f32(vec_tmp);
-            vec_tmp_s32 = vshrq_n_s32(vec_tmp_s32, 31); 
+            vec_tmp_s32 = vshrq_n_s32(vec_tmp_s32, FLOAT_POINT_EXP_MAN_BIT); 
             vec_tmp_s32 = vmvnq_s32(vec_tmp_s32);
             vec_out_feature_s32 = vandq_s32(vec_out_feature_s32, vec_tmp_s32); 
             vec_out_feature = vreinterpretq_f32_s32(vec_out_feature_s32);
