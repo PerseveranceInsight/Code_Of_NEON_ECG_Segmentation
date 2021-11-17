@@ -35,6 +35,14 @@ typedef struct conv_fuse_relu
     float conv_bias[4];
 } conv_fuse_relu_t;
 
+typedef struct conv_fuse_relu2
+{
+    uint32_t conv_fuse_relu_c;
+    mat_sig_para_t weight_para;
+    mat_sig_t *conv_weight;
+    float *conv_bias;
+} conv_fuse_relu_t_2;
+
 int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para, 
                                          conv_fuse_relu_t **pp_module,
                                          char *weight_path0, 
