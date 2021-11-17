@@ -48,7 +48,6 @@ int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
                                signal_container_t *p_in_sig_con,
                                signal_container_t *p_out_sig_con,
                                uint32_t input_num,
-                               uint32_t in_sig2col_num,
                                uint32_t output_num);
 
 void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module);

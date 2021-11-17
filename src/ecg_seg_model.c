@@ -4,6 +4,7 @@
 
 #include "arm_util.h"
 #include "arm_typedef.h"
+#include "ecg_seg_gemm.h"
 #include "ecg_seg_matrix.h"
 #include "ecg_seg_model.h"
 #include "ecg_seg_sig2col.h"
@@ -102,7 +103,6 @@ int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
                                signal_container_t *p_in_sig_con,
                                signal_container_t *p_out_sig_con,
                                uint32_t input_num,
-                               uint32_t in_sig2col_num,
                                uint32_t output_num)
 {
     MODEL_FUNC_ENTRANCE;
@@ -119,18 +119,39 @@ int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
                                "%s directly return due to input_num == 0", __func__);
     ree_check_true_exit_retval((output_num == 0), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
                                "%s directly return due to output_num == 0", __func__);
-    ree_check_true_exit_retval((output_num != 4), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
-                               "%s occurs error due to output_num != 4", __func__);
-    ree_check_true_exit_retval((in_sig2col_num != input_num), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
-                               "%s occurs error due to in_sig2col_num != input_num", __func__);
+    ree_log(MODEL_LOG, "%s input_num %d output_num %d", __func__, input_num, output_num);
 
+    for (uint32_t in_ind = 0; in_ind<input_num; in_ind++)
+    {
+        ree_check_null_exit_retval((&(p_in_sig_con->signal[in_ind])), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
+                                   "%s occurs error due to p_in_sig_con->signal[in_ind] is NULL", __func__);
+        retval = sig2col_mat_fp(p_col_ctr, &(p_in_sig_con->signal[in_ind]));
+        ree_check_true_exit((retval != ECG_SEG_OK), EXIT_CONV_FUSE_RELU_FORWARD,
+                             "%s occurs error due to sig2col_mat_fp of in_ind %d failed", __func__, in_ind);
+        for (uint32_t out_ind = 0; out_ind<output_num; out_ind++)
+        {
+            ree_check_null_exit_retval(&(p_out_sig_con->signal[out_ind]), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
+                                       "%s occurs error due to p_out_sig_con->signal[out_ind] is NULL out_ind %d", __func__, out_ind);
+            retval = ecg_seg_fp_gemm(&(p_module->conv_weight[out_ind]),
+                                     p_col_ctr,
+                                     &(p_out_sig_con->signal[out_ind]));
+            ree_check_true_exit((retval != ECG_SEG_OK), EXIT_CONV_FUSE_RELU_FORWARD,
+                                 "%s occurs error due to ecg_seg_fp_gemm of in_ind %d out_ind %d failed", __func__, in_ind, out_ind);
+        }
+    }
 
-    // for (uint32_t out_ind = 0; out_ind<output_num; out_ind++)
-    // {
-    //     for (uint32_t in_ind = 0; in_ind<input_num; in_ind++)
-    //     {
-    //     }
-    // }
+    for (uint32_t out_ind = 0; out_ind<output_num; out_ind++)
+    {
+        ree_check_null_exit_retval(&(p_out_sig_con->signal[out_ind]), retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_FORWARD,
+                                   "%s occurs error due to p_out_sig_con->signal[out_ind] is NULL out_ind %d", __func__, out_ind);
+        retval = ecg_seg_fp_add_bias((&p_out_sig_con->signal[out_ind]),
+                                     p_module->conv_bias[out_ind],
+                                     TRUE);
+        print_mat_ori_fp(&(p_out_sig_con->signal[out_ind]));
+        ree_check_true_exit((retval != ECG_SEG_OK), EXIT_CONV_FUSE_RELU_FORWARD,
+                                         "%s occurs error due to ecg_seg_fp_add_bias of out_ind %d failed", __func__, out_ind);
+    }
+
 EXIT_CONV_FUSE_RELU_FORWARD:
     MODEL_FUNC_EXIT;
     return retval;
