@@ -9,6 +9,7 @@
 #include "ecg_seg_model.h"
 #include "ecg_seg_sig2col.h"
 #include "ecg_seg_signal.h"
+#include "ecg_seg_weight.h"
 #include "ecg_response_def.h"
 #include "ecg_seg_util.h"
 
@@ -65,7 +66,15 @@ int main(int argc, char* argv[])
                                     p_input_sig,
                                     p_mid_feature,
                                     ECG_SIGNAL_ORI_C, ECG_SIGNAL_MID1_ORI_C);
-    
+
+    mat_sig_t test_sig = {0};
+    ree_log(LOG_DEBUG, "%s %p", __func__, &unet_encoder1_conv1d_block_1_conv_weight0);
+    retval = mat_sig_constructor_fp_static(&weight_para,
+                                           &test_sig,
+                                           (void**)&unet_encoder1_conv1d_block_1_conv_weight0,
+                                           TRUE);
+
+    print_mat_ori_fp(&test_sig); 
     ree_log(LOG_DEBUG, "%s ends", __func__);
 
     conv_fuse_relu_destructor(p_module);

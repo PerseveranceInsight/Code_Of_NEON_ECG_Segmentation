@@ -98,6 +98,28 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR:
     return retval;
 }
 
+int32_t conv_fuse_relu_constructor_static(mat_sig_para_t *p_para,
+                                          conv_fuse_relu_t **pp_module,
+                                          void **pp_weight_buf,
+                                          void **pp_bias_buf)
+{
+    MODEL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_para, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
+                               "%s occurs error due to p_para is NULL", __func__);
+    ree_check_null_exit_retval(pp_module, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
+                               "%s occurs error due to pp_module is NULL", __func__);
+    ree_check_null_exit_retval(pp_weight_buf, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
+                               "%s occurs error due to pp_weight is NULL", __func__);
+    ree_check_null_exit_retval(pp_bias_buf, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
+                               "%s occurs error due to  pp_bias_buf is NULL", __func__);
+    *pp_module = ree_malloc(sizeof(conv_fuse_relu_t));
+    ree_set(*pp_module, 0, sizeof(conv_fuse_relu_t));
+EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC:
+    MODEL_FUNC_EXIT;
+    return retval;
+}
+
 int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
                                sig2col_ctr_t *p_col_ctr,
                                signal_container_t *p_in_sig_con,
@@ -168,3 +190,4 @@ void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)
 EXIT_CONV_FUSE_RELU_DESTRUCTOR:
     MODEL_FUNC_EXIT;
 }
+

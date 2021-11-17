@@ -184,6 +184,57 @@ EXIT_MAT_SIG_CONSTRUCTOR_FP:
     return retval;
 }
 
+int32_t mat_sig_constructor_fp_static(mat_sig_para_t *p_param,
+                                      mat_sig_t *p_mat,
+                                      void **pp_mat_buf,
+                                      BOOL kernel)
+{
+    MATRIX_FUNC_ENTRANCE;
+    uint32_t ele_num = 0;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_param, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_CONSTRUCTOR_FP_STATIC,
+                               "%s occurs error due to p_param is NULL", __func__);
+    ree_check_null_exit_retval(p_mat, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_CONSTRUCTOR_FP_STATIC,
+                               "%s occurs error due to p_mat is NULL", __func__);
+    print_mat_sig_para(p_param);
+
+    if (kernel)
+    {
+        p_mat->ori_l = p_param->ori_l;
+        p_mat->out_l = p_param->ori_l;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE_W;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE_W)!=0)?1:0;
+        p_mat->pack_h = 1;
+    } else
+    {
+        p_mat->ori_l = p_param->ori_l;
+        p_mat->out_l = (p_param->ori_l+2*p_param->padding-p_param->k_l)/p_param->stride+1;
+        p_mat->col_h = p_param->k_l;
+        p_mat->col_w = p_mat->out_l;
+        p_mat->pack_w_step = p_mat->out_l / FP_PACK_SIZE_W;
+        p_mat->pack_w_step += ((p_mat->out_l % FP_PACK_SIZE_W)!=0)?1:0;
+        p_mat->pack_h = p_mat->col_h;
+    }
+    p_mat->pack_w = p_mat->pack_w_step * FP_PACK_SIZE_W;
+    p_mat->pack_ele = p_mat->pack_h * p_mat->pack_w;
+    p_mat->padding = p_param->padding;
+    p_mat->stride = p_param->stride;
+    print_mat_para(p_mat);
+    if (kernel)
+    {
+        ele_num = p_mat->pack_ele;
+    } else {
+        ele_num = p_mat->ori_l/FP_PACK_SIZE_W;
+        ele_num += ((p_mat->ori_l%FP_PACK_SIZE_W)!=0)?1:0;
+        ele_num *= FP_PACK_SIZE_W;
+    }
+    p_mat->ori_buf = &(*pp_mat_buf);
+
+EXIT_MAT_SIG_CONSTRUCTOR_FP_STATIC:
+    MATRIX_FUNC_EXIT;
+    return retval;
+}
+
 void mat_sig_destructor(mat_sig_t *p_mat)
 {
     MATRIX_FUNC_ENTRANCE;

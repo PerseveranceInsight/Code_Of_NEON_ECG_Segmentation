@@ -43,6 +43,11 @@ int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para,
                                          char *weight_path3,
                                          char *bias_path);
 
+int32_t conv_fuse_relu_constructor_static(mat_sig_para_t *p_para,
+                                          conv_fuse_relu_t **pp_module,
+                                          void **pp_weight_buf,
+                                          void **pp_bias_buf);
+
 int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
                                sig2col_ctr_t *p_col_ctr,
                                signal_container_t *p_in_sig_con,
@@ -51,5 +56,7 @@ int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
                                uint32_t output_num);
 
 void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module);
+
+void conv_fuse_relu_destructor_static(conv_fuse_relu_t *p_module);
 
 #endif

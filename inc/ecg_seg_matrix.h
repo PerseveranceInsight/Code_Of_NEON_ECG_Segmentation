@@ -81,6 +81,11 @@ int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
                                mat_sig_t *p_mat,
                                BOOL kernel);
 
+int32_t mat_sig_constructor_fp_static(mat_sig_para_t *p_param,
+                                      mat_sig_t *p_mat,
+                                      void **pp_mat_buf,
+                                      BOOL kernel);
+
 void mat_sig_destructor(mat_sig_t *p_mat);
 
 #endif
