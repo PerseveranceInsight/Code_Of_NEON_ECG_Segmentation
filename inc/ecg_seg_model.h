@@ -21,27 +21,13 @@
 #define MODEL_LOG                                                       LOG_VERBOSE
 #endif
 
-#define UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT0                       "./model_weight/unet_encoder1_conv1d_block_1_conv_weight0.bin"
-#define UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT1                       "./model_weight/unet_encoder1_conv1d_block_1_conv_weight1.bin"
-#define UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT2                       "./model_weight/unet_encoder1_conv1d_block_1_conv_weight2.bin"
-#define UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT3                       "./model_weight/unet_encoder1_conv1d_block_1_conv_weight3.bin"
-#define UNET_ENCODER1_CONV1D_BLOCK_1_CONV_BIAS                          "./model_weight/unet_encoder1_conv1d_block_1_conv_bias.bin"
-
 typedef struct conv_fuse_relu
-{
-    uint32_t conv_fuse_relu_c;
-    mat_sig_para_t weight_para;
-    mat_sig_t conv_weight[4];
-    float conv_bias[4];
-} conv_fuse_relu_t;
-
-typedef struct conv_fuse_relu2
 {
     uint32_t conv_fuse_relu_c;
     mat_sig_para_t weight_para;
     mat_sig_t *conv_weight;
     float *conv_bias;
-} conv_fuse_relu_t_2;
+} conv_fuse_relu_t;
 
 int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para, 
                                          conv_fuse_relu_t **pp_module,

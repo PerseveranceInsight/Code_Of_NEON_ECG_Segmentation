@@ -56,6 +56,7 @@ ELE_U16_SIZE	../inc/ecg_seg_matrix.h	25;"	d
 ELE_U32_SIZE	../inc/ecg_seg_matrix.h	26;"	d
 ELE_U8_SIZE	../inc/ecg_seg_matrix.h	24;"	d
 FALSE	../util/inc/arm_typedef.h	6;"	d
+FLOAT_POINT_EXP_MAN_BIT	../inc/ecg_seg_gemm.h	22;"	d
 FP_PACK_ELE	../inc/ecg_seg_matrix.h	22;"	d
 FP_PACK_SIZE_H	../inc/ecg_seg_matrix.h	20;"	d
 FP_PACK_SIZE_W	../inc/ecg_seg_matrix.h	21;"	d
@@ -71,6 +72,14 @@ GEMM_LOG	../inc/ecg_seg_gemm.h	14;"	d
 GEMM_LOG	../inc/ecg_seg_gemm.h	19;"	d
 GEMM_PRINTF	../inc/ecg_seg_gemm.h	13;"	d
 GEMM_PRINTF	../inc/ecg_seg_gemm.h	18;"	d
+GRAPH_FUNC_ENTRANCE	../inc/ecg_seg_graph.h	12;"	d
+GRAPH_FUNC_ENTRANCE	../inc/ecg_seg_graph.h	17;"	d
+GRAPH_FUNC_EXIT	../inc/ecg_seg_graph.h	13;"	d
+GRAPH_FUNC_EXIT	../inc/ecg_seg_graph.h	18;"	d
+GRAPH_LOG	../inc/ecg_seg_graph.h	15;"	d
+GRAPH_LOG	../inc/ecg_seg_graph.h	20;"	d
+GRAPH_PRINTF	../inc/ecg_seg_graph.h	14;"	d
+GRAPH_PRINTF	../inc/ecg_seg_graph.h	19;"	d
 IN_FILE_FP	../inc/ecg_seg_matrix.h	/^    IN_FILE_FP = 3,$/;"	e	enum:in_file_type
 IN_FILE_U16	../inc/ecg_seg_matrix.h	/^    IN_FILE_U16 = 1,$/;"	e	enum:in_file_type
 IN_FILE_U32	../inc/ecg_seg_matrix.h	/^    IN_FILE_U32 = 2,$/;"	e	enum:in_file_type
@@ -134,48 +143,53 @@ SIGNAL_LOG	../inc/ecg_seg_signal.h	19;"	d
 SIGNAL_PRINTF	../inc/ecg_seg_signal.h	13;"	d
 SIGNAL_PRINTF	../inc/ecg_seg_signal.h	18;"	d
 TRUE	../util/inc/arm_typedef.h	5;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_BIAS	../inc/ecg_seg_model.h	28;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT0	../inc/ecg_seg_model.h	24;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT1	../inc/ecg_seg_model.h	25;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT2	../inc/ecg_seg_model.h	26;"	d
-UNET_ENCODER1_CONV1D_BLOCK_1_CONV_WEIGHT3	../inc/ecg_seg_model.h	27;"	d
 __ARM_TYPEDEF_H__	../util/inc/arm_typedef.h	2;"	d
 __ARM_UTIL_H__	../util/inc/arm_util.h	4;"	d
 __ECG_SEG_DEF_H__	../inc/ecg_seg_def.h	2;"	d
 __ECG_SEG_GEMM_H__	../inc/ecg_seg_gemm.h	2;"	d
+__ECG_SEG_GRAPH_H__	../inc/ecg_seg_graph.h	2;"	d
 __ECG_SEG_MATRIX_H__	../inc/ecg_seg_matrix.h	2;"	d
 __ECG_SEG_MODEL_H__	../inc/ecg_seg_model.h	2;"	d
 __ECG_SEG_RESPONSE_DEF_H__	../util/inc/ecg_response_def.h	2;"	d
 __ECG_SEG_SIG2COL_H__	../inc/ecg_seg_sig2col.h	2;"	d
 __ECG_SEG_SIGNAL_H__	../inc/ecg_seg_signal.h	2;"	d
 __ECG_SEG_UTIL_H__	../util/inc/ecg_seg_util.h	2;"	d
+__ECG_SEG_WEIGHT_H__	../inc/ecg_seg_weight.h	2;"	d
 alloc_col	../inc/ecg_seg_matrix.h	/^    uint32_t alloc_col;$/;"	m	struct:mat_sig
 col_buf	../inc/ecg_seg_sig2col.h	/^    void *col_buf;$/;"	m	struct:sig2col_ctr
 col_h	../inc/ecg_seg_matrix.h	/^    uint32_t col_h;$/;"	m	struct:mat_sig
 col_w	../inc/ecg_seg_matrix.h	/^    uint32_t col_w;$/;"	m	struct:mat_sig
-conv_bias	../inc/ecg_seg_model.h	/^    float conv_bias[4];$/;"	m	struct:conv_fuse_relu
+conv_bias	../inc/ecg_seg_model.h	/^    float *conv_bias;$/;"	m	struct:conv_fuse_relu
 conv_fuse_bias_fopen	../src/ecg_seg_model.c	/^static int32_t conv_fuse_bias_fopen(char *bias_path,$/;"	f	file:
 conv_fuse_relu	../inc/ecg_seg_model.h	/^typedef struct conv_fuse_relu$/;"	s
 conv_fuse_relu_c	../inc/ecg_seg_model.h	/^    uint32_t conv_fuse_relu_c;$/;"	m	struct:conv_fuse_relu
 conv_fuse_relu_constructor_fopen	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para, $/;"	f
+conv_fuse_relu_constructor_static	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_constructor_static(mat_sig_para_t *p_para,$/;"	f
 conv_fuse_relu_destructor	../src/ecg_seg_model.c	/^void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)$/;"	f
 conv_fuse_relu_forward	../src/ecg_seg_model.c	/^int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,$/;"	f
+conv_fuse_relu_num	../inc/ecg_seg_graph.h	/^    uint32_t conv_fuse_relu_num;$/;"	m	struct:ecg_seg_graph
 conv_fuse_relu_t	../inc/ecg_seg_model.h	/^} conv_fuse_relu_t;$/;"	t	typeref:struct:conv_fuse_relu
-conv_weight	../inc/ecg_seg_model.h	/^    mat_sig_t conv_weight[4];$/;"	m	struct:conv_fuse_relu
+conv_weight	../inc/ecg_seg_model.h	/^    mat_sig_t *conv_weight;$/;"	m	struct:conv_fuse_relu
 cur_ele_num	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_ele_num;$/;"	m	struct:sig2col_ctr
 cur_k_l	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_k_l;$/;"	m	struct:sig2col_ctr
 cur_out_l	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_out_l;$/;"	m	struct:sig2col_ctr
 cur_out_pack_l	../inc/ecg_seg_sig2col.h	/^    uint32_t cur_out_pack_l;$/;"	m	struct:sig2col_ctr
+ecg_seg_fp_add_bias	../src/ecg_seg_gemm.c	/^int32_t ecg_seg_fp_add_bias(mat_sig_t *p_out_feature,$/;"	f
 ecg_seg_fp_gemm	../src/ecg_seg_gemm.c	/^int32_t ecg_seg_fp_gemm(mat_sig_t *p_conv_weight,$/;"	f
+ecg_seg_graph	../inc/ecg_seg_graph.h	/^typedef struct ecg_seg_graph$/;"	s
+ecg_seg_graph_constructor_fp	../src/ecg_seg_graph.c	/^int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,$/;"	f
+ecg_seg_graph_t	../inc/ecg_seg_graph.h	/^} ecg_seg_graph_t;$/;"	t	typeref:struct:ecg_seg_graph
 ecg_seg_res	../util/inc/ecg_response_def.h	/^typedef enum ecg_seg_res {$/;"	g
 ecg_seg_res_t	../util/inc/ecg_response_def.h	/^} ecg_seg_res_t;$/;"	t	typeref:enum:ecg_seg_res
 in_file_type	../inc/ecg_seg_matrix.h	/^typedef enum in_file_type {$/;"	g
 in_file_type_t	../inc/ecg_seg_matrix.h	/^} in_file_type_t;$/;"	t	typeref:enum:in_file_type
+in_num	../inc/ecg_seg_graph.h	/^    uint32_t in_num;$/;"	m	struct:ecg_seg_graph
 k_l	../inc/ecg_seg_matrix.h	/^    uint32_t k_l;$/;"	m	struct:mat_sig_para
 main	../src/ecg_seg_main.c	/^int main(int argc, char* argv[])$/;"	f
 mat_sig	../inc/ecg_seg_matrix.h	/^typedef struct mat_sig {$/;"	s
 mat_sig_constructor_fp	../src/ecg_seg_matrix.c	/^int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,$/;"	f
 mat_sig_constructor_fp_fopen	../src/ecg_seg_matrix.c	/^int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,$/;"	f
+mat_sig_constructor_fp_static	../src/ecg_seg_matrix.c	/^int32_t mat_sig_constructor_fp_static(mat_sig_para_t *p_param,$/;"	f
 mat_sig_destructor	../src/ecg_seg_matrix.c	/^void mat_sig_destructor(mat_sig_t *p_mat)$/;"	f
 mat_sig_fp_fopen	../src/ecg_seg_matrix.c	/^static void mat_sig_fp_fopen(void *p_mat, char *path)$/;"	f	file:
 mat_sig_para	../inc/ecg_seg_matrix.h	/^typedef struct mat_sig_para {$/;"	s
@@ -187,11 +201,18 @@ max_ele_num	../inc/ecg_seg_sig2col.h	/^    uint32_t max_ele_num;$/;"	m	struct:si
 max_k_l	../inc/ecg_seg_sig2col.h	/^    uint32_t max_k_l;$/;"	m	struct:sig2col_ctr
 max_out_l	../inc/ecg_seg_sig2col.h	/^    uint32_t max_out_l;$/;"	m	struct:sig2col_ctr
 max_out_pack_l	../inc/ecg_seg_sig2col.h	/^    uint32_t max_out_pack_l;$/;"	m	struct:sig2col_ctr
+mid_num	../inc/ecg_seg_graph.h	/^    uint32_t mid_num;$/;"	m	struct:ecg_seg_graph
 now_ns	../util/src/arm_util.c	/^double now_ns(void)$/;"	f
 ori_buf	../inc/ecg_seg_matrix.h	/^    void *ori_buf;$/;"	m	struct:mat_sig
 ori_l	../inc/ecg_seg_matrix.h	/^    uint32_t ori_l;$/;"	m	struct:mat_sig
 ori_l	../inc/ecg_seg_matrix.h	/^    uint32_t ori_l;$/;"	m	struct:mat_sig_para
 out_l	../inc/ecg_seg_matrix.h	/^    uint32_t out_l;$/;"	m	struct:mat_sig
+out_num	../inc/ecg_seg_graph.h	/^    uint32_t out_num;$/;"	m	struct:ecg_seg_graph
+p_in_sigs	../inc/ecg_seg_graph.h	/^    signal_container_t *p_in_sigs;$/;"	m	struct:ecg_seg_graph
+p_mid_features	../inc/ecg_seg_graph.h	/^    signal_container_t *p_mid_features;$/;"	m	struct:ecg_seg_graph
+p_modules	../inc/ecg_seg_graph.h	/^    conv_fuse_relu_t *p_modules;$/;"	m	struct:ecg_seg_graph
+p_out_pred	../inc/ecg_seg_graph.h	/^    signal_container_t *p_out_pred;$/;"	m	struct:ecg_seg_graph
+p_sig2col_ctr	../inc/ecg_seg_graph.h	/^    sig2col_ctr_t *p_sig2col_ctr;$/;"	m	struct:ecg_seg_graph
 pack_ele	../inc/ecg_seg_matrix.h	/^    uint32_t pack_ele;$/;"	m	struct:mat_sig
 pack_h	../inc/ecg_seg_matrix.h	/^    uint32_t pack_h;$/;"	m	struct:mat_sig
 pack_mat	../inc/ecg_seg_matrix.h	/^typedef enum pack_mat {$/;"	g
@@ -214,6 +235,7 @@ ree_cpy	../util/inc/arm_util.h	63;"	d
 ree_dbg_neon_fp32x2_t	../util/src/arm_util.c	/^void ree_dbg_neon_fp32x2_t(float32x2_t vec_dbg)$/;"	f
 ree_dbg_neon_fp32x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_fp32x4_t(float32x4_t vec_dbg)$/;"	f
 ree_dbg_neon_fp32x4x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_fp32x4x4_t(float32x4x4_t vec_dbg)$/;"	f
+ree_dbg_neon_hex_u32x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_hex_u32x4_t(uint32x4_t vec_dbg)$/;"	f
 ree_dbg_neon_u32x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_u32x4_t(uint32x4_t vec_dbg)$/;"	f
 ree_dbg_neon_u32x4x4_t	../util/src/arm_util.c	/^void ree_dbg_neon_u32x4x4_t(uint32x4x4_t vec_dbg)$/;"	f
 ree_fclose	../util/inc/arm_util.h	74;"	d
@@ -245,4 +267,9 @@ signal_num	../inc/ecg_seg_signal.h	/^    uint32_t signal_num;$/;"	m	struct:signa
 signal_para	../inc/ecg_seg_signal.h	/^    mat_sig_para_t signal_para;$/;"	m	struct:signal_container
 stride	../inc/ecg_seg_matrix.h	/^    uint32_t stride;$/;"	m	struct:mat_sig
 stride	../inc/ecg_seg_matrix.h	/^    uint32_t stride;$/;"	m	struct:mat_sig_para
+unet_encoder1_conv1d_block_1_conv_bias	../inc/ecg_seg_weight.h	/^static unsigned char unet_encoder1_conv1d_block_1_conv_bias[16] __attribute__((aligned(4))) = {$/;"	v
+unet_encoder1_conv1d_block_1_conv_weight0	../inc/ecg_seg_weight.h	/^static unsigned char unet_encoder1_conv1d_block_1_conv_weight0[48] __attribute__((aligned(4))) = {$/;"	v
+unet_encoder1_conv1d_block_1_conv_weight1	../inc/ecg_seg_weight.h	/^static unsigned char unet_encoder1_conv1d_block_1_conv_weight1[48] __attribute__((aligned(4))) = {$/;"	v
+unet_encoder1_conv1d_block_1_conv_weight2	../inc/ecg_seg_weight.h	/^static unsigned char unet_encoder1_conv1d_block_1_conv_weight2[48] __attribute__((aligned(4))) = {$/;"	v
+unet_encoder1_conv1d_block_1_conv_weight3	../inc/ecg_seg_weight.h	/^static unsigned char unet_encoder1_conv1d_block_1_conv_weight3[48] __attribute__((aligned(4))) = {$/;"	v
 weight_para	../inc/ecg_seg_model.h	/^    mat_sig_para_t weight_para;$/;"	m	struct:conv_fuse_relu

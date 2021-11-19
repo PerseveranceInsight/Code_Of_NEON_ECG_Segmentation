@@ -33,6 +33,10 @@ ifeq ($(EN_GEMM_DBG),true)
 LOCAL_CFLAGS += -DEN_GEMM_DBG
 endif
 
+ifeq ($(EN_GRAPH_DBG),true)
+LOCAL_CFLAGS += -DEN_GRAPH_DBG
+endif
+
 ifeq ($(EN_SIGNAL_DBG),true)
 LOCAL_CFLAGS += -DEN_SIGNAL_DBG
 endif
@@ -53,6 +57,7 @@ LOCAL_C_INCLUDES += $(PROJECT_INC) \
 
 LOCAL_SRC_FILES +=  ${PROJECT_SRC}/ecg_seg_main.c \
 					${PROJECT_SRC}/ecg_seg_gemm.c \
+					${PROJECT_SRC}/ecg_seg_graph.c \
 					${PROJECT_SRC}/ecg_seg_matrix.c \
 					${PROJECT_SRC}/ecg_seg_model.c \
 					${PROJECT_SRC}/ecg_seg_sig2col.c \
