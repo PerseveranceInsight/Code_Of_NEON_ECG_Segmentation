@@ -18,6 +18,11 @@
 #include "ecg_response_def.h"
 #include "ecg_seg_util.h"
 
+static mat_sig_para_t mid_feat_para0 = {.ori_l = ECG_SIGNAL_MID1_ORI_L,
+                                        .k_l = ECG_SIGNAL_MID1_K_L,
+                                        .padding = ECG_SIGNAL_MID1_PADDING,
+                                        .stride = ECG_SIGNAL_MID1_STRIDE,};
+
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph)
 {
     ree_log(GRAPH_LOG, "%s in_num %d", __func__, p_graph->in_num);
@@ -74,19 +79,86 @@ EXIT_ECG_SEG_GRAPH_CONSTRUCTOR:
     return retval;
 }
 
-int32_t ecg_seg_graph_input_fopen(char *p_sig_path,
-                                  ecg_seg_graph_t *p_graph)
+int32_t ecg_seg_graph_input_constructor_fopen(char *p_sig_path,
+                                              mat_sig_para_t *p_sig_para,
+                                              ecg_seg_graph_t *p_graph)
 {
     GRAPH_FUNC_ENTRANCE;
     int32_t retval = ECG_SEG_OK;
     ree_check_null_exit_retval(p_sig_path, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_INPUT_FOPEN,
                                "%s occurs error due to p_sig_path is NULL", __func__);
+    ree_check_null_exit_retval(p_sig_para, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_INPUT_FOPEN,
+                               "%s occurs error due to p_sig_para is NULL", __func__);
     ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_INPUT_FOPEN,
                                "%s occurs error due to p_graph is NULL", __func__);
     ree_check_true_exit_retval((p_graph->inited != TRUE), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_INPUT_FOPEN,
                                "%s occurs error due to p_graph->inited is FALSE", __func__);
     ree_log(GRAPH_LOG, "%s path of signal : %s", __func__, p_sig_path);
+    ree_check_null_exit_retval((p_graph->p_in_sigs), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_INPUT_FOPEN,
+                               "%s occurs error due to p_graph->p_in_sigs is NULL", __func__);
+    retval = signal_container_constructor_fp_fopen(p_graph->in_num,
+                                                   p_sig_para,
+                                                   &p_graph->p_in_sigs,
+                                                   &p_sig_path);
 EXIT_ECG_SEG_GRAPH_INPUT_FOPEN:
+    GRAPH_FUNC_EXIT;
+    return retval;
+}
+
+static int32_t ecg_seg_graph_mid_feature0_constructor(mat_sig_para_t *p_sig_para,
+                                                      ecg_seg_graph_t *p_graph)
+{
+    GRAPH_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_sig_para, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR,
+                               "%s occurs error due to p_sig_para is NULL", __func__);
+    ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR,
+                               "%s occurs error due to p_graph is NULL", __func__);
+    ree_check_true_exit_retval((!p_graph->inited), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR,
+                               "%s occurs error due to p_graph->inited is FALSE", __func__);
+    ree_check_null_exit_retval(p_graph->p_mid_features, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR,
+                               "%s occurs error due to p_graph->p_mid_features is NULL", __func__);
+    ree_check_true_exit_retval((p_graph->mid_num < 1), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR,
+                               "%s occurs error due to p_graph->mid_num is less than 1", __func__);
+    retval = signal_container_constructor_fp(ECG_SIGNAL_MID1_MAX_C,
+                                             p_sig_para,
+                                             &p_graph->p_mid_features);
+EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR:
+    GRAPH_FUNC_EXIT;
+    return retval;
+}
+
+static int32_t ecg_seg_graph_output_constructor(mat_sig_para_t *p_sig_para,
+                                                ecg_seg_graph_t *p_graph)
+{
+    GRAPH_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_sig_para, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_OUTPUT,
+                               "%s occurs error due to p_sig_para is NULL", __func__);
+    ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_OUTPUT,
+                               "%s occurs error due to p_graph is NULL", __func__);
+    ree_check_true_exit_retval((p_graph->inited != TRUE), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_OUTPUT,
+                               "%s occurs error due to p_graph->inited is FALSE", __func__);
+    ree_check_null_exit_retval((p_graph->p_out_pred), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_OUTPUT,
+                               "%s occurs error due to p_graph->p_out_pred is NULL", __func__);
+    retval = signal_container_constructor_fp(p_graph->out_num,
+                                             p_sig_para,
+                                             &p_graph->p_out_pred);
+EXIT_ECG_SEG_GRAPH_OUTPUT:
+    GRAPH_FUNC_EXIT;
+    return retval;
+}
+
+int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph)
+{
+    GRAPH_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_CONTEXT_INIT,
+                               "%s occurs error due to p_graph is NULL", __func__);
+    ree_check_true_exit_retval((p_graph->inited != TRUE), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_CONTEXT_INIT,
+                               "%s occurs error due to p_graph->inited is FALSE", __func__);
+    ecg_seg_graph_mid_feature0_constructor(&mid_feat_para0, p_graph);
+EXIT_ECG_SEG_GRAPH_CONTEXT_INIT:
     GRAPH_FUNC_EXIT;
     return retval;
 }
@@ -99,6 +171,12 @@ int32_t ecg_seg_graph_destructor_fp(ecg_seg_graph_t *p_graph)
                                "%s occurs error due to p_graph is NULL", __func__);
     ree_check_true_exit_retval((p_graph->inited != TRUE), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_DESTRUCTOR,
                                "%s occurs error due to p_graph->inited is FALSE", __func__);
+    signal_container_destructor(p_graph->p_in_sigs);
+    for (uint32_t ind = 0; ind < p_graph->mid_num; ind++)
+    {
+        signal_container_destructor(&p_graph->p_mid_features[ind]);
+    }
+    signal_container_destructor(p_graph->p_out_pred);
     ree_free(p_graph->p_in_sigs);
     ree_free(p_graph->p_mid_features);
     ree_free(p_graph->p_out_pred);

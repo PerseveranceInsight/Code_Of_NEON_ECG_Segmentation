@@ -5,6 +5,7 @@
 #include "arm_typedef.h"
 #include "arm_util.h"
 #include "ecg_seg_def.h"
+#include "ecg_seg_matrix.h"
 #include "ecg_seg_model.h"
 #include "ecg_seg_sig2col.h"
 #include "ecg_seg_signal.h"
@@ -41,8 +42,11 @@ int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,
                                      uint32_t conv_fuse_relu_num,
                                      ecg_seg_graph_t *p_graph);
 
-int32_t ecg_seg_graph_input_fopen(char *p_sig_path,
-                                  ecg_seg_graph_t *p_graph);
+int32_t ecg_seg_graph_input_constructor_fopen(char *p_sig_path,
+                                              mat_sig_para_t *p_sig_para,
+                                              ecg_seg_graph_t *p_graph);
+
+int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph);
 
 int32_t ecg_seg_graph_destructor_fp(ecg_seg_graph_t *p_graph);
 
