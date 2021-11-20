@@ -23,6 +23,7 @@
 #define SIG2COL_INVALID_IND                     (INT_MIN)
 
 typedef struct sig2col_ctr {
+    BOOL inited;
     uint32_t cur_out_l;
     uint32_t cur_out_pack_l;
     uint32_t cur_k_l;

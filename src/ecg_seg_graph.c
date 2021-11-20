@@ -66,6 +66,10 @@ int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,
     ree_check_null_exit_retval(p_graph->p_out_pred, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
                                "%s occurs error due to alloc p_graph->p_out_pred failed", __func__);
     ree_set(p_graph->p_out_pred, 0, sizeof(signal_container_t)*out_num);
+    p_graph->p_sig2col_ctr = ree_malloc(sizeof(sig2col_ctr_t)*mid_num);
+    ree_check_null_exit_retval(p_graph->p_sig2col_ctr, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
+                               "%s occurs error due to alloc p_graph->p_sig2col_ctr failed", __func__);
+    ree_set(p_graph->p_sig2col_ctr, 0, sizeof(sig2col_ctr_t)*mid_num);
     p_graph->inited = TRUE;
 EXIT_ECG_SEG_GRAPH_CONSTRUCTOR:
     if (!p_graph->inited) 
@@ -149,6 +153,28 @@ EXIT_ECG_SEG_GRAPH_OUTPUT:
     return retval;
 }
 
+static int32_t ecg_seg_graph_sig2col0_constructor(uint32_t max_out_l,
+                                                  uint32_t max_k_l,
+                                                  ecg_seg_graph_t *p_graph)
+{
+    GEMM_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_true_exit_retval((max_out_l == 0), retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_SIG2COL0_CONSTRUCTOR,
+                               "%s directly return due to max_out_l == 0", __func__);
+    ree_check_true_exit_retval((max_k_l == 0), retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_SIG2COL0_CONSTRUCTOR,
+                               "%s directly return due to max_k_l == 0", __func__);
+    ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_SIG2COL0_CONSTRUCTOR,
+                               "%s directly return due to p_graph is NULL", __func__);
+    ree_log(GRAPH_LOG, "%s max_out_l %d max_k_l %d", __func__, max_out_l, max_k_l);
+    retval = sig2col_ctr_fp_constructor(max_out_l,
+                                        max_k_l,
+                                        &p_graph->p_sig2col_ctr);
+    ree_log(GRAPH_LOG, "%s retval of sig2col_ctr_fp_constructor %d", __func__, retval);
+EXIT_ECG_SEG_SIG2COL0_CONSTRUCTOR:
+    GEMM_FUNC_EXIT;
+    return retval;
+}
+
 int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph)
 {
     GRAPH_FUNC_ENTRANCE;
@@ -157,7 +183,10 @@ int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph)
                                "%s occurs error due to p_graph is NULL", __func__);
     ree_check_true_exit_retval((p_graph->inited != TRUE), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_CONTEXT_INIT,
                                "%s occurs error due to p_graph->inited is FALSE", __func__);
-    ecg_seg_graph_mid_feature0_constructor(&mid_feat_para0, p_graph);
+    retval = ecg_seg_graph_mid_feature0_constructor(&mid_feat_para0, p_graph);
+    retval = ecg_seg_graph_sig2col0_constructor(ECG_SIG2COL_MAX_OUT_L,
+                                                ECG_SIG2COL_MAX_K_L,
+                                                p_graph);
 EXIT_ECG_SEG_GRAPH_CONTEXT_INIT:
     GRAPH_FUNC_EXIT;
     return retval;
@@ -175,6 +204,7 @@ int32_t ecg_seg_graph_destructor_fp(ecg_seg_graph_t *p_graph)
     for (uint32_t ind = 0; ind < p_graph->mid_num; ind++)
     {
         signal_container_destructor(&p_graph->p_mid_features[ind]);
+        sig2col_ctr_destructor(&p_graph->p_sig2col_ctr[ind]);
     }
     signal_container_destructor(p_graph->p_out_pred);
     ree_free(p_graph->p_in_sigs);

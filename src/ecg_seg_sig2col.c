@@ -64,9 +64,16 @@ int32_t sig2col_ctr_fp_constructor(uint32_t max_out_l, uint32_t max_k_l, sig2col
     uint32_t ele_num = 0;
     ree_check_null_exit_retval(pp_ctr, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_CTR_CONTRUCTOR,
                               "%s occurs error due to pp_ctr is NULL", __func__);
-    ree_check_true_exit_retval((*pp_ctr != NULL), retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_CTR_CONTRUCTOR,
-                               "%s occurs error due to *pp_ctr is NULL", __func__);
-    *pp_ctr = ree_malloc(sizeof(sig2col_ctr_t));
+    if (!(*pp_ctr))
+    {
+        ree_log(SIG2COL_LOG, "%s prepares to allocate *pp_ctr", __func__);
+        *pp_ctr = ree_malloc(sizeof(sig2col_ctr_t));
+        ree_check_null_exit_retval((*pp_ctr), retval, ECG_SEG_ALLOC_FAILED, EXIT_SIG2COL_CTR_CONTRUCTOR,
+                                   "%s occurs error due to pp_ctr is NULL", __func__);
+    } else
+    {
+        ree_log(SIG2COL_LOG, "%s *pp_ctr has already been allocated", __func__);
+    }
     ree_set(*pp_ctr, 0, sizeof(sig2col_ctr_t));
     (*pp_ctr)->max_out_l = max_out_l;
     (*pp_ctr)->max_out_pack_l = (max_out_l / FP_PACK_SIZE_W + 1) * FP_PACK_SIZE_W;
@@ -79,6 +86,7 @@ int32_t sig2col_ctr_fp_constructor(uint32_t max_out_l, uint32_t max_k_l, sig2col
     ree_check_null_exit_retval((*pp_ctr)->col_buf, retval, ECG_SEG_ALLOC_FAILED, EXIT_SIG2COL_CTR_CONTRUCTOR,
                                "%s occurs error due to *pp_ctr->col_buf is NULL", __func__);
     ree_set((*pp_ctr)->col_buf, 0, ele_num*ELE_FP_SIZE);
+    (*pp_ctr)->inited = TRUE;
 EXIT_SIG2COL_CTR_CONTRUCTOR:
     SIG2COL_FUNC_EXIT;
     return retval;
@@ -97,6 +105,8 @@ int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat)
                                "%s occurs error due to p_ctr is NULL", __func__);
     ree_check_null_exit_retval(p_ctr->col_buf, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_FP,
                                "%s occurs error due to p_ctr->col_buf is NULL", __func__);
+    ree_check_true_exit_retval((!p_ctr->inited), retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_FP,
+                               "%s occurs error due to p_ctr->inited is FALSE", __func__);
     p_ctr->cur_k_l = p_mat->col_h;
     p_ctr->cur_out_l = p_mat->col_w;
     p_ctr->cur_out_pack_l = p_mat->pack_w;
@@ -133,6 +143,7 @@ void sig2col_ctr_destructor(sig2col_ctr_t *p_ctr)
 {
     SIG2COL_FUNC_ENTRANCE;
     ree_check_null_exit(p_ctr, EXIT_SIG2COL_CTR_DESTRUCTOR, "%s occurs error due to p_ctr is NULL", __func__);
+    ree_check_true_exit((!p_ctr->inited), EXIT_SIG2COL_CTR_DESTRUCTOR, "%s directly return due to p_ctr->inited is FALSE", __func__);
     ree_free(p_ctr->col_buf);
 EXIT_SIG2COL_CTR_DESTRUCTOR:
     SIG2COL_FUNC_EXIT;
