@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
                                      .stride = ECG_SIGNAL_STRIDE,};
     ecg_seg_graph_t graph_ctr = {0};
     ree_log(LOG_DEBUG, "%s starts", __func__);
-    retval = ecg_seg_graph_constructor_fp(1, 5, 1, 9, &graph_ctr);
+    retval = ecg_seg_graph_constructor_fp(1, 5, 1, 19, &graph_ctr);
     retval = ecg_seg_graph_input_constructor_fopen(ECG_TINY_SIGNAL,
                                                    &input_sig_para,
                                                    &graph_ctr);

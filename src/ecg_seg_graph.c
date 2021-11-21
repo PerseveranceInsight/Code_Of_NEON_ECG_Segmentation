@@ -18,6 +18,11 @@
 #include "ecg_response_def.h"
 #include "ecg_seg_util.h"
 
+static mat_sig_para_t weight_para0_0 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
+                                        .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
+                                        .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
+                                        .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
+
 static mat_sig_para_t mid_feat_para0 = {.ori_l = ECG_SIGNAL_MID1_ORI_L,
                                         .k_l = ECG_SIGNAL_MID1_K_L,
                                         .padding = ECG_SIGNAL_MID1_PADDING,
@@ -70,6 +75,10 @@ int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,
     ree_check_null_exit_retval(p_graph->p_sig2col_ctr, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
                                "%s occurs error due to alloc p_graph->p_sig2col_ctr failed", __func__);
     ree_set(p_graph->p_sig2col_ctr, 0, sizeof(sig2col_ctr_t)*mid_num);
+    p_graph->p_modules = ree_malloc(sizeof(conv_fuse_relu_t)*conv_fuse_relu_num);
+    ree_check_null_exit_retval(p_graph->p_modules, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
+                               "%s occurs error due to alloc p_graph->p_modules failed", __func__);
+    ree_set(p_graph->p_modules, 0, sizeof(conv_fuse_relu_t)*conv_fuse_relu_num);
     p_graph->inited = TRUE;
 EXIT_ECG_SEG_GRAPH_CONSTRUCTOR:
     if (!p_graph->inited) 
@@ -175,6 +184,43 @@ EXIT_ECG_SEG_SIG2COL0_CONSTRUCTOR:
     return retval;
 }
 
+static int32_t ecg_seg_graph_conv_fuse_relu0_0_constructor(mat_sig_para_t *p_sig_para,
+                                                           ecg_seg_graph_t *p_graph)
+{
+    GRAPH_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    void **pp_weight_buf = NULL;
+    void **pp_bias_buf = NULL;
+    ree_check_null_exit_retval(p_sig_para, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_CONV_FUSE_RELU0_0_CONSTRUCTOR,
+                               "%s occurs error due to p_sig_para is NULL", __func__);
+    ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_CONV_FUSE_RELU0_0_CONSTRUCTOR,
+                               "%s occurs error due to p_graph is NULL", __func__);
+    ree_check_true_exit_retval((!p_graph->inited), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_CONV_FUSE_RELU0_0_CONSTRUCTOR,
+                               "%s occurs error due to p_graph->inited is FALSE", __func__);
+    ree_check_true_exit_retval((p_graph->conv_fuse_relu_num < 1), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_CONV_FUSE_RELU0_0_CONSTRUCTOR,
+                               "%s occurs error due to p_graph->conv_fuse_relu_num is less than 1", __func__);
+    print_mat_sig_para(p_sig_para);
+    pp_weight_buf = ree_malloc(sizeof(void*)*ECG_SEG_ENCODER_CONVRELU_0_K_C);
+    ree_check_null_exit_retval(pp_weight_buf, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONV_FUSE_RELU0_0_CONSTRUCTOR,
+                               "%s occurs error due to allocate pp_weight_buf failed", __func__);
+    ree_set(pp_weight_buf, 0, sizeof(void*)*ECG_SEG_ENCODER_CONVRELU_0_K_C);
+    pp_weight_buf[0] = (void*)(&unet_encoder0_conv1d_block_0_conv_weight0);
+    pp_weight_buf[1] = (void*)(&unet_encoder0_conv1d_block_0_conv_weight1);
+    pp_weight_buf[2] = (void*)(&unet_encoder0_conv1d_block_0_conv_weight2);
+    pp_weight_buf[3] = (void*)(&unet_encoder0_conv1d_block_0_conv_weight3);
+    pp_bias_buf = (void*)&unet_encoder0_conv1d_block_0_conv_bias;
+    retval = conv_fuse_relu_constructor_static(ECG_SEG_ENCODER_CONVRELU_0_K_C,
+                                               p_sig_para,
+                                               &(p_graph->p_modules),
+                                               pp_weight_buf,
+                                               pp_bias_buf);
+    ree_log(GRAPH_LOG, "%s retval of conv_fuse_relu_constructor_static %d", __func__, retval); 
+EXIT_ECG_SEG_GRAPH_CONV_FUSE_RELU0_0_CONSTRUCTOR:
+    ree_free(pp_weight_buf);
+    GRAPH_FUNC_EXIT;
+    return retval;
+}
+
 int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph)
 {
     GRAPH_FUNC_ENTRANCE;
@@ -187,6 +233,7 @@ int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph)
     retval = ecg_seg_graph_sig2col0_constructor(ECG_SIG2COL_MAX_OUT_L,
                                                 ECG_SIG2COL_MAX_K_L,
                                                 p_graph);
+    retval = ecg_seg_graph_conv_fuse_relu0_0_constructor(&weight_para0_0, p_graph);
 EXIT_ECG_SEG_GRAPH_CONTEXT_INIT:
     GRAPH_FUNC_EXIT;
     return retval;
@@ -211,6 +258,7 @@ int32_t ecg_seg_graph_destructor_fp(ecg_seg_graph_t *p_graph)
     ree_free(p_graph->p_mid_features);
     ree_free(p_graph->p_out_pred);
     ree_free(p_graph->p_sig2col_ctr);
+    ree_free(p_graph->p_modules);
 EXIT_ECG_SEG_GRAPH_DESTRUCTOR:
     GRAPH_FUNC_EXIT;
     return retval;

@@ -23,6 +23,7 @@
 
 typedef struct conv_fuse_relu
 {
+    BOOL inited;
     uint32_t conv_fuse_relu_c;
     mat_sig_para_t weight_para;
     mat_sig_t *conv_weight;
@@ -37,7 +38,8 @@ int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para,
                                          char *weight_path3,
                                          char *bias_path);
 
-int32_t conv_fuse_relu_constructor_static(mat_sig_para_t *p_para,
+int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_num,
+                                          mat_sig_para_t *p_para,
                                           conv_fuse_relu_t **pp_module,
                                           void **pp_weight_buf,
                                           void **pp_bias_buf);

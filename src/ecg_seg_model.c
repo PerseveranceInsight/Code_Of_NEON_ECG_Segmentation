@@ -98,7 +98,8 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR:
     return retval;
 }
 
-int32_t conv_fuse_relu_constructor_static(mat_sig_para_t *p_para,
+int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_num,
+                                          mat_sig_para_t *p_para,
                                           conv_fuse_relu_t **pp_module,
                                           void **pp_weight_buf,
                                           void **pp_bias_buf)
@@ -113,8 +114,16 @@ int32_t conv_fuse_relu_constructor_static(mat_sig_para_t *p_para,
                                "%s occurs error due to pp_weight is NULL", __func__);
     ree_check_null_exit_retval(pp_bias_buf, retval, ECG_SEG_INVALID_PARAM, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
                                "%s occurs error due to  pp_bias_buf is NULL", __func__);
-    *pp_module = ree_malloc(sizeof(conv_fuse_relu_t));
-    ree_set(*pp_module, 0, sizeof(conv_fuse_relu_t));
+    if (!(*pp_module))
+    {
+        ree_log(MODEL_LOG, "%s prepares to allocate pp_module", __func__);
+        *pp_module = ree_malloc(sizeof(conv_fuse_relu_t));
+        ree_set(*pp_module, 0, sizeof(conv_fuse_relu_t));
+    } else
+    {
+        ree_log(MODEL_LOG, "%s has already allocated pp_module", __func__);
+    }
+
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC:
     MODEL_FUNC_EXIT;
     return retval;
