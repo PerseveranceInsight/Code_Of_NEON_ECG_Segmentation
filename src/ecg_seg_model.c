@@ -98,7 +98,7 @@ EXIT_CONV_FUSE_RELU_CONSTRUCTOR:
     return retval;
 }
 
-int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_num,
+int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_c,
                                           mat_sig_para_t *p_para,
                                           conv_fuse_relu_t **pp_module,
                                           void **pp_weight_buf,
@@ -123,7 +123,30 @@ int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_num,
     {
         ree_log(MODEL_LOG, "%s has already allocated pp_module", __func__);
     }
-
+    ree_log(MODEL_LOG, "%s conv_fuse_relu_c %d", __func__, conv_fuse_relu_c);
+    ree_cpy(&((*pp_module)->weight_para), p_para, sizeof(mat_sig_para_t));
+    print_mat_sig_para(&((*pp_module)->weight_para));
+    (*pp_module)->conv_weight = ree_malloc(sizeof(mat_sig_t)*conv_fuse_relu_c);
+    ree_check_null_exit_retval((*pp_module)->conv_weight, retval, ECG_SEG_ALLOC_FAILED, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
+                               "%s occusrs error due to allocate (*pp_module)->conv_weight failed", __func__);
+    ree_set((*pp_module)->conv_weight, 0, sizeof(mat_sig_t)*conv_fuse_relu_c);
+    
+    for (uint32_t ind = 0; ind<conv_fuse_relu_c; ind++)
+    {
+        ree_log(MODEL_LOG, "%s ind %d", __func__, ind);
+        ree_check_null_exit_retval(&((*pp_module)->conv_weight[ind]), retval, ECG_SEG_ALLOC_FAILED, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
+                                   "%s occurs error due to allocate (*pp_module)->conv_weight[ind] ind %d is NULL", __func__, ind);
+        ree_check_null_exit_retval(pp_weight_buf[ind], retval, ECG_SEG_ALLOC_FAILED, EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC,
+                                   "%s occurs error due to allocate pp_weight_buf[ind] ind %d is NULL", __func__, ind);
+        ree_log(MODEL_LOG, "%s address %p", __func__, pp_weight_buf[ind]);
+        retval = mat_sig_constructor_fp_static(&((*pp_module)->weight_para),
+                                               ((*pp_module)->conv_weight + ind),
+                                               pp_weight_buf[ind],
+                                               TRUE);
+    }
+    (*pp_module)->conv_bias = (float*)(pp_bias_buf);
+    ree_log(MODEL_LOG, "%s (*pp_module)->conv_bias %p %p", __func__, (*pp_module)->conv_bias, pp_bias_buf);
+    (*pp_module)->inited = TRUE;
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC:
     MODEL_FUNC_EXIT;
     return retval;
@@ -192,10 +215,12 @@ void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)
 {
     MODEL_FUNC_ENTRANCE;
     ree_check_null_exit(p_module, EXIT_CONV_FUSE_RELU_DESTRUCTOR, "%s directly return due to p_module is NULL", __func__);
-    for (uint32_t i = 0; i<4; i++)
+    ree_check_true_exit((!p_module->inited), EXIT_CONV_FUSE_RELU_DESTRUCTOR, "%s directly return due to p_module is NULL", __func__);
+    for (uint32_t i = 0; i<p_module->conv_fuse_relu_c; i++)
     {
         mat_sig_destructor(&p_module->conv_weight[i]);
     }
+    ree_free(p_module->conv_weight);
 EXIT_CONV_FUSE_RELU_DESTRUCTOR:
     MODEL_FUNC_EXIT;
 }

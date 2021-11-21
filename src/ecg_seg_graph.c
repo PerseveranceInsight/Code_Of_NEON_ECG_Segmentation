@@ -209,6 +209,8 @@ static int32_t ecg_seg_graph_conv_fuse_relu0_0_constructor(mat_sig_para_t *p_sig
     pp_weight_buf[2] = (void*)(&unet_encoder0_conv1d_block_0_conv_weight2);
     pp_weight_buf[3] = (void*)(&unet_encoder0_conv1d_block_0_conv_weight3);
     pp_bias_buf = (void*)&unet_encoder0_conv1d_block_0_conv_bias;
+    ree_log(GRAPH_LOG, "%s %p %p %p %p", __func__, pp_weight_buf[0], pp_weight_buf[1], pp_weight_buf[2], pp_weight_buf[3]);
+    ree_log(GRAPH_LOG, "%s pp_bias_buf %p unet_encoder0_conv1d_block_0_conv_bias %p", __func__, pp_bias_buf, &unet_encoder0_conv1d_block_0_conv_bias);
     retval = conv_fuse_relu_constructor_static(ECG_SEG_ENCODER_CONVRELU_0_K_C,
                                                p_sig_para,
                                                &(p_graph->p_modules),
@@ -252,6 +254,10 @@ int32_t ecg_seg_graph_destructor_fp(ecg_seg_graph_t *p_graph)
     {
         signal_container_destructor(&p_graph->p_mid_features[ind]);
         sig2col_ctr_destructor(&p_graph->p_sig2col_ctr[ind]);
+    }
+    for (uint32_t ind = 0; ind < p_graph->conv_fuse_relu_num; ind++)
+    {
+        conv_fuse_relu_destructor(&(p_graph->p_modules[ind]));
     }
     signal_container_destructor(p_graph->p_out_pred);
     ree_free(p_graph->p_in_sigs);

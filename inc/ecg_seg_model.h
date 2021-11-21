@@ -38,7 +38,7 @@ int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para,
                                          char *weight_path3,
                                          char *bias_path);
 
-int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_num,
+int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_c,
                                           mat_sig_para_t *p_para,
                                           conv_fuse_relu_t **pp_module,
                                           void **pp_weight_buf,

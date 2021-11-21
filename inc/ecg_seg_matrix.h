@@ -53,6 +53,8 @@ typedef struct mat_sig_para {
 } mat_sig_para_t;
 
 typedef struct mat_sig {
+    BOOL inited;
+    BOOL allocated;
     uint32_t ori_l;
     uint32_t out_l;
     uint32_t col_h;

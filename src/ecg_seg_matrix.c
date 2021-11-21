@@ -35,6 +35,8 @@ void print_mat_sig_para(mat_sig_para_t *p_param)
 void print_mat_para(mat_sig_t *p_mat)
 {
     MATRIX_FUNC_ENTRANCE;
+    MATRIX_PRINTF("%s p_param->inited %d\n", __func__, p_mat->inited);
+    MATRIX_PRINTF("%s p_param->allocated %d\n", __func__, p_mat->allocated);
     MATRIX_PRINTF("%s p_mat->ori_l %d\n", __func__, p_mat->ori_l);
     MATRIX_PRINTF("%s p_mat->out_l %d\n", __func__, p_mat->out_l);
     MATRIX_PRINTF("%s p_mat->col_h %d\n", __func__, p_mat->col_h);
@@ -122,6 +124,8 @@ int32_t mat_sig_constructor_fp_fopen(mat_sig_para_t *p_param,
                                "%s occurs error due to allocate p_mat->ori_buf failed", __func__);
     ree_set(p_mat->ori_buf, 0, ele_num*ELE_FP_SIZE);
     mat_sig_fp_fopen(p_mat->ori_buf, path);
+    p_mat->inited = TRUE;
+    p_mat->allocated = TRUE;
     print_mat_ori_fp(p_mat);
 EXIT_MAT_SIG_CONSTRUCTOR_FP_FOPEN:
     MATRIX_FUNC_EXIT;
@@ -178,6 +182,8 @@ int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
     ree_check_null_exit_retval(p_mat->ori_buf, retval, ECG_SEG_ALLOC_FAILED, EXIT_MAT_SIG_CONSTRUCTOR_FP,
                                "%s occurs error due to allocate p_mat->ori_buf failed", __func__);
     ree_set(p_mat->ori_buf, 0, ele_num*ELE_FP_SIZE);
+    p_mat->inited = TRUE;
+    p_mat->allocated = TRUE;
     print_mat_ori_fp(p_mat);
 EXIT_MAT_SIG_CONSTRUCTOR_FP:
     MATRIX_FUNC_EXIT;
@@ -229,7 +235,9 @@ int32_t mat_sig_constructor_fp_static(mat_sig_para_t *p_param,
         ele_num *= FP_PACK_SIZE_W;
     }
     p_mat->ori_buf = &(*pp_mat_buf);
-
+    p_mat->inited = TRUE;
+    p_mat->allocated = FALSE;
+    print_mat_ori_fp(p_mat);
 EXIT_MAT_SIG_CONSTRUCTOR_FP_STATIC:
     MATRIX_FUNC_EXIT;
     return retval;
@@ -239,6 +247,8 @@ void mat_sig_destructor(mat_sig_t *p_mat)
 {
     MATRIX_FUNC_ENTRANCE;
     ree_check_null_exit(p_mat, EXIT_MAT_SIG_DESTRUCTOR, "%s directly returns due to p_mat is NULL", __func__);
+    ree_check_true_exit((!p_mat->inited), EXIT_MAT_SIG_DESTRUCTOR, "%s directly returns due to p_mat->inited is FALSE", __func__);
+    ree_check_true_exit((!p_mat->allocated), EXIT_MAT_SIG_DESTRUCTOR, "%s directrly returns due to p_mat->allocated is FALSE", __func__);
     ree_free(p_mat->ori_buf);
 EXIT_MAT_SIG_DESTRUCTOR:
     MATRIX_FUNC_EXIT;
