@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
                                                    &input_sig_para,
                                                    &graph_ctr);
     retval = ecg_seg_graph_context_init(&graph_ctr);
+    retval = ecg_seg_graph_forward(&graph_ctr);
     ecg_seg_graph_destructor_fp(&graph_ctr);
     ree_log(LOG_DEBUG, "%s ends retval %d", __func__, retval);
     return 0;

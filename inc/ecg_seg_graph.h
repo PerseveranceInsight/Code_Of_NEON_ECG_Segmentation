@@ -48,6 +48,8 @@ int32_t ecg_seg_graph_input_constructor_fopen(char *p_sig_path,
 
 int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph);
 
+int32_t ecg_seg_graph_forward(ecg_seg_graph_t *p_graph);
+
 int32_t ecg_seg_graph_destructor_fp(ecg_seg_graph_t *p_graph);
 
 #endif
