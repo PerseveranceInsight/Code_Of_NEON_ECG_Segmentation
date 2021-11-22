@@ -38,4 +38,8 @@
 #define ECG_SIG2COL_MAX_OUT_L                                         (ECG_TINY_TEST_SIGNAL_MAX_OUT_L)
 #define ECG_SIG2COL_MAX_K_L                                           (ECG_TINY_TEST_SIGNAL_MAX_K_L)
 
+#define ECG_MIDDLE_FEATURE_GROUP_NUM                                  (5)
+#define ECG_CONV_RELU_FUSE_GROUP_NUM                                  (19)
+#define ECG_OUTPUT_PRED_GROUP_NUM                                     (1)
+
 #endif
