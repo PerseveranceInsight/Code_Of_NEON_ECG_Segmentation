@@ -23,10 +23,10 @@ static mat_sig_para_t weight_para0_0 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
 
-static mat_sig_para_t mid_feat_para0 = {.ori_l = ECG_SIGNAL_MID1_ORI_L,
-                                        .k_l = ECG_SIGNAL_MID1_K_L,
-                                        .padding = ECG_SIGNAL_MID1_PADDING,
-                                        .stride = ECG_SIGNAL_MID1_STRIDE,};
+static mat_sig_para_t mid_feat_para0 = {.ori_l = ECG_SIGNAL_MID0_ORI_L,
+                                        .k_l = ECG_SIGNAL_MID0_K_L,
+                                        .padding = ECG_SIGNAL_MID0_PADDING,
+                                        .stride = ECG_SIGNAL_MID0_STRIDE,};
 
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph)
 {
@@ -133,7 +133,7 @@ static int32_t ecg_seg_graph_mid_feature0_constructor(mat_sig_para_t *p_sig_para
                                "%s occurs error due to p_graph->p_mid_features is NULL", __func__);
     ree_check_true_exit_retval((p_graph->mid_num < 1), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR,
                                "%s occurs error due to p_graph->mid_num is less than 1", __func__);
-    retval = signal_container_constructor_fp(ECG_SIGNAL_MID1_MAX_C,
+    retval = signal_container_constructor_fp(ECG_SIGNAL_MID0_MAX_C,
                                              p_sig_para,
                                              &p_graph->p_mid_features);
 EXIT_ECG_SEG_GRAPH_MID_FEATURE0_CONSTRUCTOR:
@@ -223,6 +223,9 @@ EXIT_ECG_SEG_GRAPH_CONV_FUSE_RELU0_0_CONSTRUCTOR:
     return retval;
 }
 
+// static int32_t ecg_seg_graph_conv_fuse_relu0_1_constructor()
+
+
 int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph)
 {
     GRAPH_FUNC_ENTRANCE;
@@ -260,7 +263,7 @@ static int32_t ecg_seg_graph0_0_forward(ecg_seg_graph_t *p_graph)
                                     p_graph->p_in_sigs,
                                     p_graph->p_mid_features,
                                     ECG_SIGNAL_ORI_C, 
-                                    ECG_SIGNAL_MID1_ORI_C);
+                                    ECG_SIGNAL_MID0_0_ORI_C);
 EXIT_ECG_SEG_GRAPH0_0_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;
