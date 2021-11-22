@@ -259,7 +259,8 @@ static int32_t ecg_seg_graph0_0_forward(ecg_seg_graph_t *p_graph)
                                     p_graph->p_sig2col_ctr,
                                     p_graph->p_in_sigs,
                                     p_graph->p_mid_features,
-                                    ECG_SIGNAL_ORI_C, ECG_SIGNAL_MID1_ORI_C);
+                                    ECG_SIGNAL_ORI_C, 
+                                    ECG_SIGNAL_MID1_ORI_C);
 EXIT_ECG_SEG_GRAPH0_0_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;
