@@ -2,7 +2,8 @@
 #define __ECG_SEG_DEF_H__
 
 #define ECG_SEG_ENCODER_CONVRELU_0_K_L                                (9)
-#define ECG_SEG_ENCODER_CONVRELU_0_K_C                                (4)
+#define ECG_SEG_ENCODER_CONVRELU0_0_K_C                               (4)
+#define ECG_SEG_ENCODER_CONVRELU0_1_K_C                               (16)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING                  (4)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE                   (1)
 

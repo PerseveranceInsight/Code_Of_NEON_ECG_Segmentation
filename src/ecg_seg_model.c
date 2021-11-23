@@ -147,6 +147,7 @@ int32_t conv_fuse_relu_constructor_static(uint32_t conv_fuse_relu_c,
     (*pp_module)->conv_bias = (float*)(pp_bias_buf);
     ree_log(MODEL_LOG, "%s (*pp_module)->conv_bias %p %p", __func__, (*pp_module)->conv_bias, pp_bias_buf);
     (*pp_module)->inited = TRUE;
+    (*pp_module)->conv_fuse_relu_c = conv_fuse_relu_c;
 EXIT_CONV_FUSE_RELU_CONSTRUCTOR_STATIC:
     MODEL_FUNC_EXIT;
     return retval;
@@ -219,8 +220,10 @@ void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)
     MODEL_FUNC_ENTRANCE;
     ree_check_null_exit(p_module, EXIT_CONV_FUSE_RELU_DESTRUCTOR, "%s directly return due to p_module is NULL", __func__);
     ree_check_true_exit((!p_module->inited), EXIT_CONV_FUSE_RELU_DESTRUCTOR, "%s directly return due to p_module is NULL", __func__);
+    ree_log(MODEL_LOG, "%s p_module->conv_fuse_relu_c %d", __func__, p_module->conv_fuse_relu_c);
     for (uint32_t i = 0; i<p_module->conv_fuse_relu_c; i++)
     {
+        ree_log(MODEL_LOG, "%s prepare to destructor p_module->conv_weight[i] %d", __func__, i);
         mat_sig_destructor(&p_module->conv_weight[i]);
     }
     ree_free(p_module->conv_weight);
