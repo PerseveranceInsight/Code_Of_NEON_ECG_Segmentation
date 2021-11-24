@@ -118,21 +118,18 @@ int32_t ecg_seg_fp_add_bias(mat_sig_t *p_out_feature,
     remain_w_num = p_out_feature->out_l - w_steps*FP_PACK_SIZE_W;
     ree_log(GEMM_LOG, "%s w_steps %d, remian_w_num %d", __func__, w_steps, remain_w_num);
     p_feat = p_out_feature->ori_buf;
-    if (bias != 0.0f)
+    vec_bias = vdupq_n_f32(bias);
+    for (uint32_t w_ind = 0; w_ind<w_steps; w_ind++)
     {
-        vec_bias = vdupq_n_f32(bias);
-        for (uint32_t w_ind = 0; w_ind<w_steps; w_ind++)
-        {
-            vec_out_feature = vld1q_f32(p_feat);
-            vec_out_feature = vaddq_f32(vec_out_feature, vec_bias);
-            vst1q_f32(p_feat, vec_out_feature);
-            p_feat += FP_PACK_SIZE_W;
-        }
-        for (uint32_t w_ind = 0; w_ind<remain_w_num; w_ind++)
-        {
-            *(p_feat) += bias;
-            p_feat++; 
-        }
+        vec_out_feature = vld1q_f32(p_feat);
+        vec_out_feature = vaddq_f32(vec_out_feature, vec_bias);
+        vst1q_f32(p_feat, vec_out_feature);
+        p_feat += FP_PACK_SIZE_W;
+    }
+    for (uint32_t w_ind = 0; w_ind<remain_w_num; w_ind++)
+    {
+        *(p_feat) += bias;
+        p_feat++; 
     }
 
     w_steps++; // for all elements of output feature
