@@ -30,6 +30,13 @@ typedef struct conv_fuse_relu
     float *conv_bias;
 } conv_fuse_relu_t;
 
+typedef struct max_pool_parameters
+{
+    uint32_t kernel_size;
+    uint32_t stride;
+    uint32_t padding;
+} max_pool_parameters_t;
+
 int32_t conv_fuse_relu_constructor_fopen(mat_sig_para_t *p_para, 
                                          conv_fuse_relu_t **pp_module,
                                          char *weight_path0, 
@@ -52,6 +59,14 @@ int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
                                uint32_t input_start_ind,
                                uint32_t output_num,
                                uint32_t output_start_ind);
+
+int32_t max_pool_forward(max_pool_parameters_t *p_parameters,
+                         signal_container_t *p_in_sig_con,
+                         signal_container_t *p_out_sig_con,
+                         uint32_t input_num,
+                         uint32_t input_start_ind,
+                         uint32_t output_num,
+                         uint32_t output_start_ind);
 
 void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module);
 

@@ -33,6 +33,20 @@ static mat_sig_para_t mid_feat_para0 = {.ori_l = ECG_SIGNAL_MID0_ORI_L,
                                         .padding = ECG_SIGNAL_MID0_PADDING,
                                         .stride = ECG_SIGNAL_MID0_STRIDE,};
 
+static mat_sig_para_t mid_feat_para1 = {.ori_l = ECG_SIGNAL_MID1_ORI_L,
+                                        .k_l = ECG_SIGNAL_MID1_K_L,
+                                        .padding = ECG_SIGNAL_MID1_PADDING,
+                                        .stride = ECG_SIGNAL_MID1_STRIDE,};
+
+static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_mid_feature0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_output_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_sig2col0_constructor(uint32_t max_out_l, uint32_t max_k_l, ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_conv_fuse_relu0_0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_conv_fuse_relu0_1_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph0_0_forward(ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph0_1_forward(ecg_seg_graph_t *p_graph);
+
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph)
 {
     ree_log(GRAPH_LOG, "%s in_num %d", __func__, p_graph->in_num);
