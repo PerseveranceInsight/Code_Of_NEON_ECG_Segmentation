@@ -317,7 +317,7 @@ static int32_t ecg_seg_graph0_0_forward(ecg_seg_graph_t *p_graph)
     int32_t retval = ECG_SEG_OK;
     ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH0_0_FORWARD,
                                "%s occurs error due to p_graph is NULL", __func__);
-    ree_check_null_exit_retval(p_graph->p_in_sigs, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH0_0_FORWARD,
+    ree_check_null_exit_retval(p_graph->p_in_sigs, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH0_0_FORWARD,
                                "%s occurs error due to p_graph->p_in_sigs is NULL", __func__);
     ree_check_null_exit_retval(p_graph->p_sig2col_ctr, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH0_0_FORWARD,
                                "%s occurs error due to p_graph->p_sig2col_ctr is NULL", __func__);
@@ -329,9 +329,36 @@ static int32_t ecg_seg_graph0_0_forward(ecg_seg_graph_t *p_graph)
                                     p_graph->p_sig2col_ctr,
                                     p_graph->p_in_sigs,
                                     p_graph->p_mid_features,
-                                    ECG_SIGNAL_ORI_C, 
-                                    ECG_SIGNAL_MID0_0_ORI_C);
+                                    ECG_SIGNAL_ORI_C,
+                                    ECG_SIGNAL_ORI_IN_IND,
+                                    ECG_SIGNAL_MID0_0_ORI_C,
+                                    ECG_SIGNAL_MID0_0_OUT_IND);
 EXIT_ECG_SEG_GRAPH0_0_FORWARD:
+    GRAPH_FUNC_EXIT;
+    return retval;
+}
+
+static int32_t ecg_seg_graph0_1_forward(ecg_seg_graph_t *p_graph)
+{
+    GRAPH_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH0_1_FORWARD,
+                               "%s occurs error due to p_graph is NULL", __func__);
+    ree_check_null_exit_retval(p_graph->p_sig2col_ctr, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH0_1_FORWARD,
+                               "%s occurs error due to p_graph->p_sig2col_ctr is NULL", __func__);
+    ree_check_null_exit_retval(p_graph->p_mid_features, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH0_1_FORWARD,
+                               "%s occurs error due to p_graph->p_mid_features is NULL", __func__);
+    ree_check_null_exit_retval(&(p_graph->p_modules[1]), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH0_1_FORWARD,
+                               "%s occurs error due to &(p_graph->p_modules[1]) is NULL", __func__);
+    retval = conv_fuse_relu_forward(&(p_graph->p_modules[1]),
+                                    p_graph->p_sig2col_ctr,
+                                    p_graph->p_mid_features,
+                                    p_graph->p_mid_features,
+                                    ECG_SIGNAL_MID0_0_ORI_C,
+                                    ECG_SIGNAL_MID0_1_IN_IND,
+                                    ECG_SIGNAL_MID0_1_ORI_C,
+                                    ECG_SIGNAL_MID0_1_OUT_IND);
+EXIT_ECG_SEG_GRAPH0_1_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;
 }
@@ -346,6 +373,8 @@ int32_t ecg_seg_graph_forward(ecg_seg_graph_t *p_graph)
                                "%s occurs error due to p_graph->inited is FALSE", __func__);
     retval = ecg_seg_graph0_0_forward(p_graph);
     ree_log(GRAPH_LOG, "%s retval of ecg_seg_graph0_0_forward %d", __func__, retval);
+    retval = ecg_seg_graph0_1_forward(p_graph);
+    ree_log(GRAPH_LOG, "%s retval of ecg_seg_graph0_1_forward %d", __func__, retval);
 EXIT_ECG_SEG_GRAPH_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;
