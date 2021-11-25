@@ -44,7 +44,7 @@
 #define ECG_SIGNAL_MID0_1_OUT_IND                                     (4)
 
 #define ECG_SIGNAL_MID1_0_ORI_C                                       (8)
-#define ECG_SIGNAL_MID1_ORI_L                                         (ECG_TINY_TEST_SIGNAL_ORI_L)
+#define ECG_SIGNAL_MID1_ORI_L                                         (ECG_TINY_TEST_SIGNAL_MID1_ORI_L)
 #define ECG_SIGNAL_MID1_K_L                                           (ECG_TINY_TEST_SIGNAL_K_L)
 #define ECG_SIGNAL_MID1_PADDING                                       (ECG_TINY_TEST_SIGNAL_PADDING)
 #define ECG_SIGNAL_MID1_STRIDE                                        (ECG_TINY_TEST_SIGNAL_STRIDE)
