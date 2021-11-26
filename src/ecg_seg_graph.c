@@ -44,6 +44,7 @@ static max_pool_parameters_t max_pool_parameters = {.kernel_size = 8,
 
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_mid_feature0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_mid_feature1_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_output_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_sig2col0_constructor(uint32_t max_out_l, uint32_t max_k_l, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_conv_fuse_relu0_0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
@@ -414,13 +415,29 @@ static int32_t ecg_seg_graph_max_pool_0_forward(ecg_seg_graph_t *p_graph)
 {
     GRAPH_FUNC_ENTRANCE;
     int32_t retval = ECG_SEG_OK;
+    signal_container_t *p_mid0_feature = NULL;
+    signal_container_t *p_mid1_feature = NULL;
     ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD,
                                "%s occurs error due to p_graph is NULL", __func__);
     ree_check_true_exit_retval((!p_graph->inited), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD,
                                "%s occurs error due to p_graph->inited is NULL", __func__);
     ree_check_true_exit_retval((p_graph->mid_num<2), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD,
-                               "%s occurs error due to p_graph->mid_num %d is less than 2", __func__, p_graph->mid_num); 
-
+                               "%s occurs error due to p_graph->mid_num %d is less than 2", __func__, p_graph->mid_num);
+    ree_check_null_exit_retval((p_graph->p_mid_features), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD,
+                               "%s occurs error due to p_graph->p_mid_Features is NULL", __func__);
+    p_mid0_feature = &(p_graph->p_mid_features[0]);
+    p_mid1_feature = &(p_graph->p_mid_features[1]);
+    ree_check_null_exit_retval(p_mid0_feature, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD,
+                               "%s occurs erorr due to p_graph->p_mid_features[0] is NULL", __func__);
+    ree_check_null_exit_retval(p_mid1_feature, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD,
+                               "%s occurs erorr due to p_graph->p_mid_features[1] is NULL", __func__);
+    retval = max_pool_forward(&max_pool_parameters,
+                              p_mid0_feature,
+                              p_mid1_feature,
+                              ECG_SIGNAL_MID0_1_ORI_C,
+                              ECG_SIGNAL_MID0_1_OUT_IND,
+                              4,
+                              0);
 EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;

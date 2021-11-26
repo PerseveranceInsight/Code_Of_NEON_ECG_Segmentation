@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "arm_util.h"
 #include "arm_typedef.h"
@@ -40,6 +41,47 @@ static int32_t conv_fuse_bias_fopen(char *bias_path,
     ree_check_fopen(bias_file, bias_path, "rb", EXIT_CONV_FUSE_BIAS_FOPEN);
     ree_file_read(bias_file, conv_bias_buf, file_size, read_size);
 EXIT_CONV_FUSE_BIAS_FOPEN:
+    MODEL_FUNC_EXIT;
+    return retval;
+}
+
+static int32_t max_pool_fp(uint32_t in_search_start_ind,
+                           uint32_t in_search_end_ind,
+                           uint32_t out_step_ind,
+                           uint32_t max_pool_padding,
+                           mat_sig_t *p_in_mat,
+                           mat_sig_t *p_out_mat)
+{
+    MODEL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    int32_t in_search_start_ind_wo_padding = (int32_t)in_search_start_ind - (int32_t)max_pool_padding;
+    int32_t in_search_end_ind_wo_padding = (int32_t)in_search_end_ind - (int32_t)max_pool_padding;
+    float max_in_feature = -99999.0f;
+    float *p_in_feature = NULL, *p_out_feature = NULL;
+    ree_check_null_exit_retval(p_in_mat, retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FP,
+                               "%s occurs error due to p_in_mat is NULL", __func__);
+    ree_check_null_exit_retval(p_out_mat, retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FP,
+                               "%s occurs error due to p_out_mat is NULL", __func__);
+    ree_check_true_exit_retval((p_in_mat->inited != TRUE), retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FP,
+                               "%s occurs error due to p_in_mat->inited is FALSE", __func__);
+    ree_check_true_exit_retval((p_out_mat->inited != TRUE), retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FP,
+                               "%s occurs error due to p_out_mat->inited is FALSE", __func__);
+    in_search_start_ind_wo_padding = (in_search_start_ind_wo_padding < 0)?0:in_search_start_ind_wo_padding;
+    in_search_end_ind_wo_padding = (in_search_end_ind_wo_padding < 0)?0:in_search_end_ind_wo_padding;
+    in_search_start_ind_wo_padding = (in_search_start_ind_wo_padding > p_in_mat->ori_l)?p_in_mat->ori_l:in_search_start_ind_wo_padding;
+    in_search_end_ind_wo_padding = (in_search_end_ind_wo_padding > p_in_mat->ori_l)?p_in_mat->ori_l:in_search_end_ind_wo_padding;
+    ree_log(MODEL_LOG, "%s in_search_start_ind_wo_padding %d in_search_end_ind_wo_padding %d", __func__, 
+                                                                                              in_search_start_ind_wo_padding, 
+                                                                                              in_search_end_ind_wo_padding);
+    p_in_feature = (float*)p_in_mat->ori_buf;
+    p_out_feature = (float*)p_out_mat->ori_buf;
+    for (uint32_t in_ind = in_search_start_ind_wo_padding; in_ind<in_search_end_ind_wo_padding; in_ind++)
+    {
+        max_in_feature = (p_in_feature[in_ind] > max_in_feature)?p_in_feature[in_ind]:max_in_feature;
+    }
+    ree_log(MODEL_LOG, "%s max_in_feature %4.4f", __func__, max_in_feature);
+    p_out_feature[out_step_ind] = max_in_feature;
+EXIT_MAX_POOL_FP:
     MODEL_FUNC_EXIT;
     return retval;
 }
@@ -218,6 +260,111 @@ int32_t conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
     }
 
 EXIT_CONV_FUSE_RELU_FORWARD:
+    MODEL_FUNC_EXIT;
+    return retval;
+}
+
+int32_t max_pool_forward(max_pool_parameters_t *p_parameters,
+                         signal_container_t *p_in_sig_con,
+                         signal_container_t *p_out_sig_con,
+                         uint32_t input_num,
+                         uint32_t input_start_ind,
+                         uint32_t output_num,
+                         uint32_t output_start_ind)
+{
+    MODEL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    uint32_t input_end_ind = 0, output_end_ind = 0;
+    uint32_t input_ind = 0, output_ind = 0;
+    ree_check_null_exit_retval(p_parameters, retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to p_parameters is NULL", __func__);
+    ree_check_null_exit_retval(p_in_sig_con, retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to p_in_sig_con is NULL", __func__);
+    ree_check_null_exit_retval(p_out_sig_con, retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to p_out_sig_con is NULL", __func__);
+    ree_check_true_exit_retval((p_in_sig_con->inited != TRUE), retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to p_in_sig_con->inited is FALSE", __func__);
+    ree_check_true_exit_retval((p_out_sig_con->inited != TRUE), retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to p_out_sig_con->inited is FALSE", __func__);
+    ree_log(MODEL_LOG, "%s input_num %d input_start_ind %d output_num %d output_start_ind %d", __func__,
+                                                                                               input_num,
+                                                                                               input_start_ind,
+                                                                                               output_num,
+                                                                                               output_start_ind);
+
+    ree_log(MODEL_LOG, "%s p_in_sig_con's signal_para", __func__);
+    print_mat_sig_para(&(p_in_sig_con->signal_para));
+    ree_log(MODEL_LOG, "%s p_out_sig_con's signal_para", __func__);
+    print_mat_sig_para(&(p_out_sig_con->signal_para));
+    ree_log(MODEL_LOG, "%s p_in_sig_con->signal_num %d", __func__, p_in_sig_con->signal_num);
+    ree_log(MODEL_LOG, "%s p_out_sig_con->signal_num %d", __func__, p_out_sig_con->signal_num);
+    ree_check_true_exit_retval((input_num != output_num), retval, ECG_SEG_INVALID_PARAM, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to input_num != output_num", __func__);
+    ree_check_true_exit_retval((input_start_ind>p_in_sig_con->signal_num), retval, ECG_SEG_ERROR_STATE, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to input_start_ind %d is larger than p_in_sig_con->signal_num %d", __func__, 
+                                                                                                                       input_start_ind,
+                                                                                                                       p_in_sig_con->signal_num);
+    ree_check_true_exit_retval((output_start_ind>p_out_sig_con->signal_num), retval, ECG_SEG_ERROR_STATE, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to output_start_ind %d is larger than p_out_sig_con->signal_num %d", __func__, 
+                                                                                                                       output_start_ind,
+                                                                                                                       p_out_sig_con->signal_num);
+    ree_check_true_exit_retval(((input_start_ind+input_num)>p_in_sig_con->signal_num), retval, ECG_SEG_ERROR_STATE, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to input_start_ind+input_num %d is larger than p_in_sig_con->signal_num %d", __func__, 
+                                                                                                                                input_start_ind + input_num,
+                                                                                                                                p_in_sig_con->signal_num);
+    ree_check_true_exit_retval(((output_start_ind+output_num)>p_out_sig_con->signal_num), retval, ECG_SEG_ERROR_STATE, EXIT_MAX_POOL_FORWARD,
+                               "%s occurs error due to output_start_ind+output_num %d is larger than p_out_sig_con->signal_num %d", __func__, 
+                                                                                                                                   output_start_ind + output_num,
+                                                                                                                                   p_out_sig_con->signal_num);
+    input_end_ind = input_num + input_start_ind;
+    output_end_ind = output_num + output_start_ind;
+    input_ind = input_start_ind;
+    output_ind = output_start_ind;
+    ree_log(MODEL_LOG, "%s input_end_ind %d output_end_ind %d", __func__, input_end_ind, output_end_ind);
+    {
+        const float tmp_step = ((float)(p_in_sig_con->signal_para.ori_l + p_parameters->padding*2 - p_parameters->kernel_size)/(float)p_parameters->padding) + 1.0f;
+        const uint32_t step = (uint32_t)ceil(tmp_step);
+        uint32_t max_pool_feature_start_ind = 0;
+        uint32_t max_pool_feature_end_ind = p_parameters->kernel_size;
+        ree_log(MODEL_LOG, "%s step %d tmp_step %f", __func__, step, tmp_step);
+        ree_log(MODEL_LOG, "%s max_pool_feature_start_ind %d max_pool_feature_end_ind %d", __func__, 
+                                                                                           max_pool_feature_start_ind,
+                                                                                           max_pool_feature_end_ind);
+        ree_check_true_exit_retval((step != p_out_sig_con->signal_para.ori_l), retval, ECG_SEG_ERROR_STATE, EXIT_MAX_POOL_FORWARD,
+                                   "%s occurs error due to step %d != p_out_sig_con->signal_para.ori_l %d", __func__,
+                                                                                                            step,
+                                                                                                            p_out_sig_con->signal_para.ori_l);
+        for (uint32_t ind = 0; ind<input_num; ind++)
+        {
+            max_pool_feature_start_ind = 0;
+            max_pool_feature_end_ind = p_parameters->kernel_size;
+            for (uint32_t step_ind = 0; step_ind<step; step_ind++)
+            {
+                ree_log(MODEL_LOG, "%s step_ind %d, max_pool_feature_start_ind %d max_pool_feature_end_ind %d", __func__, 
+                                                                                                                step_ind,
+                                                                                                                max_pool_feature_start_ind,
+                                                                                                                max_pool_feature_end_ind);
+                retval = max_pool_fp(max_pool_feature_start_ind, max_pool_feature_end_ind,
+                                     step_ind, p_parameters->padding,
+                                     &(p_in_sig_con->signal[input_ind]),
+                                     &(p_out_sig_con->signal[output_ind]));
+                max_pool_feature_start_ind += p_parameters->stride;
+                max_pool_feature_end_ind += p_parameters->stride;
+            }
+            input_ind++;
+            output_ind++;
+        }
+    }
+
+    output_ind = output_start_ind;
+    for (uint32_t ind = 0; ind<input_num; ind++)
+    {
+        ree_log(MODEL_LOG, "%s ind %d", __func__, ind);
+        print_mat_ori_fp(&(p_out_sig_con->signal[output_ind]));
+        output_ind++;
+    }
+
+EXIT_MAX_POOL_FORWARD:
     MODEL_FUNC_EXIT;
     return retval;
 }

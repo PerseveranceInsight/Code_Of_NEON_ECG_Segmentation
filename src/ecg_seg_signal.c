@@ -83,6 +83,7 @@ int32_t signal_container_constructor_fp(uint32_t signal_num, mat_sig_para_t *p_p
     ree_check_null_exit_retval((*pp_container)->signal, retval, ECG_SEG_ALLOC_FAILED, EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP,
                                "%s occurs error due to allocate (*pp_container)->signal faild", __func__);
     ree_set((*pp_container)->signal, 0, sizeof(mat_sig_t)*signal_num);
+    ree_cpy((void*)&((*pp_container)->signal_para), p_para, sizeof(mat_sig_para_t));
 
     for (uint32_t i=0; i<signal_num; i++)
     {

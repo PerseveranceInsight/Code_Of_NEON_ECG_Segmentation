@@ -20,19 +20,19 @@ typedef enum LOG_LEVEL {
     if (LOG_LEVEL >= DEFAULT_LOG_LEVEL) {                                               \
         switch (LOG_LEVEL) {                                                            \
             case LOG_VERBOSE:                                                           \
-                __android_log_print(ANDROID_LOG_WARN, "ANDROID_IPP", x);                \
+                __android_log_print(ANDROID_LOG_WARN, "ECG_SEG", x);                    \
                 break;                                                                  \
             case LOG_DEBUG:                                                             \
-                __android_log_print(ANDROID_LOG_DEBUG, "ANRDOID_IPP", x);               \
+                __android_log_print(ANDROID_LOG_DEBUG, "ECG_SEG", x);                   \
                 break;                                                                  \
             case LOG_INFO:                                                              \
-                __android_log_print(ANDROID_LOG_INFO, "ANDROID_IPP", x);                \
+                __android_log_print(ANDROID_LOG_INFO, "ECG_SEG", x);                    \
                 break;                                                                  \
             case LOG_WARN:                                                              \
-                __android_log_print(ANDROID_LOG_WARN, "ANDROID_IPP", x);                \
+                __android_log_print(ANDROID_LOG_WARN, "ECG_SEG", x);                    \
                 break;                                                                  \
             case LOG_ERROR:                                                             \
-                __android_log_print(ANDROID_LOG_ERROR, "ANRDOID_IPP", x);               \
+                __android_log_print(ANDROID_LOG_ERROR, "ECG_SEG", x);                   \
                 break;                                                                  \
         }                                                                               \
         printf(x);                                                                      \
