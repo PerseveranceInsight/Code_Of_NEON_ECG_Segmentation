@@ -132,7 +132,7 @@ int32_t ecg_seg_fp_add_bias(mat_sig_t *p_out_feature,
         p_feat++; 
     }
 
-    w_steps++; // for all elements of output feature
+    w_steps += (remain_w_num != 0)?1:0; // for all elements of output feature
     ree_log(GEMM_LOG, "%s w_steps %d for relu", __func__, w_steps);
     p_feat = p_out_feature->ori_buf;
     if (fused_relu)

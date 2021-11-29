@@ -38,9 +38,9 @@ static mat_sig_para_t mid_feat_para1 = {.ori_l = ECG_SIGNAL_MID1_ORI_L,
                                         .padding = ECG_SIGNAL_MID1_PADDING,
                                         .stride = ECG_SIGNAL_MID1_STRIDE,};
 
-static max_pool_parameters_t max_pool_parameters = {.kernel_size = 8,
-                                                    .stride = 2,
-                                                    .padding = 3,};
+static max_pool_parameters_t max_pool_parameters = {.kernel_size = ECG_SIGNAL_MAX_POOL_KERNEL_SIZE,
+                                                    .stride = ECG_SIGNAL_MAX_POOL_STRIDE,
+                                                    .padding = ECG_SIGNAL_MAX_POOL_PADDING,};
 
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_mid_feature0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
@@ -436,8 +436,8 @@ static int32_t ecg_seg_graph_max_pool_0_forward(ecg_seg_graph_t *p_graph)
                               p_mid1_feature,
                               ECG_SIGNAL_MID0_1_ORI_C,
                               ECG_SIGNAL_MID0_1_OUT_IND,
-                              4,
-                              0);
+                              ECG_SIGNAL_MID1_INPUT_C,
+                              ECG_SIGNAL_MID1_INPUT_IN_IND);
 EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;

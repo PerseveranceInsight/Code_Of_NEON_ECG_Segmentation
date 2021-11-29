@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
                                           ECG_MIDDLE_FEATURE_GROUP_NUM, 
                                           ECG_OUTPUT_PRED_GROUP_NUM, 
                                           ECG_CONV_RELU_FUSE_GROUP_NUM, &graph_ctr);
-    retval = ecg_seg_graph_input_constructor_fopen(ECG_TINY_SIGNAL,
+    retval = ecg_seg_graph_input_constructor_fopen(ECG_SIGNAL,
                                                    &input_sig_para,
                                                    &graph_ctr);
     retval = ecg_seg_graph_context_init(&graph_ctr);

@@ -322,7 +322,7 @@ int32_t max_pool_forward(max_pool_parameters_t *p_parameters,
     output_ind = output_start_ind;
     ree_log(MODEL_LOG, "%s input_end_ind %d output_end_ind %d", __func__, input_end_ind, output_end_ind);
     {
-        const float tmp_step = ((float)(p_in_sig_con->signal_para.ori_l + p_parameters->padding*2 - p_parameters->kernel_size)/(float)p_parameters->padding) + 1.0f;
+        const float tmp_step = ((float)(p_in_sig_con->signal_para.ori_l + p_parameters->padding*2 - p_parameters->kernel_size)/(float)p_parameters->stride) + 1.0f;
         const uint32_t step = (uint32_t)ceil(tmp_step);
         uint32_t max_pool_feature_start_ind = 0;
         uint32_t max_pool_feature_end_ind = p_parameters->kernel_size;
