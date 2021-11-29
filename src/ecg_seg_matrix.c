@@ -243,6 +243,28 @@ EXIT_MAT_SIG_CONSTRUCTOR_FP_STATIC:
     return retval;
 }
 
+int32_t mat_sig_reset_fp(mat_sig_t *p_mat)
+{
+    MATRIX_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    uint32_t ele_num = 0;
+    ree_check_null_exit_retval(p_mat, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_RESET_FP,
+                               "%s occurs error due to p_mat is NULL", __func__);
+    ree_check_true_exit_retval((!p_mat->allocated), retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_RESET_FP,
+                               "%s directly returns due to p_mat->allocated is FALSE", __func__);
+    ree_log(MATRIX_LOG, "%s p_mat->ori_l %d", __func__, p_mat->ori_l);
+    ele_num = p_mat->ori_l / FP_PACK_SIZE_W;
+    ele_num += ((p_mat->ori_l % FP_PACK_SIZE_W)!=0)?1:0;
+    ele_num *= FP_PACK_SIZE_W;
+    ree_log(MATRIX_LOG, "%s ele_num %d", __func__, ele_num);
+    ree_check_null_exit_retval(p_mat->ori_buf, retval, ECG_SEG_ERROR_STATE, EXIT_MAT_SIG_RESET_FP,
+                               "%s occurs error due to p_mat->ori_buf is NULL", __func__);
+    ree_set(p_mat->ori_buf, 0, ele_num*ELE_FP_SIZE);
+EXIT_MAT_SIG_RESET_FP:
+    MATRIX_FUNC_EXIT;
+    return retval;
+}
+
 void mat_sig_destructor(mat_sig_t *p_mat)
 {
     MATRIX_FUNC_ENTRANCE;

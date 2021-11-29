@@ -98,6 +98,39 @@ EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_FP:
     return retval;
 }
 
+int32_t signal_container_reset_fp(signal_container_t *p_container,
+                                  uint32_t reset_num,
+                                  uint32_t reset_start_ind)
+{
+    SIGNAL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    uint32_t res_start_ind = reset_start_ind;
+    uint32_t res_end_ind = reset_start_ind + reset_num;
+    ree_check_null_exit_retval(p_container, retval, ECG_SEG_INVALID_PARAM, EXIT_SIGNAL_CONTAINER_RESET_FP,
+                               "%s occurs error due to p_container is NULL", __func__);
+    ree_log(SIGNAL_LOG, "%s reset_start_ind %d reset_num %d", __func__, reset_start_ind, reset_num);
+    ree_log(SIGNAL_LOG, "%s res_start_ind %d res_end_ind %d", __func__, res_start_ind, res_end_ind);
+    ree_check_true_exit_retval((res_start_ind > p_container->signal_num), retval, ECG_SEG_INVALID_PARAM, EXIT_SIGNAL_CONTAINER_RESET_FP,
+                               "%s occurs error due to res_start_ind > p_container->signal_num %d", __func__, p_container->signal_num);
+    ree_check_true_exit_retval((res_end_ind > p_container->signal_num), retval, ECG_SEG_INVALID_PARAM, EXIT_SIGNAL_CONTAINER_RESET_FP,
+                               "%s occurs error due to res_end_ind > p_container->signal_num %d", __func__, p_container->signal_num);
+    
+    for (uint32_t res_ind = res_start_ind; res_ind < res_end_ind; res_ind++)
+    {
+        ree_log(SIGNAL_LOG, "%s res_ind %d", __func__, res_ind);
+        ree_check_null_exit_retval((&p_container->signal[res_ind]), retval, ECG_SEG_ALLOC_FAILED, EXIT_SIGNAL_CONTAINER_RESET_FP,
+                                   "%s occurs error due to p_container->signal[res_ind] is NULL", __func__);
+        retval = mat_sig_reset_fp((&p_container->signal[res_ind]));
+        ree_check_true_exit((retval != ECG_SEG_OK), 
+                            EXIT_SIGNAL_CONTAINER_RESET_FP, 
+                            "%s occurs error due to retval of mat_sig_reset_fp != ECG_SEG_OK", __func__);
+    }
+
+EXIT_SIGNAL_CONTAINER_RESET_FP:
+    SIGNAL_FUNC_EXIT;
+    return retval;
+}
+
 void signal_container_destructor(signal_container_t *p_container)
 {
     SIGNAL_FUNC_ENTRANCE;

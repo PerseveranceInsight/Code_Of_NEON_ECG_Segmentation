@@ -92,6 +92,8 @@ int32_t mat_sig_constructor_fp_static(mat_sig_para_t *p_param,
                                       void **pp_mat_buf,
                                       BOOL kernel);
 
+int32_t mat_sig_reset_fp(mat_sig_t *p_mat);
+
 void mat_sig_destructor(mat_sig_t *p_mat);
 
 #endif
