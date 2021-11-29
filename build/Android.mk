@@ -17,6 +17,10 @@ ifeq ($(EN_MATRIX_DBG),true)
 LOCAL_CFLAGS += -DMATRIX_DBG
 endif
 
+ifeq ($(EN_PRINT_MAT_ORI),true)
+LOCAL_CFLAGS += -DPRINT_MAT_ORI
+endif
+
 ifeq ($(EN_MODEL_DBG),true)
 LOCAL_CFLAGS += -DMODEL_DBG
 endif

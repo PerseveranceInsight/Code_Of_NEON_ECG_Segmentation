@@ -58,12 +58,14 @@ void print_mat_ori_fp(mat_sig_t *p_mat)
     MATRIX_PRINTF("%s p_mat->ori_l %d\n", __func__, p_mat->ori_l);
     ree_check_null_exit(p_mat->ori_buf, EXIT_PRINT_MAT_ORI_FP, "%s occurs error due to p_mat->ori_buf is NULL", __func__);
     p_ele = p_mat->ori_buf;
+#ifdef PRINT_MAT_ORI
     for (uint32_t i = 0; i<p_mat->ori_l; i++)
     {
         MATRIX_PRINTF("%3.05f ", *p_ele);
         p_ele++;
     }
     MATRIX_PRINTF("\n");
+#endif
 EXIT_PRINT_MAT_ORI_FP:
     MATRIX_FUNC_EXIT;
 }

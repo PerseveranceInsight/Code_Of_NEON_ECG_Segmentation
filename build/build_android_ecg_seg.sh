@@ -1,10 +1,11 @@
 # export EN_DEBUG_SYM=true
 
-export EN_MATRIX_DBG=true
-export EN_MODEL_DBG=true
+# export EN_MATRIX_DBG=true
+# export EN_PRINT_MAT_ORI=true
+# export EN_MODEL_DBG=true
 # export EN_PACK_DEBUG=true
-export EN_GEMM_DBG=true
-export EN_GRAPH_DBG=true
+# export EN_GEMM_DBG=true
+# export EN_GRAPH_DBG=true
 # export EN_SIGNAL_DBG=true
 # export EN_SIG2COL_DBG=true
 
