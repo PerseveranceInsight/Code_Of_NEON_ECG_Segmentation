@@ -35,6 +35,7 @@ typedef enum LOG_LEVEL {
                 __android_log_print(ANDROID_LOG_ERROR, "ECG_SEG", x);                   \
                 break;                                                                  \
         }                                                                               \
+        printf("%s [%d] ", __FILE__, __LINE__);                                         \
         printf(x);                                                                      \
         printf("\n");                                                                   \
     }                                                                                   \
