@@ -65,6 +65,7 @@ static int32_t ecg_seg_graph0_0_forward(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph0_1_forward(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_max_pool_0_forward(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph1_0_forward(ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph1_1_forward(ecg_seg_graph_t *p_graph);
 
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph)
 {
@@ -575,6 +576,10 @@ static int32_t ecg_seg_graph1_0_forward(ecg_seg_graph_t *p_graph)
 EXIT_ECG_SEG_GRAPH1_0_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;
+}
+
+static int32_t ecg_seg_graph1_1_forward(ecg_seg_graph_t *p_graph)
+{
 }
 
 int32_t ecg_seg_graph_forward(ecg_seg_graph_t *p_graph)
