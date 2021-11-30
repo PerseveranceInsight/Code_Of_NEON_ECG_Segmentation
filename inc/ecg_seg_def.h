@@ -67,6 +67,7 @@
 #define ECG_SIGNAL_MID1_1_OUTPUT_IND                                  (8)
 
 #define ECG_SIGNAL_MID2_INPUT_C                                       (8)
+#define ECG_SIGNAL_MID2_INPUT_IND                                     (0)
 #define ECG_SIGNAL_MID2_0_ORI_C                                       (16)
 #define ECG_SIGNAL_MID2_ORI_L                                         (ECG_TEST_SIGNAL_MID2_ORI_L)
 #define ECG_SIGNAL_MID2_K_L                                           (ECG_TEST_SIGNAL_K_L)
