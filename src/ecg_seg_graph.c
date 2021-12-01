@@ -13,7 +13,7 @@
 #include "ecg_seg_model.h"
 #include "ecg_seg_sig2col.h"
 #include "ecg_seg_signal.h"
-#include "ecg_seg_weight.h"
+#include "ecg_seg_encoder_weight.h"
 
 #include "ecg_response_def.h"
 #include "ecg_seg_util.h"
