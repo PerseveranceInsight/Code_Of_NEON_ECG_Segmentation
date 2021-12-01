@@ -95,6 +95,10 @@
 #define ECG_SIGNAL_MID3_STRIDE                                        (ECG_TEST_SIGNAL_STRIDE)
 #define ECG_SIGNAL_MID3_MAX_C                                         (128)
 #define ECG_SIGNAL_MID3_INPUT_IND                                     (0)
+#define ECG_SIGNAL_MID3_0_OUTPUT_C                                    (32)
+#define ECG_SIGNAL_MID3_0_OUTPUT_IND                                  (64)
+#define ECG_SIGNAL_MID3_1_OUTPUT_C                                    (32)
+#define ECG_SIGNAL_MID3_1_OUTPUT_IND                                  (32)
 
 #define ECG_SIG2COL_MAX_OUT_L                                         (ECG_TEST_SIGNAL_MAX_OUT_L)
 #define ECG_SIG2COL_MAX_K_L                                           (ECG_TEST_SIGNAL_MAX_K_L)
