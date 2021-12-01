@@ -54,6 +54,10 @@ static mat_sig_para_t weight_para2_1 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
+static mat_sig_para_t mid_feat_para3 = {.ori_l = ECG_SIGNAL_MID3_ORI_L,
+                                        .k_l = ECG_SIGNAL_MID3_K_L,
+                                        .padding = ECG_SIGNAL_MID3_PADDING,
+                                        .stride = ECG_SIGNAL_MID3_STRIDE,};
 static max_pool_parameters_t max_pool_parameters = {.kernel_size = ECG_SIGNAL_MAX_POOL_KERNEL_SIZE,
                                                     .stride = ECG_SIGNAL_MAX_POOL_STRIDE,
                                                     .padding = ECG_SIGNAL_MAX_POOL_PADDING,};
@@ -62,6 +66,7 @@ static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_mid_feature0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_mid_feature1_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_mid_feature2_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_mid_feature3_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_output_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_sig2col0_constructor(uint32_t max_out_l, uint32_t max_k_l, ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_conv_fuse_relu0_0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
@@ -238,6 +243,31 @@ static int32_t ecg_seg_graph_mid_feature2_constructor(mat_sig_para_t *p_sig_para
                                              p_sig_para,
                                              &p_sig_container);
 EXIT_ECG_SEG_GRAPH_MID_FEATURE2_CONSTRUCTOR:
+    GRAPH_FUNC_EXIT;
+    return retval;
+}
+
+static int32_t ecg_seg_graph_mid_feature3_constructor(mat_sig_para_t *p_sig_para,
+                                                      ecg_seg_graph_t *p_graph)
+{
+    GRAPH_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    signal_container_t *p_sig_container = NULL;
+    ree_check_null_exit_retval(p_sig_para, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_MID_FEATURE3_CONSTRUCTOR,
+                               "%s occurs error due to p_sig_para is NULL", __func__);
+    ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_MID_FEATURE3_CONSTRUCTOR,
+                               "%s occurs error due to p_graph is NULL", __func__);
+    ree_check_true_exit_retval((!p_graph->inited), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MID_FEATURE3_CONSTRUCTOR,
+                               "%s occurs error due to p_graph->inited is FALSE", __func__);
+    ree_check_true_exit_retval((p_graph->mid_num < 4), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MID_FEATURE3_CONSTRUCTOR,
+                               "%s occurs errod due to p_graph->mid_num is less than 4", __func__);
+    ree_check_null_exit_retval((p_graph->p_mid_features + sizeof(signal_container_t)*3), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_MID_FEATURE3_CONSTRUCTOR,
+                               "%s occurs error due to p_graph->p_mid_features + sizeof(signal_container_t)*3 is NULL", __func__);
+    p_sig_container = &(p_graph->p_mid_features[3]);
+    retval = signal_container_constructor_fp(ECG_SIGNAL_MID3_MAX_C,
+                                             p_sig_para,
+                                             &p_sig_container);
+EXIT_ECG_SEG_GRAPH_MID_FEATURE3_CONSTRUCTOR:
     GRAPH_FUNC_EXIT;
     return retval;
 }
@@ -596,6 +626,9 @@ int32_t ecg_seg_graph_context_init(ecg_seg_graph_t *p_graph)
     ree_check_true_exit_retval((retval != ECG_SEG_OK), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_CONTEXT_INIT,
                                "%s occurs error due to retval != ECG_SEG_OK", __func__);
     retval = ecg_seg_graph_conv_fuse_relu2_1_constructor(&weight_para2_1, p_graph);
+    ree_check_true_exit_retval((retval != ECG_SEG_OK), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_CONTEXT_INIT,
+                               "%s occurs error due to retval != ECG_SEG_OK", __func__);
+    retval = ecg_seg_graph_mid_feature3_constructor(&mid_feat_para3, p_graph);
     ree_check_true_exit_retval((retval != ECG_SEG_OK), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_CONTEXT_INIT,
                                "%s occurs error due to retval != ECG_SEG_OK", __func__);
 EXIT_ECG_SEG_GRAPH_CONTEXT_INIT:

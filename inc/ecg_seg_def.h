@@ -21,6 +21,8 @@
 #define ECG_TEST_SIGNAL_ORI_L                                         (2000)
 #define ECG_TEST_SIGNAL_MID1_ORI_L                                    (1000)
 #define ECG_TEST_SIGNAL_MID2_ORI_L                                    (500)
+#define ECG_TEST_SIGNAL_MID3_ORI_L                                    (250)
+#define ECG_TEST_SIGNAL_MID4_ORI_L                                    (125)
 #define ECG_TEST_SIGNAL_K_L                                           (9)
 #define ECG_TEST_SIGNAL_PADDING                                       (4)
 #define ECG_TEST_SIGNAL_STRIDE                                        (1)
@@ -84,6 +86,14 @@
 #define ECG_SIGNAL_MID2_0_OUTPUT_IND                                  (32)
 #define ECG_SIGNAL_MID2_1_OUTPUT_C                                    (16)
 #define ECG_SIGNAL_MID2_1_OUTPUT_IND                                  (16)
+
+#define ECG_SIGNAL_MID3_INPUT_C                                       (16)
+#define ECG_SIGNAL_MID3_0_ORI_C                                       (32)
+#define ECG_SIGNAL_MID3_ORI_L                                         (ECG_TEST_SIGNAL_MID3_ORI_L)
+#define ECG_SIGNAL_MID3_K_L                                           (ECG_TEST_SIGNAL_K_L)
+#define ECG_SIGNAL_MID3_PADDING                                       (ECG_TEST_SIGNAL_PADDING)
+#define ECG_SIGNAL_MID3_STRIDE                                        (ECG_TEST_SIGNAL_STRIDE)
+#define ECG_SIGNAL_MID3_MAX_C                                         (128)
 
 #define ECG_SIG2COL_MAX_OUT_L                                         (ECG_TEST_SIGNAL_MAX_OUT_L)
 #define ECG_SIG2COL_MAX_K_L                                           (ECG_TEST_SIGNAL_MAX_K_L)
