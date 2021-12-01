@@ -8,6 +8,12 @@
 #define ECG_SEG_ENCODER_CONVRELU0_1_K_C                               (16)
 #define ECG_SEG_ENCODER_CONVRELU1_0_K_C                               (32)
 #define ECG_SEG_ENCODER_CONVRELU1_1_K_C                               (64)
+#define ECG_SEG_ENCODER_CONVRELU2_0_K_C                               (128)
+#define ECG_SEG_ENCODER_CONVRELU2_1_K_C                               (256)
+#define ECG_SEG_ENCODER_CONVRELU3_0_K_C                               (512)
+#define ECG_SEG_ENCODER_CONVRELU3_1_K_C                               (1024)
+#define ECG_SEG_ENCODER_CONVRELU4_0_K_C                               (2048)
+#define ECG_SEG_ENCODER_CONVRELU4_1_K_C                               (4096)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING                  (4)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE                   (1)
 
