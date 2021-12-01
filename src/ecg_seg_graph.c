@@ -580,7 +580,7 @@ static int32_t ecg_seg_graph_max_pool_0_forward(ecg_seg_graph_t *p_graph)
                               ECG_SIGNAL_MID0_1_ORI_C,
                               ECG_SIGNAL_MID0_1_OUT_IND,
                               ECG_SIGNAL_MID1_INPUT_C,
-                              ECG_SIGNAL_MID1_INPUT_IN_IND);
+                              ECG_SINGAL_MID1_INPUT_IND);
 EXIT_ECG_SEG_GRAPH_MAX_POOL_0_FORWARD:
     GRAPH_FUNC_EXIT;
     return retval;
@@ -605,7 +605,7 @@ static int32_t ecg_seg_graph1_0_forward(ecg_seg_graph_t *p_graph)
                                     p_mid1_feature,
                                     p_mid1_feature,
                                     ECG_SIGNAL_MID1_INPUT_C,
-                                    ECG_SIGNAL_MID1_INPUT_IN_IND,
+                                    ECG_SINGAL_MID1_INPUT_IND,
                                     ECG_SIGNAL_MID1_0_OUTPUT_C,
                                     ECG_SIGNAL_MID1_0_OUTPUT_IND);
 EXIT_ECG_SEG_GRAPH1_0_FORWARD:
