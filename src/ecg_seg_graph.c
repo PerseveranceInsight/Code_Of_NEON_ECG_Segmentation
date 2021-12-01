@@ -22,47 +22,38 @@ static mat_sig_para_t weight_para0_0 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
-
 static mat_sig_para_t weight_para0_1 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
-
 static mat_sig_para_t mid_feat_para0 = {.ori_l = ECG_SIGNAL_MID0_ORI_L,
                                         .k_l = ECG_SIGNAL_MID0_K_L,
                                         .padding = ECG_SIGNAL_MID0_PADDING,
                                         .stride = ECG_SIGNAL_MID0_STRIDE,};
-
 static mat_sig_para_t mid_feat_para1 = {.ori_l = ECG_SIGNAL_MID1_ORI_L,
                                         .k_l = ECG_SIGNAL_MID1_K_L,
                                         .padding = ECG_SIGNAL_MID1_PADDING,
                                         .stride = ECG_SIGNAL_MID1_STRIDE,};
-
 static mat_sig_para_t weight_para1_0 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
-
 static mat_sig_para_t weight_para1_1 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
-
 static mat_sig_para_t mid_feat_para2 = {.ori_l = ECG_SIGNAL_MID2_ORI_L,
                                         .k_l = ECG_SIGNAL_MID2_K_L,
                                         .padding = ECG_SIGNAL_MID2_PADDING,
                                         .stride = ECG_SIGNAL_MID2_STRIDE,};
-
 static mat_sig_para_t weight_para2_0 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
-
 static mat_sig_para_t weight_para2_1 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .k_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
                                         .padding = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING,
                                         .stride = ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE,};
-
 static max_pool_parameters_t max_pool_parameters = {.kernel_size = ECG_SIGNAL_MAX_POOL_KERNEL_SIZE,
                                                     .stride = ECG_SIGNAL_MAX_POOL_STRIDE,
                                                     .padding = ECG_SIGNAL_MAX_POOL_PADDING,};
