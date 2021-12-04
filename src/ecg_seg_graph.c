@@ -81,6 +81,10 @@ static mat_sig_para_t weight_para4_1 = {.ori_l = ECG_SEG_ENCODER_CONVRELU_0_K_L,
 static max_pool_parameters_t max_pool_parameters = {.kernel_size = ECG_SIGNAL_MAX_POOL_KERNEL_SIZE,
                                                     .stride = ECG_SIGNAL_MAX_POOL_STRIDE,
                                                     .padding = ECG_SIGNAL_MAX_POOL_PADDING,};
+static mat_sig_para_t tranconv_weight_para = {.ori_l = ECG_SEG_TRANCONV_0_K_L,
+                                              .k_l = ECG_SEG_TRANCONV_0_K_L,
+                                              .stride = ECG_SEG_TRANCONV_0_K_DUMMING_STRIDE,
+                                              .padding = ECG_SEG_TRANCONV_0_K_DUMMING_PADDING,};
 
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_mid_feature0_constructor(mat_sig_para_t *p_sig_para, ecg_seg_graph_t *p_graph);
@@ -121,12 +125,14 @@ static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph)
     ree_log(GRAPH_LOG, "%s mid_num %d", __func__, p_graph->mid_num);
     ree_log(GRAPH_LOG, "%s out_num %d", __func__, p_graph->out_num);
     ree_log(GRAPH_LOG, "%s conv_fuse_relu_num %d", __func__, p_graph->conv_fuse_relu_num);
+    ree_log(GRAPH_LOG, "%s tranconv_num %d", __func__, p_graph->tranconv_num);
 }
 
 int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,
                                      uint32_t mid_num,
                                      uint32_t out_num,
                                      uint32_t conv_fuse_relu_num,
+                                     uint32_t tranconv_num,
                                      ecg_seg_graph_t *p_graph)
 {
     GRAPH_FUNC_ENTRANCE;
@@ -139,12 +145,15 @@ int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,
                                "%s occurs error due to out_num==0", __func__);
     ree_check_true_exit_retval((conv_fuse_relu_num == 0), retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
                                "%s occurs error due to conv_fuse_relu_num==0", __func__);
+    ree_check_true_exit_retval((tranconv_num == 0), retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
+                               "%s occurs error due to tranconv_num==0", __func__);
     ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
                                "%s occurs error due to p_graph is NULL", __func__);
     p_graph->in_num = in_num;
     p_graph->mid_num = mid_num;
     p_graph->out_num = out_num;
     p_graph->conv_fuse_relu_num = conv_fuse_relu_num;
+    p_graph->tranconv_num = tranconv_num;
     ecg_seg_graph_constructor_param(p_graph);
     p_graph->p_in_sigs = ree_malloc(sizeof(signal_container_t)*in_num);
     ree_check_null_exit_retval(p_graph->p_in_sigs, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,

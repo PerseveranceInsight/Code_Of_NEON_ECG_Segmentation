@@ -14,8 +14,11 @@
 #define ECG_SEG_ENCODER_CONVRELU3_1_K_C                               (1024)
 #define ECG_SEG_ENCODER_CONVRELU4_0_K_C                               (2048)
 #define ECG_SEG_ENCODER_CONVRELU4_1_K_C                               (4096)
+#define ECG_SEG_TRANCONV_0_K_L                                        (8)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING                  (4)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE                   (1)
+#define ECG_SEG_TRANCONV_0_K_DUMMING_PADDING                          (3)
+#define ECG_SEG_TRANCONV_0_K_DUMMING_STRIDE                           (2)
 
 #define ECG_TEST_SIGNAL_ORI_C                                         (1)
 #define ECG_TEST_SIGNAL_ORI_L                                         (2000)
@@ -118,6 +121,7 @@
 
 #define ECG_MIDDLE_FEATURE_GROUP_NUM                                  (5)
 #define ECG_CONV_RELU_FUSE_GROUP_NUM                                  (19)
+#define ECG_TRANCONV_GROUP_NUM                                        (4)
 #define ECG_OUTPUT_PRED_GROUP_NUM                                     (1)
 
 #endif

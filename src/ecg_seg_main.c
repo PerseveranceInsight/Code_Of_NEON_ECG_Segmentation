@@ -21,7 +21,8 @@ int main(int argc, char* argv[])
     retval = ecg_seg_graph_constructor_fp(ECG_SIGNAL_ORI_C, 
                                           ECG_MIDDLE_FEATURE_GROUP_NUM, 
                                           ECG_OUTPUT_PRED_GROUP_NUM, 
-                                          ECG_CONV_RELU_FUSE_GROUP_NUM, &graph_ctr);
+                                          ECG_CONV_RELU_FUSE_GROUP_NUM, 
+                                          ECG_TRANCONV_GROUP_NUM, &graph_ctr);
     retval = ecg_seg_graph_input_constructor_fopen(ECG_SIGNAL,
                                                    &input_sig_para,
                                                    &graph_ctr);

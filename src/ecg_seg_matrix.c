@@ -245,6 +245,36 @@ EXIT_MAT_SIG_CONSTRUCTOR_FP_STATIC:
     return retval;
 }
 
+int32_t mat_sig_set_tran_conv_para(mat_sig_para_t *p_tran_kernel,
+                                   mat_sig_para_t *p_feat_para,
+                                   mat_sig_tran_conv_para_t *p_tran_conv_para)
+{
+    MATRIX_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_tran_kernel, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_TRAN_CONV_PARA,
+                               "%s occurs error due to p_tran_kernel is NULL", __func__);
+    ree_check_null_exit_retval(p_feat_para, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_TRAN_CONV_PARA,
+                               "%s occurs error due to p_feat_para is NULL", __func__);
+    ree_check_null_exit_retval(p_tran_conv_para, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_TRAN_CONV_PARA,
+                               "%s occurs error due to p_tran_conv_para is NULL", __func__);
+    print_mat_sig_para(p_tran_kernel);
+    print_mat_sig_para(p_feat_para);
+    p_tran_conv_para->ori_l = (p_feat_para->ori_l - 1)*p_tran_kernel->stride - 2*p_tran_kernel->padding + p_tran_kernel->k_l;
+    p_tran_conv_para->out_l = p_tran_conv_para->ori_l;
+    p_tran_conv_para->col_h = p_tran_kernel->k_l;
+    p_tran_conv_para->col_w = p_tran_conv_para->out_l;
+    p_tran_conv_para->pack_w_step = p_tran_conv_para->out_l / FP_PACK_SIZE_W;
+    p_tran_conv_para->pack_w_step += ((p_tran_conv_para->out_l % FP_PACK_SIZE_W)!=0)?1:0;
+    p_tran_conv_para->pack_h = p_tran_conv_para->col_h;
+    p_tran_conv_para->pack_w = p_tran_conv_para->pack_w_step * FP_PACK_SIZE_W;
+    p_tran_conv_para->pack_ele = p_tran_conv_para->pack_h * p_tran_conv_para->pack_w;
+    p_tran_conv_para->padding = p_tran_kernel->padding;
+    p_tran_conv_para->stride = p_tran_kernel->stride;
+EXIT_MAT_SIG_TRAN_CONV_PARA:
+    MATRIX_FUNC_EXIT;
+    return retval;
+}
+
 int32_t mat_sig_reset_fp(mat_sig_t *p_mat)
 {
     MATRIX_FUNC_ENTRANCE;

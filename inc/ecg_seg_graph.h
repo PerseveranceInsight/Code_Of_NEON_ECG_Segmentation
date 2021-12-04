@@ -29,7 +29,9 @@ typedef struct ecg_seg_graph
     uint32_t mid_num;
     uint32_t out_num;
     uint32_t conv_fuse_relu_num;
+    uint32_t tranconv_num;
     conv_fuse_relu_t *p_modules;
+    conv_fuse_relu_t *p_tranconv_modules;
     signal_container_t *p_in_sigs;
     signal_container_t *p_mid_features;
     signal_container_t *p_out_pred;
@@ -40,6 +42,7 @@ int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,
                                      uint32_t mid_num,
                                      uint32_t out_num,
                                      uint32_t conv_fuse_relu_num,
+                                     uint32_t tranconv_num,
                                      ecg_seg_graph_t *p_graph);
 
 int32_t ecg_seg_graph_input_constructor_fopen(char *p_sig_path,

@@ -52,6 +52,19 @@ typedef struct mat_sig_para {
     uint32_t stride;
 } mat_sig_para_t;
 
+typedef struct mat_sig_tran_conv_para {
+    uint32_t ori_l;
+    uint32_t out_l;
+    uint32_t col_h;
+    uint32_t col_w;
+    uint32_t pack_w_step;
+    uint32_t pack_h;
+    uint32_t pack_w;
+    uint32_t pack_ele;
+    uint32_t padding;
+    uint32_t stride;
+} mat_sig_tran_conv_para_t;
+
 typedef struct mat_sig {
     BOOL inited;
     BOOL allocated;
@@ -91,6 +104,10 @@ int32_t mat_sig_constructor_fp_static(mat_sig_para_t *p_param,
                                       mat_sig_t *p_mat,
                                       void **pp_mat_buf,
                                       BOOL kernel);
+
+int32_t mat_sig_set_tran_conv_para(mat_sig_para_t *p_tran_kernel,
+                                   mat_sig_para_t *p_feat_para,
+                                   mat_sig_tran_conv_para_t *p_tran_conv_para);
 
 int32_t mat_sig_reset_fp(mat_sig_t *p_mat);
 
