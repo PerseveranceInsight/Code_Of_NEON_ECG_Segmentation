@@ -175,6 +175,10 @@ int32_t ecg_seg_graph_constructor_fp(uint32_t in_num,
     ree_check_null_exit_retval(p_graph->p_modules, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
                                "%s occurs error due to alloc p_graph->p_modules failed", __func__);
     ree_set(p_graph->p_modules, 0, sizeof(conv_fuse_relu_t)*conv_fuse_relu_num);
+    p_graph->p_tranconv_modules = ree_malloc(sizeof(conv_fuse_relu_t)*tranconv_num);
+    ree_check_null_exit_retval(p_graph->p_tranconv_modules, retval, ECG_SEG_ALLOC_FAILED, EXIT_ECG_SEG_GRAPH_CONSTRUCTOR,
+                               "%s occurs error due to alloc p_graph->p_tranconv_modules failed", __func__);
+    ree_set(p_graph->p_tranconv_modules, 0, sizeof(conv_fuse_relu_t)*tranconv_num);
     p_graph->inited = TRUE;
 EXIT_ECG_SEG_GRAPH_CONSTRUCTOR:
     if (!p_graph->inited) 
@@ -183,6 +187,7 @@ EXIT_ECG_SEG_GRAPH_CONSTRUCTOR:
         ree_free(p_graph->p_mid_features);
         ree_free(p_graph->p_out_pred);
         ree_free(p_graph->p_sig2col_ctr);
+        ree_free(p_graph->p_tranconv_modules);
     }
     GRAPH_FUNC_EXIT;
     return retval;
@@ -1368,12 +1373,17 @@ int32_t ecg_seg_graph_destructor_fp(ecg_seg_graph_t *p_graph)
     {
         conv_fuse_relu_destructor(&(p_graph->p_modules[ind]));
     }
+    for (uint32_t ind = 0; ind < p_graph->tranconv_num; ind++)
+    {
+        conv_fuse_relu_destructor(&(p_graph->p_tranconv_modules[ind]));
+    }
     signal_container_destructor(p_graph->p_out_pred);
     ree_free(p_graph->p_in_sigs);
     ree_free(p_graph->p_mid_features);
     ree_free(p_graph->p_out_pred);
     ree_free(p_graph->p_sig2col_ctr);
     ree_free(p_graph->p_modules);
+    ree_free(p_graph->p_tranconv_modules);
 EXIT_ECG_SEG_GRAPH_DESTRUCTOR:
     GRAPH_FUNC_EXIT;
     return retval;
