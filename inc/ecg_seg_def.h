@@ -2,6 +2,7 @@
 #define __ECG_SEG_DEF_H__
 
 #define ECG_SEG_ENCODER_CONVRELU_WEIGHT_PACK_SIZE                     (12)
+#define ECG_SEG_TRANCONV_WEIGHT_PACK_SIZE                             (8)
 
 #define ECG_SEG_ENCODER_CONVRELU_0_K_L                                (9)
 #define ECG_SEG_ENCODER_CONVRELU0_0_K_C                               (4)
@@ -15,6 +16,7 @@
 #define ECG_SEG_ENCODER_CONVRELU4_0_K_C                               (2048)
 #define ECG_SEG_ENCODER_CONVRELU4_1_K_C                               (4096)
 #define ECG_SEG_TRANCONV_0_K_L                                        (8)
+#define ECG_SEG_TRANCONV_0_K_C                                        (ECG_SEG_ENCODER_CONVRELU4_1_K_C)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_PADDING                  (4)
 #define ECG_SEG_ENCODER_CONVRELU_0_K_DUMMING_STRIDE                   (1)
 #define ECG_SEG_TRANCONV_0_K_DUMMING_PADDING                          (3)
