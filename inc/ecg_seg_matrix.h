@@ -87,6 +87,8 @@ int32_t mat_sig_constructor_fp_st(mat_sig_para_t *p_param,
 
 void print_mat_sig_para(mat_sig_para_t *p_param);
 
+void print_mat_sig_tran_conv_para(mat_sig_tran_conv_para_t *p_param);
+
 void print_mat_para(mat_sig_t *p_mat);
 
 void print_mat_ori_fp(mat_sig_t *p_mat);

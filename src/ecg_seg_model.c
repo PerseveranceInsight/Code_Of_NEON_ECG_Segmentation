@@ -369,6 +369,49 @@ EXIT_MAX_POOL_FORWARD:
     return retval;
 }
 
+int32_t tranconv_forward(conv_fuse_relu_t *p_tran_module,
+                         sig2col_ctr_t *p_col_ctr,
+                         signal_container_t *p_in_sig_con,
+                         signal_container_t *p_out_sig_con,
+                         mat_sig_tran_conv_para_t *p_tran_conv_para,
+                         uint32_t input_num,
+                         uint32_t input_start_ind,
+                         uint32_t output_num,
+                         uint32_t output_start_ind)
+{
+    MODEL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    uint32_t weight_ind = 0;
+    uint32_t input_end_ind = 0, output_end_ind = 0;
+    ree_check_null_exit_retval(p_tran_module, retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
+                               "%s occurs error due to p_tran_module is NULL", __func__);
+    ree_check_null_exit_retval(p_col_ctr, retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
+                               "%s occurs error due to p_col_ctr is NULL", __func__);
+    ree_check_null_exit_retval(p_in_sig_con, retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
+                               "%s occurs error due to p_in_sig_con is NULL", __func__);
+    ree_check_null_exit_retval(p_out_sig_con, retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
+                               "%s occurs error due to p_out_sig_con is NULL", __func__);
+    ree_check_null_exit_retval(p_tran_conv_para, retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
+                               "%s occurs error due to p_tran_conv_para is NULL", __func__);
+    input_end_ind = input_start_ind + input_num;
+    output_end_ind = output_start_ind + output_num;
+    ree_log(MODEL_LOG, "%s input_end_ind %d", __func__, input_end_ind);
+    ree_log(MODEL_LOG, "%s output_end_ind %d", __func__, output_end_ind);
+
+    for (uint32_t in_ind = input_start_ind; in_ind<input_end_ind; in_ind++)
+    {
+        ree_log(GEMM_LOG, "%s in_ind %d", __func__, in_ind);
+        ree_check_null_exit_retval(&(p_in_sig_con->signal[in_ind]), retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
+                                   "%s occurs error due to p_in_sig_con->signal[in_ind] is NULL", __func__);
+        retval = sig2col_mat_tranconv_fp(p_col_ctr,
+                                         &(p_in_sig_con->signal[in_ind]),
+                                         p_tran_conv_para);
+    }
+EXIT_TRANCONV_FORWARD:
+    MODEL_FUNC_EXIT;
+    return retval;
+}
+
 void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)
 {
     MODEL_FUNC_ENTRANCE;

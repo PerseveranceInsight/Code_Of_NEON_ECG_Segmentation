@@ -139,7 +139,7 @@ EXIT_SIG2COL_MAT_FP:
     return retval;
 }
 
-int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_para_t *p_para)
+int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_tran_conv_para_t *p_para)
 {
     SIG2COL_FUNC_ENTRANCE;
     int32_t retval = ECG_SEG_OK;
@@ -156,7 +156,7 @@ int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_
                                "%s occurs error due to p_ctr->col_buf is NULL", __func__);
     ree_check_true_exit_retval((!p_ctr->inited), retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_TRANCONV_FP,
                                "%s occurs error due to p_ctr->inited is FALSE", __func__);
-    print_mat_sig_para(p_para);
+    print_mat_sig_tran_conv_para(p_para);
 EXIT_SIG2COL_MAT_TRANCONV_FP:
     SIG2COL_FUNC_EXIT;
     return retval;
