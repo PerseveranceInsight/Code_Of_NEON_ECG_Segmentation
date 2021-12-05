@@ -32,6 +32,22 @@ void print_mat_sig_para(mat_sig_para_t *p_param)
     MATRIX_FUNC_EXIT;
 }
 
+void print_mat_sig_tran_conv_para(mat_sig_tran_conv_para_t *p_param)
+{
+    MATRIX_FUNC_ENTRANCE;
+    MATRIX_PRINTF("%s p_param->ori_l %d\n", __func__, p_param->ori_l);
+    MATRIX_PRINTF("%s p_param->out_l %d\n", __func__, p_param->out_l);
+    MATRIX_PRINTF("%s p_param->col_h %d\n", __func__, p_param->col_h);
+    MATRIX_PRINTF("%s p_param->col_w %d\n", __func__, p_param->col_w);
+    MATRIX_PRINTF("%s p_param->pack_w_step %d\n", __func__, p_param->pack_w_step);
+    MATRIX_PRINTF("%s p_param->pack_h %d\n", __func__, p_param->pack_h);
+    MATRIX_PRINTF("%s p_param->pack_w %d\n", __func__, p_param->pack_w);
+    MATRIX_PRINTF("%s p_param->pack_ele %d\n", __func__, p_param->pack_ele);
+    MATRIX_PRINTF("%s p_param->padding %d\n", __func__, p_param->padding);
+    MATRIX_PRINTF("%s p_param->stride %d\n", __func__, p_param->stride);
+    MATRIX_FUNC_EXIT;
+}
+
 void print_mat_para(mat_sig_t *p_mat)
 {
     MATRIX_FUNC_ENTRANCE;
@@ -270,6 +286,7 @@ int32_t mat_sig_set_tran_conv_para(mat_sig_para_t *p_tran_kernel,
     p_tran_conv_para->pack_ele = p_tran_conv_para->pack_h * p_tran_conv_para->pack_w;
     p_tran_conv_para->padding = p_tran_kernel->padding;
     p_tran_conv_para->stride = p_tran_kernel->stride;
+    print_mat_sig_tran_conv_para(p_tran_conv_para);
 EXIT_MAT_SIG_TRAN_CONV_PARA:
     MATRIX_FUNC_EXIT;
     return retval;
