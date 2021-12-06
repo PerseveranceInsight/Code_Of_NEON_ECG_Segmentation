@@ -406,6 +406,8 @@ int32_t tranconv_forward(conv_fuse_relu_t *p_tran_module,
         retval = sig2col_mat_tranconv_fp(p_col_ctr,
                                          &(p_in_sig_con->signal[in_ind]),
                                          p_tran_conv_para);
+        ree_check_true_exit((retval != ECG_SEG_OK), EXIT_TRANCONV_FORWARD, "%s occurs error due to retval of sig2col_mat_tranconv_fp %d != ECG_SEG_OK", __func__,
+                                                                                                                                                        retval);
     }
 EXIT_TRANCONV_FORWARD:
     MODEL_FUNC_EXIT;
