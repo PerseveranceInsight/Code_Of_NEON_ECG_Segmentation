@@ -1381,8 +1381,8 @@ static int32_t ecg_seg_graph_tranconv0_forward(ecg_seg_graph_t *p_graph)
                               &tran_conv_para,
                               ECG_SIGNAL_MID4_1_OUTPUT_C,
                               ECG_SIGNAL_MID4_1_OUTPUT_IND,
-                              64,
-                              64);
+                              ECG_SIGNAL_TRAN_MID3_OUTPUT_C,
+                              ECG_SIGNAL_TRAN_MID3_OUTPUT_IND);
 
 EXIT_ECG_SEG_GRAPH_TRANCONV0_FORWARD:
     GRAPH_FUNC_EXIT;
