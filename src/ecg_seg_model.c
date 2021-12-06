@@ -422,18 +422,18 @@ int32_t tranconv_forward(conv_fuse_relu_t *p_tran_module,
         }
     }
 
-    // for (uint32_t out_ind = output_start_ind, bias_ind = 0; out_ind<output_end_ind; out_ind++, bias_ind++)
-    // {
-    //     ree_log(GEMM_LOG, "%s out_ind %d, bias_ind %d", __func__, out_ind, bias_ind);
-    //     ree_check_null_exit_retval(&(p_out_sig_con->signal[out_ind]), retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
-    //                                "%s occurs error due to p_out_sig_con->signal[out_ind] is NULL out_ind %d", __func__, out_ind);
-    //     retval = ecg_seg_fp_add_bias((&p_out_sig_con->signal[out_ind]),
-    //                                  p_tran_module->conv_bias[bias_ind],
-    //                                  FALSE);
-    //     print_mat_ori_fp(&(p_out_sig_con->signal[out_ind]));
-    //     ree_check_true_exit((retval != ECG_SEG_OK), EXIT_TRANCONV_FORWARD,
-    //                                      "%s occurs error due to ecg_seg_fp_add_bias of out_ind %d failed", __func__, out_ind);
-    // }
+    for (uint32_t out_ind = output_start_ind, bias_ind = 0; out_ind<output_end_ind; out_ind++, bias_ind++)
+    {
+        ree_log(GEMM_LOG, "%s out_ind %d, bias_ind %d", __func__, out_ind, bias_ind);
+        ree_check_null_exit_retval(&(p_out_sig_con->signal[out_ind]), retval, ECG_SEG_INVALID_PARAM, EXIT_TRANCONV_FORWARD,
+                                   "%s occurs error due to p_out_sig_con->signal[out_ind] is NULL out_ind %d", __func__, out_ind);
+        retval = ecg_seg_fp_add_bias((&p_out_sig_con->signal[out_ind]),
+                                     p_tran_module->conv_bias[bias_ind],
+                                     FALSE);
+        print_mat_ori_fp(&(p_out_sig_con->signal[out_ind]));
+        ree_check_true_exit((retval != ECG_SEG_OK), EXIT_TRANCONV_FORWARD,
+                                         "%s occurs error due to ecg_seg_fp_add_bias of out_ind %d failed", __func__, out_ind);
+    }
 EXIT_TRANCONV_FORWARD:
     MODEL_FUNC_EXIT;
     return retval;
