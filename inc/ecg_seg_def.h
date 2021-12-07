@@ -120,6 +120,12 @@
 #define ECG_SIGNAL_MID3_1_OUTPUT_IND                                  (32)
 #define ECG_SIGNAL_TRAN_MID3_OUTPUT_C                                 (64)
 #define ECG_SIGNAL_TRAN_MID3_OUTPUT_IND                               (64)
+#define ECG_SIGNAL_DECODER_MID3_INPUT_C                               (96)
+#define ECG_SIGNAL_DECODER_MID3_INPUT_IND                             (32)
+#define ECG_SIGNAL_DECODER_MID3_0_OUTPUT_C                            (32)
+#define ECG_SIGNAL_DECODER_MID3_0_OUTPUT_IND                          (0)
+#define ECG_SIGNAL_DECODER_MID3_1_OUTPUT_C                            (32)
+#define ECG_SIGNAL_DECODER_MID3_1_OUTPUT_IND                          (32)
 
 #define ECG_SIGNAL_MID4_INPUT_C                                       (32)
 #define ECG_SIGNAL_MID4_0_ORI_C                                       (64)
