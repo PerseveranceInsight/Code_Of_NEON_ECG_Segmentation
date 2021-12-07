@@ -47,7 +47,7 @@ static inline float sig2col_get_tranconv_pixel_fp(uint32_t col_h_ind, uint32_t c
     uint32_t col_w_ind_w_padding = col_w_ind + p_para->padding;
     uint32_t feat_ind = (col_w_ind_w_padding - col_h_ind)/p_para->stride;
     float *p_buf = p_mat->ori_buf;
-    if (((col_w_ind_w_padding+col_h_ind)%p_para->stride) && (col_w_ind_w_padding >= col_h_ind) && (feat_ind < p_mat->ori_l))
+    if (((col_w_ind_w_padding+col_h_ind)%p_para->stride == 0) && (col_w_ind_w_padding >= col_h_ind) && (feat_ind < p_mat->ori_l))
     {
         ree_log(SIG2COL_LOG, "%s col_w_ind_w_padding %d col_h_ind %d col_w_ind %d feat_ind %d", __func__,
                                                                                                 col_w_ind_w_padding,
