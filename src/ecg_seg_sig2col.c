@@ -40,18 +40,22 @@ static inline float sig2col_get_pixel_fp(uint32_t sig_ind_w_padding, mat_sig_t *
     return feature;
 }
 
-static inline float sig2col_get_tranconv_pixel_fp(uint32_t sig_ind_w_padding, mat_sig_t *p_mat, mat_sig_tran_conv_para_t *p_para)
+static inline float sig2col_get_tranconv_pixel_fp(uint32_t col_h_ind, uint32_t col_w_ind, mat_sig_t *p_mat, mat_sig_tran_conv_para_t *p_para)
 {
     SIG2COL_FUNC_ENTRANCE;
     float feature = 0.0f;
-    float *p_buf = (float*)p_mat->ori_buf;
-    int32_t sig_ind_wo_padding = sig_ind_w_padding - p_para->padding;
-    if ((sig_ind_wo_padding >= 0) && (sig_ind_wo_padding < p_mat->ori_l))
+    uint32_t col_w_ind_w_padding = col_w_ind + p_para->padding;
+    uint32_t feat_ind = (col_w_ind_w_padding - col_h_ind)/p_para->stride;
+    float *p_buf = p_mat->ori_buf;
+    if (((col_w_ind_w_padding+col_h_ind)%p_para->stride) && (col_w_ind_w_padding >= col_h_ind) && (feat_ind < p_mat->ori_l))
     {
-        ree_log(SIG2COL_LOG, "sig_ind_wo_padding %d %d", sig_ind_w_padding, sig_ind_wo_padding);
-        feature = *(p_buf+sig_ind_wo_padding);
+        ree_log(SIG2COL_LOG, "%s col_w_ind_w_padding %d col_h_ind %d col_w_ind %d feat_ind %d", __func__,
+                                                                                                col_w_ind_w_padding,
+                                                                                                col_h_ind,
+                                                                                                col_w_ind,
+                                                                                                feat_ind);
+        feature = p_buf[feat_ind];
     }
-    ree_log(SIG2COL_LOG, "%04.4f\n", feature);
     SIG2COL_FUNC_EXIT;
     return feature;
 }
@@ -159,7 +163,7 @@ int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_
 {
     SIG2COL_FUNC_ENTRANCE;
     int32_t retval = ECG_SEG_OK;
-    uint32_t ele_num = 0, sig_ind_w_padding = 0;
+    uint32_t ele_num = 0, feature_ind = 0;
     float feature = 0.0f;
     float *p_col_buf = NULL;
     ree_check_null_exit_retval(p_ctr, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_TRANCONV_FP,
@@ -184,18 +188,16 @@ int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_
 
     for (uint32_t col_h_ind = 0; col_h_ind<p_ctr->cur_k_l; col_h_ind++)
     {
-        sig_ind_w_padding = col_h_ind*p_para->stride;
         for (uint32_t col_w_ind = 0; col_w_ind<p_ctr->cur_out_pack_l; col_w_ind++)
         {
-            if (col_w_ind<p_ctr->cur_out_l)
+            if (col_w_ind < p_para->col_w)
             {
-                feature = sig2col_get_tranconv_pixel_fp(sig_ind_w_padding, p_mat, p_para);
+                feature = sig2col_get_tranconv_pixel_fp(col_h_ind, col_w_ind, p_mat, p_para);
             } else
             {
                 feature = 0.0f;
             }
             *p_col_buf = feature;
-            sig_ind_w_padding++;
             p_col_buf++;
         }
     }
