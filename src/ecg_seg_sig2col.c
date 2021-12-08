@@ -138,7 +138,7 @@ int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat)
     
     for (uint32_t col_h_ind = 0; col_h_ind<p_ctr->cur_k_l; col_h_ind++)
     {
-        sig_ind_w_padding = col_h_ind*p_mat->stride;
+        sig_ind_w_padding = col_h_ind;
         for (uint32_t col_w_ind = 0; col_w_ind<p_ctr->cur_out_pack_l; col_w_ind++)
         {
             if (col_w_ind<p_ctr->cur_out_l)
@@ -149,7 +149,7 @@ int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat)
                 feature = 0.0f;
             }
             *p_col_buf = feature;
-            sig_ind_w_padding++;
+            sig_ind_w_padding += p_mat->stride;
             p_col_buf++;
         }
     }
