@@ -78,6 +78,16 @@ int32_t tranconv_forward(conv_fuse_relu_t *p_tran_module,
                          uint32_t output_num, 
                          uint32_t output_start_ind);
 
+int32_t decoder_conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
+                                       sig2col_ctr_t *p_col_ctr,
+                                       signal_container_t *p_in_sig_con,
+                                       signal_container_t *p_out_sig_con,
+                                       mat_decoder_conv_para_t *p_decoder_para,
+                                       uint32_t input_num,
+                                       uint32_t input_start_ind,
+                                       uint32_t output_num,
+                                       uint32_t output_start_ind);
+
 void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module);
 
 void conv_fuse_relu_destructor_static(conv_fuse_relu_t *p_module);

@@ -65,6 +65,19 @@ typedef struct mat_sig_tran_conv_para {
     uint32_t stride;
 } mat_sig_tran_conv_para_t;
 
+typedef struct mat_decoder_conv_para_t {
+    uint32_t ori_l;
+    uint32_t out_l;
+    uint32_t col_h;
+    uint32_t col_w;
+    uint32_t pack_w_step;
+    uint32_t pack_h;
+    uint32_t pack_w;
+    uint32_t pack_ele;
+    uint32_t padding;
+    uint32_t stride;
+} mat_decoder_conv_para_t;
+
 typedef struct mat_sig {
     BOOL inited;
     BOOL allocated;
