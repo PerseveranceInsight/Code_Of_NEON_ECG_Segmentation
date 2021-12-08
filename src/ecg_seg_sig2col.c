@@ -163,7 +163,7 @@ int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_
 {
     SIG2COL_FUNC_ENTRANCE;
     int32_t retval = ECG_SEG_OK;
-    uint32_t ele_num = 0, feature_ind = 0;
+    uint32_t ele_num = 0;
     float feature = 0.0f;
     float *p_col_buf = NULL;
     ree_check_null_exit_retval(p_ctr, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_TRANCONV_FP,

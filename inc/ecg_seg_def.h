@@ -27,9 +27,9 @@
 #define ECG_SEG_TRANCONV_0_K_DUMMING_STRIDE                           (2)
 
 #define ECG_SEG_DECODER_CONVRELU_0_K_L                                (3)
-#define ECG_SEG_DECODER_CONVRELU_0_K_DUMMING_PADDING                  (1)
 #define ECG_SEG_DECODER_CONVRELU0_0_K_C                               (3072)
 #define ECG_SEG_DECODER_CONVRELU0_1_K_C                               (1024)
+#define ECG_SEG_DECODER_CONVRELU_0_K_DUMMING_PADDING                  (1)
 #define ECG_SEG_DECODER_CONVRELU_0_K_DUMMING_STRIDE                   (1)
 
 #define ECG_TEST_SIGNAL_ORI_C                                         (1)
