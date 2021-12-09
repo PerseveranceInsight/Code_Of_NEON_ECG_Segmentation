@@ -453,7 +453,6 @@ int32_t decoder_conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
     int32_t retval = ECG_SEG_OK;
     uint32_t weight_ind = 0;
     uint32_t input_end_ind = 0, output_end_ind = 0;
-    uint32_t input_ind = 0, output_ind = 0;
     ree_check_null_exit_retval(p_module, retval, ECG_SEG_INVALID_PARAM, EXIT_DECODER_CONV_FUSE_RELU_FORWARD,
                                "%s occurs error due to p_module is NULL", __func__);
     ree_check_null_exit_retval(p_col_ctr, retval, ECG_SEG_INVALID_PARAM, EXIT_DECODER_CONV_FUSE_RELU_FORWARD,
@@ -485,8 +484,26 @@ int32_t decoder_conv_fuse_relu_forward(conv_fuse_relu_t *p_module,
             retval = sig2col_mat_decoder_mat_fp(p_col_ctr, &(p_in_sig_con->signal[in_ind]), p_decoder_para);
             ree_check_true_exit((retval != ECG_SEG_OK), EXIT_DECODER_CONV_FUSE_RELU_FORWARD,
                                  "%s occurs error due to sig2col_mat_fp of in_ind %d failed", __func__, in_ind);
-
+            retval = ecg_seg_fp_gemm(&(p_module->conv_weight[weight_ind]),
+                                     p_col_ctr,
+                                     &(p_out_sig_con->signal[out_ind]));
+            ree_check_true_exit((retval != ECG_SEG_OK), EXIT_DECODER_CONV_FUSE_RELU_FORWARD,
+                                "%s occurs error due to ecg_seg_fp_gemm of in_ind %d out_ind %d failed", __func__, in_ind, out_ind);
+            weight_ind++;
         }
+    }
+
+    for (uint32_t out_ind = output_start_ind, bias_ind = 0; out_ind<output_end_ind; out_ind++, bias_ind++)
+    {
+        ree_log(GEMM_LOG, "%s out_ind %d, bias_ind %d", __func__, out_ind, bias_ind);
+        ree_check_null_exit_retval(&(p_out_sig_con->signal[out_ind]), retval, ECG_SEG_INVALID_PARAM, EXIT_DECODER_CONV_FUSE_RELU_FORWARD,
+                                   "%s occurs error due to p_out_sing_con->signal[out_ind] is NULL out_ind %d", __func__, out_ind);
+        retval = ecg_seg_fp_add_bias((&p_out_sig_con->signal[out_ind]),
+                                     p_module->conv_bias[bias_ind],
+                                     TRUE);
+        print_mat_ori_fp(&(p_out_sig_con->signal[out_ind]));
+        ree_check_true_exit((retval != ECG_SEG_OK), EXIT_DECODER_CONV_FUSE_RELU_FORWARD,
+                            "%s occurs error due to ecg_seg_fp_add_bias of out_ind %d failed", __func__, out_ind);
     }
 EXIT_DECODER_CONV_FUSE_RELU_FORWARD:
     MODEL_FUNC_EXIT;
