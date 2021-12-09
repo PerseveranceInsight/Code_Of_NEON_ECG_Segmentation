@@ -292,6 +292,42 @@ EXIT_MAT_SIG_TRAN_CONV_PARA:
     return retval;
 }
 
+int32_t mat_sig_set_decoder_conv_para(mat_sig_para_t *p_decoder_kernel,
+                                      mat_sig_para_t *p_feat_para,
+                                      mat_decoder_conv_para_t *p_decoder_para)
+{
+    MATRIX_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    ree_check_null_exit_retval(p_decoder_kernel, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_DECODER_CONV_PARA,
+                               "%s occurs error due to p_decoder_kernel is NULL", __func__);
+    ree_check_null_exit_retval(p_feat_para, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_DECODER_CONV_PARA,
+                               "%s occurs error due to p_feat_para is NULL", __func__);
+    ree_check_null_exit_retval(p_decoder_para, retval, ECG_SEG_INVALID_PARAM, EXIT_MAT_SIG_DECODER_CONV_PARA,
+                               "%s occurs error due to p_decoder_para is NULL", __func__);
+    print_mat_sig_para(p_decoder_kernel);
+    print_mat_sig_para(p_feat_para);
+    p_decoder_para->ori_l = p_feat_para->ori_l;
+    p_decoder_para->out_l = (p_feat_para->ori_l+2*p_decoder_kernel->padding-p_decoder_kernel->k_l)/p_decoder_kernel->stride+1;
+    p_decoder_para->col_h = p_decoder_kernel->k_l;
+    p_decoder_para->col_w = p_feat_para->ori_l;
+    p_decoder_para->pack_w_step = p_decoder_para->out_l / FP_PACK_SIZE_W;
+    p_decoder_para->pack_w_step +=  ((p_decoder_para->out_l % FP_PACK_SIZE_W)!=0)?1:0;
+    p_decoder_para->pack_h = p_decoder_kernel->k_l;
+    p_decoder_para->pack_w = p_decoder_para->pack_w_step * FP_PACK_SIZE_W;
+    p_decoder_para->pack_ele = p_decoder_para->pack_h * p_decoder_para->pack_w;
+    p_decoder_para->padding = p_decoder_kernel->padding;
+    p_decoder_para->stride = p_decoder_kernel->stride;
+    ree_log(MATRIX_LOG, "%s p_decoder_para->ori_l %d", __func__, p_decoder_para->ori_l);
+    ree_log(MATRIX_LOG, "%s p_decoder_para->out_l %d", __func__, p_decoder_para->out_l);
+    ree_log(MATRIX_LOG, "%s p_decoder_para->col_h %d", __func__, p_decoder_para->col_h);
+    ree_log(MATRIX_LOG, "%s p_decoder_para->col_w %d", __func__, p_decoder_para->col_w);
+    ree_log(MATRIX_LOG, "%s p_decoder_para->pack_w_step %d", __func__, p_decoder_para->pack_w_step);
+    ree_log(MATRIX_LOG, "%s p_decoder_para->pack_h %d", __func__, p_decoder_para->pack_h);
+EXIT_MAT_SIG_DECODER_CONV_PARA:
+    MATRIX_FUNC_EXIT;
+    return retval;
+}
+
 int32_t mat_sig_reset_fp(mat_sig_t *p_mat)
 {
     MATRIX_FUNC_ENTRANCE;

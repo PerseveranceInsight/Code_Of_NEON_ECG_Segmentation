@@ -124,6 +124,10 @@ int32_t mat_sig_set_tran_conv_para(mat_sig_para_t *p_tran_kernel,
                                    mat_sig_para_t *p_feat_para,
                                    mat_sig_tran_conv_para_t *p_tran_conv_para);
 
+int32_t mat_sig_set_decoder_conv_para(mat_sig_para_t *p_decoder_kernel,
+                                      mat_sig_para_t *p_feat_para,
+                                      mat_decoder_conv_para_t *p_decoder_para);
+
 int32_t mat_sig_reset_fp(mat_sig_t *p_mat);
 
 void mat_sig_destructor(mat_sig_t *p_mat);

@@ -1502,6 +1502,7 @@ static int32_t ecg_seg_graph_decoder_conv_fuse_relu0_0_forward(ecg_seg_graph_t *
     GRAPH_FUNC_ENTRANCE;
     int32_t retval = ECG_SEG_OK;
     signal_container_t *p_mid3_feature = NULL;
+    mat_decoder_conv_para_t decoder_conv = {0};
     ree_check_null_exit_retval(p_graph, retval, ECG_SEG_INVALID_PARAM, EXIT_ECG_SEG_GRAPH_DECODER_CONV_FUSE_RELU0_0_CONSTRUCTOR,
                                "%s occurs error due to p_graph is NULL", __func__);
     ree_check_null_exit_retval(p_graph->p_sig2col_ctr, retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_DECODER_CONV_FUSE_RELU0_0_CONSTRUCTOR,
@@ -1511,18 +1512,23 @@ static int32_t ecg_seg_graph_decoder_conv_fuse_relu0_0_forward(ecg_seg_graph_t *
     ree_check_null_exit_retval(&(p_graph->p_modules[10]), retval, ECG_SEG_ERROR_STATE, EXIT_ECG_SEG_GRAPH_DECODER_CONV_FUSE_RELU0_0_CONSTRUCTOR,
                                "%s occurs error due to p_graph->p_modules[10] is NULL", __func__);
     p_mid3_feature = &p_graph->p_mid_features[3];
+    retval = mat_sig_set_decoder_conv_para(&decoder_weight_para,
+                                           &mid_feat_para3,
+                                           &decoder_conv);
+    ree_check_true_exit((retval != ECG_SEG_OK), EXIT_ECG_SEG_GRAPH_DECODER_CONV_FUSE_RELU0_0_CONSTRUCTOR, "%s retval of mat_sig_set_decoder_conv_para is %d != ECG_SEG_OK", __func__, retval);
     retval = signal_container_reset_fp(p_mid3_feature,
                                        ECG_SIGNAL_DECODER_MID3_0_OUTPUT_C,
                                        ECG_SIGNAL_DECODER_MID3_0_OUTPUT_IND);
     ree_check_true_exit((retval != ECG_SEG_OK), EXIT_ECG_SEG_GRAPH_DECODER_CONV_FUSE_RELU0_0_CONSTRUCTOR, "%s retval of signal_container_reset_fp is %d != ECG_SEG_OK", __func__, retval);
-    retval = conv_fuse_relu_forward(&(p_graph->p_modules[10]),
-                                    p_graph->p_sig2col_ctr,
-                                    p_mid3_feature,
-                                    p_mid3_feature,
-                                    ECG_SIGNAL_DECODER_MID3_INPUT_C,
-                                    ECG_SIGNAL_DECODER_MID3_INPUT_IND,
-                                    ECG_SIGNAL_DECODER_MID3_0_OUTPUT_C,
-                                    ECG_SIGNAL_DECODER_MID3_0_OUTPUT_IND);
+    retval = decoder_conv_fuse_relu_forward(&(p_graph->p_modules[10]),
+                                            p_graph->p_sig2col_ctr,
+                                            p_mid3_feature,
+                                            p_mid3_feature,
+                                            &decoder_conv,
+                                            ECG_SIGNAL_DECODER_MID3_INPUT_C,
+                                            ECG_SIGNAL_DECODER_MID3_INPUT_IND,
+                                            ECG_SIGNAL_DECODER_MID3_0_OUTPUT_C,
+                                            ECG_SIGNAL_DECODER_MID3_0_OUTPUT_IND);
 EXIT_ECG_SEG_GRAPH_DECODER_CONV_FUSE_RELU0_0_CONSTRUCTOR:
     GRAPH_FUNC_EXIT;
     return retval;

@@ -38,6 +38,7 @@ typedef struct sig2col_ctr {
 int32_t sig2col_ctr_fp_constructor(uint32_t max_out_l, uint32_t max_k_l, sig2col_ctr_t **pp_ctr);
 int32_t sig2col_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat);
 int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_tran_conv_para_t *p_para);
+int32_t sig2col_mat_decoder_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_decoder_conv_para_t *p_para);
 void sig2col_printf_mat_fp(sig2col_ctr_t *p_ctr);
 void sig2col_ctr_destructor(sig2col_ctr_t *p_ctr);
 

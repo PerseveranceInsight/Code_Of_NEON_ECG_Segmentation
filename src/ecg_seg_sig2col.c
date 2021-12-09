@@ -60,6 +60,21 @@ static inline float sig2col_get_tranconv_pixel_fp(uint32_t col_h_ind, uint32_t c
     return feature;
 }
 
+static inline float sig2col_get_deconv_pixel_fp(uint32_t sig_ind_w_padding, mat_sig_t *p_mat, mat_decoder_conv_para_t *p_para)
+{
+    SIG2COL_FUNC_ENTRANCE;
+    float feature = 0.0f;
+    float *p_buf = (float*)p_mat->ori_buf;
+    uint32_t sig_ind_wo_padding = sig_ind_w_padding - p_para->padding;
+    if ((sig_ind_wo_padding >= 0) && (sig_ind_wo_padding < p_mat->ori_l))
+    {
+        ree_log(SIG2COL_LOG, "sig_ind_wo_padding %d %d", sig_ind_w_padding, sig_ind_wo_padding);
+        feature = *(p_buf+sig_ind_wo_padding);
+    }
+    SIG2COL_FUNC_EXIT;
+    return feature;
+}
+
 void sig2col_printf_mat_fp(sig2col_ctr_t *p_ctr)
 {
     SIG2COL_FUNC_ENTRANCE;
@@ -202,6 +217,53 @@ int32_t sig2col_mat_tranconv_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_sig_
         }
     }
 EXIT_SIG2COL_MAT_TRANCONV_FP:
+    SIG2COL_FUNC_EXIT;
+    return retval;
+}
+
+int32_t sig2col_mat_decoder_mat_fp(sig2col_ctr_t *p_ctr, mat_sig_t *p_mat, mat_decoder_conv_para_t *p_para)
+{
+    SIG2COL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    uint32_t ele_num = 0, sig_ind_w_padding = 0;
+    float feature = 0.0f;
+    float *p_col_buf = NULL;
+    ree_check_null_exit_retval(p_ctr, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_DECODER_MAT_FP,
+                               "%s occurs error due to p_ctr is NULL", __func__);
+    ree_check_null_exit_retval(p_mat, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_DECODER_MAT_FP,
+                               "%s occurs error due to p_mat is NULL", __func__);
+    ree_check_null_exit_retval(p_para, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_DECODER_MAT_FP,
+                               "%s occurs error due to p_para is NULL", __func__);
+    ree_check_null_exit_retval(p_ctr->col_buf, retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_DECODER_MAT_FP,
+                               "%s occurs error due to p_ctr->col_buf is NULL", __func__);
+    ree_check_true_exit_retval((!p_ctr->inited), retval, ECG_SEG_INVALID_PARAM, EXIT_SIG2COL_MAT_DECODER_MAT_FP,
+                               "%s occurs error due to p_ctr->inited is FALSE", __func__);
+    p_ctr->cur_k_l = p_para->col_h;
+    p_ctr->cur_out_l = p_para->col_w;
+    p_ctr->cur_out_pack_l = p_para->pack_w;
+    p_ctr->cur_ele_num = p_ctr->cur_k_l * p_ctr->cur_out_pack_l;
+    ele_num = p_ctr->cur_ele_num;
+    p_col_buf = p_ctr->col_buf;
+    ree_set(p_col_buf, 0, ele_num*ELE_FP_SIZE);
+
+    for (uint32_t col_h_ind = 0; col_h_ind<p_ctr->cur_k_l; col_h_ind++)
+    {
+        sig_ind_w_padding = col_h_ind;
+        for (uint32_t col_w_ind = 0; col_w_ind<p_ctr->cur_out_pack_l; col_w_ind++)
+        {
+            if (col_w_ind < p_ctr->cur_out_l)
+            {
+                feature = sig2col_get_deconv_pixel_fp(sig_ind_w_padding, p_mat, p_para);
+            } else
+            {
+                feature = 0.0f;
+            }
+            *p_col_buf = feature;
+            sig_ind_w_padding += p_mat->stride;
+            p_col_buf++;
+        }
+    }
+EXIT_SIG2COL_MAT_DECODER_MAT_FP:
     SIG2COL_FUNC_EXIT;
     return retval;
 }
