@@ -23,6 +23,8 @@
 #define ECG_SEG_TRANCONV_0_K_C                                        (ECG_SEG_ENCODER_CONVRELU4_1_K_C)
 #define ECG_SEG_TRANCONV_1_K_L                                        (8)
 #define ECG_SEG_TRANCONV_1_K_C                                        (ECG_SEG_ENCODER_CONVRELU3_1_K_C)
+#define ECG_SEG_TRANCONV_2_K_L                                        (8)
+#define ECG_SEG_TRANCONV_2_K_C                                        (ECG_SEG_ENCODER_CONVRELU2_1_K_C)
 #define ECG_SEG_TRANCONV_3_K_L                                        (8)
 #define ECG_SEG_TRANCONV_3_K_C                                        (ECG_SEG_ENCODER_CONVRELU1_1_K_C)
 #define ECG_SEG_TRANCONV_0_K_DUMMING_PADDING                          (3)
