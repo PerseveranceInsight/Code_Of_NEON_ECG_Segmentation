@@ -35,6 +35,8 @@
 #define ECG_SEG_DECODER_CONVRELU0_1_K_C                               (1024)
 #define ECG_SEG_DECODER_CONVRELU1_0_K_C                               (768)
 #define ECG_SEG_DECODER_CONVRELU1_1_K_C                               (256)
+#define ECG_SEG_DECODER_CONVRELU2_0_K_C                               (192)
+#define ECG_SEG_DECODER_CONVRELU2_1_K_C                               (64)
 #define ECG_SEG_DECODER_CONVRELU_0_K_DUMMING_PADDING                  (1)
 #define ECG_SEG_DECODER_CONVRELU_0_K_DUMMING_STRIDE                   (1)
 
@@ -96,6 +98,12 @@
 #define ECG_SIGNAL_MID1_1_OUTPUT_IND                                  (8)
 #define ECG_SIGNAL_TRAN_MID1_OUTPUT_C                                 (16)
 #define ECG_SIGNAL_TRAN_MID1_OUTPUT_IND                               (16)
+#define ECG_SIGNAL_DECODER_MID1_INPUT_C                               (24)
+#define ECG_SIGNAL_DECODER_MID1_INPUT_IND                             (8)
+#define ECG_SIGNAL_DECODER_MID1_0_OUTPUT_C                            (8)
+#define ECG_SIGNAL_DECODER_MID1_0_OUTPUT_IND                          (0)
+#define ECG_SIGNAL_DECODER_MID1_1_OUTPUT_C                            (8)
+#define ECG_SIGNAL_DECODER_MID1_1_OUTPUT_IND                          (8)
 
 #define ECG_SIGNAL_MID2_INPUT_C                                       (8)
 #define ECG_SIGNAL_MID2_0_ORI_C                                       (16)
