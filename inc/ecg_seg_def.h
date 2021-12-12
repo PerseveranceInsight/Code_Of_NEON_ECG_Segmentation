@@ -37,6 +37,8 @@
 #define ECG_SEG_DECODER_CONVRELU1_1_K_C                               (256)
 #define ECG_SEG_DECODER_CONVRELU2_0_K_C                               (192)
 #define ECG_SEG_DECODER_CONVRELU2_1_K_C                               (64)
+#define ECG_SEG_DECODER_CONVRELU3_0_K_C                               (48)
+#define ECG_SEG_DECODER_CONVRELU3_1_K_C                               (16)
 #define ECG_SEG_DECODER_CONVRELU_0_K_DUMMING_PADDING                  (1)
 #define ECG_SEG_DECODER_CONVRELU_0_K_DUMMING_STRIDE                   (1)
 
