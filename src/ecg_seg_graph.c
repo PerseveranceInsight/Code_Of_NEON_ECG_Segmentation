@@ -143,7 +143,7 @@ static int32_t ecg_seg_graph_decoder_conv_fuse_relu1_1_forward(ecg_seg_graph_t *
 static int32_t ecg_seg_graph_tranconv2_forward(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_decoder_conv_fuse_relu2_0_forward(ecg_seg_graph_t *p_graph);
 static int32_t ecg_seg_graph_decoder_conv_fuse_relu2_1_forward(ecg_seg_graph_t *p_graph);
-static int32_t ecg_seg_graph_tranconv2_forward(ecg_seg_graph_t *p_graph);
+static int32_t ecg_seg_graph_tranconv3_forward(ecg_seg_graph_t *p_graph);
 
 static void ecg_seg_graph_constructor_param(ecg_seg_graph_t *p_graph)
 {
