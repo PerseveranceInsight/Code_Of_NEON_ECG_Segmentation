@@ -2343,7 +2343,7 @@ static int32_t ecg_seg_graph_decoder_conv_fuse_relu3_1_forward(ecg_seg_graph_t *
                                "%s occurs error due to p_graph->p_modules[17] is NULL", __func__);
     p_mid0_feature = &p_graph->p_mid_features[0];
     retval = mat_sig_set_decoder_conv_para(&decoder_weight_para,
-                                           &mid_feat_para1,
+                                           &mid_feat_para0,
                                            &decoder_conv);
     ree_check_true_exit((retval != ECG_SEG_OK), EXIT_ECG_SEG_GRAPH_DECODER_CONV_FUSE_RELU3_1_FORWARD, "%s retval of mat_sig_set_decoder_conv_para is %d != ECG_SEG_OK", __func__, retval);
     retval = signal_container_reset_fp(p_mid0_feature,
