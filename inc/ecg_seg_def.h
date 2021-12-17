@@ -170,6 +170,9 @@
 #define ECG_SIGNAL_MID4_1_OUTPUT_C                                    (64)
 #define ECG_SIGNAL_MID4_1_OUTPUT_IND                                  (0)
 
+#define ECG_SIGNAL_OUT_PRED_C                                         (0)
+#define ECG_SIGNAL_OUT_PRED_IND                                       (0)
+
 #define ECG_SIG2COL_MAX_OUT_L                                         (ECG_TEST_SIGNAL_MAX_OUT_L)
 #define ECG_SIG2COL_MAX_K_L                                           (ECG_TEST_SIGNAL_MAX_K_L)
 

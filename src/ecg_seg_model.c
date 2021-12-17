@@ -510,6 +510,60 @@ EXIT_DECODER_CONV_FUSE_RELU_FORWARD:
     return retval;
 }
 
+int32_t argmax_forward(signal_container_t *p_in_sig_con,
+                       signal_container_t *p_out_sig_con,
+                       uint32_t input_num,
+                       uint32_t input_start_ind,
+                       uint32_t output_start_ind)
+{
+    MODEL_FUNC_ENTRANCE;
+    int32_t retval = ECG_SEG_OK;
+    uint32_t input_end_ind = input_start_ind + input_num;
+    uint32_t feat_max_ind = 0, feat_len = 0;
+    float feat_value = 0.0f, feat_max_value = 0.0f;
+    uint8_t *p_out_feat = NULL;
+    float **pp_fea_bufs = NULL;
+    ree_check_null_exit_retval(p_in_sig_con, retval, ECG_SEG_INVALID_PARAM, EXIT_ARGMAX_FORWARD,
+                               "%s occurs error due to p_in_sig_con is NULL", __func__);
+    ree_check_null_exit_retval(p_out_sig_con, retval, ECG_SEG_INVALID_PARAM, EXIT_ARGMAX_FORWARD,
+                               "%s occurs error due to p_out_sig_con is NULL", __func__);
+    ree_check_true_exit_retval((input_num == 0), retval, ECG_SEG_INVALID_PARAM, EXIT_ARGMAX_FORWARD,
+                               "%s occurs error due to input_num is 0", __func__);
+    pp_fea_bufs = ree_malloc(sizeof(float*)*input_num);
+    ree_check_null_exit_retval(pp_fea_bufs, retval, ECG_SEG_ALLOC_FAILED, EXIT_ARGMAX_FORWARD,
+                               "%s occurs error due to alloc pp_fea_bufs failed", __func__);
+    ree_set(pp_fea_bufs, 0, sizeof(float*)*input_num);
+    ree_log(LOG_DEBUG, "%s input_start_ind %d input_end_ind %d", __func__, input_start_ind, input_end_ind);
+    feat_len = p_out_sig_con->signal[output_start_ind].ori_l;
+    ree_log(LOG_DEBUG, "%s feat_len %d", __func__, feat_len);
+    p_out_feat = p_out_sig_con->signal[output_start_ind].ori_buf;
+
+    for (uint32_t sig_ind = input_start_ind; sig_ind<input_end_ind; sig_ind++)
+    {
+        pp_fea_bufs[sig_ind - input_start_ind] = p_in_sig_con->signal[sig_ind].ori_buf;
+    }
+
+    for (uint32_t feat_ind = 0; feat_ind < feat_len; feat_ind++)
+    {
+        feat_max_value = 0;
+        feat_max_ind = 0;
+        for (uint32_t sig_ind = 0; sig_ind<input_num; sig_ind++)
+        {
+            feat_value = *pp_fea_bufs[sig_ind];
+            if (feat_value > feat_max_value)
+            {
+                feat_max_value = feat_value;
+                feat_max_ind = sig_ind;
+            }
+            pp_fea_bufs[sig_ind]++;
+        }
+        p_out_feat[feat_ind] = feat_max_ind;
+    }
+EXIT_ARGMAX_FORWARD:
+    MODEL_FUNC_EXIT;
+    return retval;
+}
+
 void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)
 {
     MODEL_FUNC_ENTRANCE;
@@ -525,4 +579,5 @@ void conv_fuse_relu_destructor(conv_fuse_relu_t *p_module)
 EXIT_CONV_FUSE_RELU_DESTRUCTOR:
     MODEL_FUNC_EXIT;
 }
+
 
