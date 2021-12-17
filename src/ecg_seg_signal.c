@@ -132,7 +132,7 @@ int32_t signal_container_constructor_uint8(uint32_t signal_num, mat_sig_para_t *
         ree_log(SIGNAL_LOG, "%s signal index i %d", __func__, i);
         ree_check_null_exit_retval(&((*pp_container)->signal[i]), retval, ECG_SEG_ALLOC_FAILED, EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_UINT8,
                                    "%s occurs error due to (*pp_container)->signal[i] is NULL", __func__);
-        mat_sig_constructor_fp(p_para, &(*pp_container)->signal[i], FALSE);
+        mat_sig_constructor_uint8(p_para, &(*pp_container)->signal[i], FALSE);
     }
     (*pp_container)->inited = TRUE;
 EXIT_SIGNAL_CONTAINER_CONSTRUCTOR_UINT8:
@@ -195,7 +195,7 @@ int32_t signal_container_reset_uint8(signal_container_t *p_container,
         ree_log(SIGNAL_LOG, "%s res_ind %d", __func__, res_ind);
         ree_check_null_exit_retval((&p_container->signal[res_ind]), retval, ECG_SEG_ALLOC_FAILED, EXIT_SIGNAL_CONTAINER_RESET_UINT8,
                                    "%s occurs error due to p_container->signal[res_ind] is NULL", __func__);
-        retval = mat_sig_reset_fp((&p_container->signal[res_ind]));
+        retval = mat_sig_reset_uint8((&p_container->signal[res_ind]));
         ree_check_true_exit((retval != ECG_SEG_OK), 
                             EXIT_SIGNAL_CONTAINER_RESET_UINT8, 
                             "%s occurs error due to retval of mat_sig_reset_fp != ECG_SEG_OK", __func__);
