@@ -560,6 +560,7 @@ int32_t argmax_forward(signal_container_t *p_in_sig_con,
         p_out_feat[feat_ind] = feat_max_ind;
     }
 EXIT_ARGMAX_FORWARD:
+    ree_free(pp_fea_bufs);
     MODEL_FUNC_EXIT;
     return retval;
 }
