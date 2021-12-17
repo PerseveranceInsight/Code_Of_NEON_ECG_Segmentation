@@ -38,9 +38,17 @@ int32_t signal_container_constructor_fp(uint32_t signal_num,
                                         mat_sig_para_t *p_para,
                                         signal_container_t **pp_container);
 
+int32_t signal_container_constructor_uint8(uint32_t signal_num,
+                                           mat_sig_para_t *p_para,
+                                           signal_container_t **pp_container);
+
 int32_t signal_container_reset_fp(signal_container_t *p_container,
                                   uint32_t rest_num,
                                   uint32_t reset_start_ind);
+
+int32_t signal_container_reset_uint8(signal_container_t *p_container,
+                                     uint32_t rest_num,
+                                     uint32_t reset_start_ind);
 
 void signal_container_destructor(signal_container_t *p_container);
 
