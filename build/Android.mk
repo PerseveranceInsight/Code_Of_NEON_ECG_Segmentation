@@ -4,11 +4,16 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := ecg_seg
 
-LOCAL_CFLAGS += -D__DEBUG__ -Ofast
+LOCAL_CFLAGS += -Ofast
 LOCAL_CFLAGS += -Wall -Werror 
 LOCAL_CFLAGS += -Wno-error=unused-function -Wno-error=unused-variable -Wno-error=unused-label -Wno-error=return-type
 LOCAL_CFLAGS += -Wno-error=sign-compare -Wno-error=multichar -Wno-error=implicit-fallthrough -Wno-error=vla
 LOCAL_CFLAGS += -Wno-error=strict-prototypes
+
+ifeq ($(EN_DEBUG), true)
+LOCAL_CFLAGS += -D_DEBUG__
+endif
+
 ifeq ($(EN_DEBUG_SYM), true)
 LOCAL_CFLAGS += -g -ggdb
 endif

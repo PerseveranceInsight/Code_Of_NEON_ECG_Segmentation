@@ -1,4 +1,6 @@
-export EN_DEBUG_SYM=true
+export EN_DEBUG=false
+
+# export EN_DEBUG_SYM=true
 
 # export EN_MATRIX_DBG=true
 # export EN_PRINT_MAT_ORI=true

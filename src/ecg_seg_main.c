@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
                                      .padding = ECG_SIGNAL_PADDING,
                                      .stride = ECG_SIGNAL_STRIDE,};
     ree_log(LOG_DEBUG, "%s starts", __func__);
+    printf("%s starts\n", __func__);
     retval = ecg_seg_graph_constructor_fp(ECG_SIGNAL_ORI_C, 
                                           ECG_MIDDLE_FEATURE_GROUP_NUM, 
                                           ECG_OUTPUT_PRED_GROUP_NUM, 
@@ -30,6 +31,7 @@ int main(int argc, char* argv[])
     retval = ecg_seg_graph_context_init(&g_graph_ctr);
     retval = ecg_seg_graph_forward(&g_graph_ctr);
     ecg_seg_graph_destructor_fp(&g_graph_ctr);
+    printf("%s ends retval %d\n", __func__, retval);
     ree_log(LOG_DEBUG, "%s ends retval %d", __func__, retval);
     return 0;
 }

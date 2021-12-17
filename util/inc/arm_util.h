@@ -11,10 +11,10 @@ typedef enum LOG_LEVEL {
     LOG_ERROR = 6,
 } LOG_LEVEL_T;
 
+#ifdef __DEBUG__
 #define DEFAULT_LOG_LEVEL (LOG_DEBUG)
 
-#ifdef __DEBUG__
-
+#ifdef REE_LOG_PRINTF
 #define ree_log(LOG_LEVEL, x...)                                                        \
 {                                                                                       \
     if (LOG_LEVEL >= DEFAULT_LOG_LEVEL) {                                               \
@@ -40,6 +40,30 @@ typedef enum LOG_LEVEL {
         printf("\n");                                                                   \
     }                                                                                   \
 }
+#else
+#define ree_log(LOG_LEVEL, x...)                                                        \
+{                                                                                       \
+    if (LOG_LEVEL >= DEFAULT_LOG_LEVEL) {                                               \
+        switch (LOG_LEVEL) {                                                            \
+            case LOG_VERBOSE:                                                           \
+                __android_log_print(ANDROID_LOG_WARN, "ECG_SEG", x);                    \
+                break;                                                                  \
+            case LOG_DEBUG:                                                             \
+                __android_log_print(ANDROID_LOG_DEBUG, "ECG_SEG", x);                   \
+                break;                                                                  \
+            case LOG_INFO:                                                              \
+                __android_log_print(ANDROID_LOG_INFO, "ECG_SEG", x);                    \
+                break;                                                                  \
+            case LOG_WARN:                                                              \
+                __android_log_print(ANDROID_LOG_WARN, "ECG_SEG", x);                    \
+                break;                                                                  \
+            case LOG_ERROR:                                                             \
+                __android_log_print(ANDROID_LOG_ERROR, "ECG_SEG", x);                   \
+                break;                                                                  \
+        }                                                                               \
+    }                                                                                   \
+}
+#endif
 
 #define FUNC_ENTRANCE_LOG       ree_log(LOG_DEBUG, "%s enters", __func__);
 #define FUNC_EXIT_LOG           ree_log(LOG_DEBUG, "%s leaves", __func__);
