@@ -115,6 +115,10 @@ int32_t mat_sig_constructor_fp(mat_sig_para_t *p_param,
                                mat_sig_t *p_mat,
                                BOOL kernel);
 
+int32_t mat_sig_constructor_uint8(mat_sig_para_t *p_param,
+                                  mat_sig_t *p_mat,
+                                  BOOL kernel);
+
 int32_t mat_sig_constructor_fp_static(mat_sig_para_t *p_param,
                                       mat_sig_t *p_mat,
                                       void **pp_mat_buf,
@@ -129,6 +133,8 @@ int32_t mat_sig_set_decoder_conv_para(mat_sig_para_t *p_decoder_kernel,
                                       mat_decoder_conv_para_t *p_decoder_para);
 
 int32_t mat_sig_reset_fp(mat_sig_t *p_mat);
+
+int32_t mat_sig_reset_uint8(mat_sig_t *p_mat);
 
 void mat_sig_destructor(mat_sig_t *p_mat);
 
