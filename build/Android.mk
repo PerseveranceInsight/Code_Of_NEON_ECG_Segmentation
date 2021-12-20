@@ -14,6 +14,11 @@ ifeq ($(EN_DEBUG), true)
 LOCAL_CFLAGS += -D_DEBUG__
 endif
 
+ifeq ($(EN_SUPPORT_SDCARD), true)
+$(info SUPPORT_SDCARD)
+LOCAL_CFLAGS += -DSUPPORT_SDCARD
+endif
+
 ifeq ($(EN_DEBUG_SYM), true)
 LOCAL_CFLAGS += -g -ggdb
 endif

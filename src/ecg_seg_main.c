@@ -12,8 +12,8 @@ static ecg_seg_graph_t g_graph_ctr = {0};
 
 int main(int argc, char* argv[])
 {
-
     int32_t retval = ECG_SEG_OK;
+    double start_time = 0.0f, end_time = 0.0f, time_span = 0.0f;
     mat_sig_para_t input_sig_para = {.ori_l = ECG_SIGNAL_ORI_L,
                                      .k_l = ECG_SIGNAL_K_L,
                                      .padding = ECG_SIGNAL_PADDING,
@@ -29,7 +29,11 @@ int main(int argc, char* argv[])
                                                    &input_sig_para,
                                                    &g_graph_ctr);
     retval = ecg_seg_graph_context_init(&g_graph_ctr);
+    start_time = now_ns();
     retval = ecg_seg_graph_forward(&g_graph_ctr);
+    end_time = now_ns();
+    time_span = end_time - start_time;
+    printf("%s inference took %f\n", __func__, time_span);
     ecg_seg_graph_destructor_fp(&g_graph_ctr);
     printf("%s ends retval %d\n", __func__, retval);
     ree_log(LOG_DEBUG, "%s ends retval %d", __func__, retval);

@@ -19,8 +19,13 @@
 #define SIGNAL_LOG                                                      LOG_VERBOSE
 #endif
 
+#ifdef SUPPORT_SDCARD
+#define ECG_SIGNAL                                                      "./sdcard/test_signal.bin"
+#define ECG_TINY_SIGNAL                                                 "./sdcard/test_tiny_signal.bin"
+#else
 #define ECG_SIGNAL                                                      "./data/test_signal.bin"
 #define ECG_TINY_SIGNAL                                                 "./data/test_tiny_signal.bin"
+#endif
 
 typedef struct signal_container {
     BOOL inited;

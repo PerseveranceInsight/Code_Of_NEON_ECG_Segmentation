@@ -1,5 +1,7 @@
 export EN_DEBUG=false
 
+export EN_SUPPORT_SDCARD=true
+
 # export EN_DEBUG_SYM=true
 
 # export EN_MATRIX_DBG=true
