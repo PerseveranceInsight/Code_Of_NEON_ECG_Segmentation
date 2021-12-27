@@ -5,6 +5,8 @@
 #include "arm_util.h"
 #include "ecg_seg_graph.h"
 #include "ecg_seg_signal.h"
+#include "ecg_seg_save.h"
+#include "ecg_seg_signal.h"
 #include "ecg_response_def.h"
 #include "ecg_seg_util.h"
 
@@ -34,6 +36,9 @@ int main(int argc, char* argv[])
     end_time = now_ns();
     time_span = end_time - start_time;
     printf("%s inference took %f\n", __func__, time_span);
+    retval = ecg_seg_save_result((uint8_t*)ECG_PRED_LABEL,
+                                 g_graph_ctr.p_out_pred->signal[0].ori_buf,
+                                 2000*sizeof(uint8_t));
     ecg_seg_graph_destructor_fp(&g_graph_ctr);
     printf("%s ends retval %d\n", __func__, retval);
     ree_log(LOG_DEBUG, "%s ends retval %d", __func__, retval);

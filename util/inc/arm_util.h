@@ -74,10 +74,10 @@ typedef enum LOG_LEVEL {
     }                                                                                   \
 }
 #else
-#define ree_log(LOG_LEVEL, x...)                                           do {} while (0)
-#define FUNC_ENTANGE_LOG                                                   do {} while (0)
-#define FUNC_EXIT_LOG                                                      do {} while (0)
-#define ree_printf(LOG_LEVEL, x...)                                        do {} while (0)
+#define ree_log(LOG_LEVEL, x...)                                            do {} while (0)
+#define FUNC_ENTRANCE_LOG                                                   do {} while (0)
+#define FUNC_EXIT_LOG                                                       do {} while (0)
+#define ree_printf(LOG_LEVEL, x...)                                         do {} while (0)
 #endif
 
 #ifndef NULL

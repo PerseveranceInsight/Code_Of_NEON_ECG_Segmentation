@@ -60,6 +60,7 @@ LOCAL_CFLAGS += -DEN_SIG2COL_DBG
 endif
 
 LOCAL_ARM_MODE := arm
+LCOAL_ARM_NEON := true
 
 PROJECT_SRC = $(LOCAL_PATH)/../src
 PROJECT_INC = $(LOCAL_PATH)/../inc
@@ -70,10 +71,11 @@ LOCAL_C_INCLUDES += $(PROJECT_INC) \
 					$(PROJECT_UTIL_INC)
 
 LOCAL_SRC_FILES +=  ${PROJECT_SRC}/ecg_seg_main.c \
-					${PROJECT_SRC}/ecg_seg_gemm.c \
+					${PROJECT_SRC}/ecg_seg_gemm.c.neon \
 					${PROJECT_SRC}/ecg_seg_graph.c \
 					${PROJECT_SRC}/ecg_seg_matrix.c \
 					${PROJECT_SRC}/ecg_seg_model.c \
+					${PROJECT_SRC}/ecg_seg_save.c \
 					${PROJECT_SRC}/ecg_seg_sig2col.c \
 					${PROJECT_SRC}/ecg_seg_signal.c \
 				    ${PROJECT_UTIL_SRC}/arm_util.c

@@ -20,11 +20,13 @@
 #endif
 
 #ifdef SUPPORT_SDCARD
-#define ECG_SIGNAL                                                      "./sdcard/test_signal.bin"
-#define ECG_TINY_SIGNAL                                                 "./sdcard/test_tiny_signal.bin"
+#define ECG_SIGNAL                                                      "/sdcard/data/test_signal.bin"
+#define ECG_TINY_SIGNAL                                                 "/sdcard/data/test_tiny_signal.bin"
+#define ECG_PRED_LABEL                                                  "/sdcard/data/test_pred.bin"
 #else
 #define ECG_SIGNAL                                                      "./data/test_signal.bin"
 #define ECG_TINY_SIGNAL                                                 "./data/test_tiny_signal.bin"
+#define ECG_PRED_LABEL                                                  "./data/test_pred.bin"
 #endif
 
 typedef struct signal_container {
